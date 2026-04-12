@@ -36,9 +36,9 @@ STATUS_CLASS = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Build the static classroom leaderboard page.')
-    parser.add_argument('--leaderboard', default='platform/results/leaderboard.csv')
-    parser.add_argument('--reports-dir', default='platform/results/reports')
-    parser.add_argument('--output', default='platform/results/index.html')
+    parser.add_argument('--leaderboard', default='my_platform/results/leaderboard.csv')
+    parser.add_argument('--reports-dir', default='my_platform/results/reports')
+    parser.add_argument('--output', default='my_platform/results/index.html')
     parser.add_argument('--session-summary', default='')
     parser.add_argument('--package-meta', default='')
     return parser.parse_args()
@@ -207,10 +207,10 @@ def render_package_table(package_meta: dict) -> str:
 
 
 def render_teacher_panel(summary: dict) -> str:
-    raw = escape(posix(summary.get('raw_path', 'test_assets/platform_eval_v2_draft/raw.txt')))
-    gold = escape(posix(summary.get('gold_path', 'test_assets/platform_eval_v2_draft/gold.txt')))
-    manifest = escape(posix(summary.get('manifest_path', 'test_assets/platform_eval_v2_draft/gold_manifest.csv')))
-    results = escape(posix(summary.get('results_dir', 'platform/results')))
+    raw = escape(posix(summary.get('raw_path', 'test_assets/platform_eval_v2_draft/platform_eval_v2_draft/raw.txt')))
+    gold = escape(posix(summary.get('gold_path', 'test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold.txt')))
+    manifest = escape(posix(summary.get('manifest_path', 'test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold_manifest.csv')))
+    results = escape(posix(summary.get('results_dir', 'my_platform/results')))
     python_exe = escape(posix(summary.get('benchmark_python', 'python')))
     toolkit_text = '、'.join(summary.get('available_toolkits', []) or []) or '当前未探测到可用 toolkit'
     return f"""

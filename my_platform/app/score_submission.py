@@ -20,11 +20,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--name', required=True, help='Displayed team or submission name')
     parser.add_argument('--submission-group', default=DEFAULT_SUBMISSION_GROUP, help='Displayed submission group label')
     parser.add_argument('--mode', default='prediction_file_only', choices=['prediction_file_only', 'executable_package'])
-    parser.add_argument('--raw', default='test_assets/platform_eval_v2_draft/raw.txt')
-    parser.add_argument('--gold', default='test_assets/platform_eval_v2_draft/gold.txt')
-    parser.add_argument('--manifest', default='test_assets/platform_eval_v2_draft/gold_manifest.csv')
-    parser.add_argument('--leaderboard', default='platform/results/leaderboard.csv')
-    parser.add_argument('--reports-dir', default='platform/results/reports')
+    parser.add_argument('--raw', default='test_assets/platform_eval_v2_draft/platform_eval_v2_draft/raw.txt')
+    parser.add_argument('--gold', default='test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold.txt')
+    parser.add_argument('--manifest', default='test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold_manifest.csv')
+    parser.add_argument('--leaderboard', default='my_platform/results/leaderboard.csv')
+    parser.add_argument('--reports-dir', default='my_platform/results/reports')
     return parser.parse_args()
 
 

@@ -1,0 +1,92 @@
+{
+  "session_name": "完整评测",
+  "dataset_version": "platform_eval_v2_draft",
+  "scoring_rule_version": "benchmark_v2",
+  "submission_protocol_version": "submission_v1",
+  "submission_count": 15,
+  "success_count": 13,
+  "failure_count": 2,
+  "prediction_mode_count": 14,
+  "executable_mode_count": 1,
+  "results_dir": "E:/同济-大三/中文信息处理/WD-Leaderboard/my_platform/results",
+  "raw_path": "E:/同济-大三/中文信息处理/WD-Leaderboard/test_assets/platform_eval_v2_draft/platform_eval_v2_draft/raw.txt",
+  "gold_path": "E:/同济-大三/中文信息处理/WD-Leaderboard/test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold.txt",
+  "manifest_path": "E:/同济-大三/中文信息处理/WD-Leaderboard/test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold_manifest.csv",
+  "scored_items": [
+    {
+      "name": "2352035_曹劭杰",
+      "mode": "prediction_file_only",
+      "path": "E:\\同济-大三\\中文信息处理\\WD-Leaderboard\\my_platform\\results\\2352035_曹劭杰_pred.txt"
+    },
+    {
+      "name": "BMM 基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bmm.pred.txt"
+    },
+    {
+      "name": "BiLSTM-CRF 基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bilstm_crf.pred.txt"
+    },
+    {
+      "name": "Bigram 贪心消歧",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bigram_greedy.pred.txt"
+    },
+    {
+      "name": "CRF BMES 基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/crf_bmes.pred.txt"
+    },
+    {
+      "name": "FMM 可执行演示",
+      "mode": "executable_package",
+      "path": "test_assets/submission_sample_v1/fmm_demo/output/pred.txt"
+    },
+    {
+      "name": "FMM 基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/fmm.pred.txt"
+    },
+    {
+      "name": "HMM BMES 基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/hmm_bmes.pred.txt"
+    },
+    {
+      "name": "Jieba 工具基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/jieba_toolkit.pred.txt"
+    },
+    {
+      "name": "THULAC 工具基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/thulac_toolkit.pred.txt"
+    },
+    {
+      "name": "双向投票基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bidirectional_voting.pred.txt"
+    },
+    {
+      "name": "感知机 BMES 基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/perceptron_bmes.pred.txt"
+    },
+    {
+      "name": "自分割 Ngram 基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/self_segment_ngram.pred.txt"
+    },
+    {
+      "name": "错误格式演示",
+      "mode": "prediction_file_only",
+      "path": "test_assets/submission_sample_v1/bad_format_demo/output/pred.txt"
+    },
+    {
+      "name": "频次路径基线",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/freq_path.pred.txt"
+    }
+  ]
+}
