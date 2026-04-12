@@ -20,10 +20,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--session-name', default='demo_session')
     parser.add_argument('--prediction-dir', default='')
     parser.add_argument('--executable-dir', default='')
-    parser.add_argument('--raw', default='test_assets/platform_eval_v2_draft/raw.txt')
-    parser.add_argument('--gold', default='test_assets/platform_eval_v2_draft/gold.txt')
-    parser.add_argument('--manifest', default='test_assets/platform_eval_v2_draft/gold_manifest.csv')
-    parser.add_argument('--results-dir', default='platform/results')
+    parser.add_argument('--raw', default='test_assets/platform_eval_v2_draft/platform_eval_v2_draft/raw.txt')
+    parser.add_argument('--gold', default='test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold.txt')
+    parser.add_argument('--manifest', default='test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold_manifest.csv')
+    parser.add_argument('--results-dir', default='my_platform/results')
     parser.add_argument('--timeout-seconds', type=int, default=120)
     return parser.parse_args()
 
@@ -62,7 +62,7 @@ def score_prediction_files(prediction_dir: Path, args: argparse.Namespace, resul
         name = display_name_from_prediction_file(pred_file)
         run_cmd([
             sys.executable,
-            str(ROOT / 'platform' / 'app' / 'score_submission.py'),
+            str(Path(__file__).resolve().parent.parent / 'app' / 'score_submission.py'),
             '--submission', str(pred_file),
             '--name', name,
             '--raw', args.raw,
@@ -81,7 +81,7 @@ def score_executable_dirs(executable_dir: Path, args: argparse.Namespace, result
         name = submission_dir.name
         run_cmd([
             sys.executable,
-            str(ROOT / 'platform' / 'app' / 'score_executable_submission.py'),
+            str(Path(__file__).resolve().parent.parent / 'app' / 'score_executable_submission.py'),
             '--submission-dir', str(submission_dir),
             '--name', name,
             '--raw', args.raw,
@@ -134,7 +134,7 @@ def main() -> None:
     package_meta = Path(args.raw).resolve().parent / 'package_meta.json'
     build_cmd = [
         sys.executable,
-        str(ROOT / 'platform' / 'app' / 'build_demo_page.py'),
+        str(Path(__file__).resolve().parent.parent / 'app' / 'build_demo_page.py'),
         '--leaderboard', str(results_dir / 'leaderboard.csv'),
         '--reports-dir', str(results_dir / 'reports'),
         '--output', str(results_dir / 'index.html'),

@@ -30,6 +30,16 @@ DISPLAY_NAMES = {
     'runtime_seconds': '运行时间(s)',
 }
 
+DATASET_DISPLAY_NAMES = {
+    'NLPCC-Weibo': 'NLPCC微博',
+    'EvaHan-2022': 'EvaHan',
+    'TCM-Ancient-Books': 'TCM古籍',
+    'samechar': '同字符',
+    'high': '高难层',
+    'medium': '中难层',
+    'specialized': '专项层',
+}
+
 METRIC_COLUMNS = [
     'f1',
     'NLPCC-Weibo_f1',
@@ -44,7 +54,7 @@ METRIC_COLUMNS = [
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Run the interactive classroom leaderboard dashboard.')
-    parser.add_argument('--results-dir', default='platform/results')
+    parser.add_argument('--results-dir', default='my_platform/results')
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=8050)
     parser.add_argument('--debug', action='store_true')
@@ -284,9 +294,28 @@ def make_profile_radar(row: pd.Series) -> go.Figure:
     return fig
 
 
-def make_dataset_bar(report: dict) -> go.Figure:
-    by_dataset = report.get('by_dataset', {}) or {}
-    if not by_dataset:
+def make_dataset_bar(row: pd.Series) -> go.Figure:
+    # 从CSV行数据中提取分数据集的F1分数
+    dataset_metrics = {
+        'NLPCC-Weibo_f1': 'NLPCC微博',
+        'EvaHan-2022_f1': 'EvaHan',
+        'TCM-Ancient-Books_f1': 'TCM古籍',
+        'samechar_f1': 'samechar',
+        'high_f1': '高难层',
+        'medium_f1': '中难层',
+        'specialized_f1': '专项层',
+    }
+
+    rows = []
+    for metric, display_name in dataset_metrics.items():
+        value = row.get(metric)
+        if pd.notna(value) and value != '':
+            f1_score = float(value)
+            if f1_score > 0:  # 只显示有值的分数
+                rows.append({'dataset': display_name, 'f1': f1_score})
+
+    if not rows:
+        # 如果没有数据，显示空图表
         fig = go.Figure()
         fig.update_layout(
             margin=dict(l=16, r=16, t=24, b=16),
@@ -298,9 +327,7 @@ def make_dataset_bar(report: dict) -> go.Figure:
             height=240,
         )
         return fig
-    rows = []
-    for dataset, payload in by_dataset.items():
-        rows.append({'dataset': dataset, 'f1': float(payload.get('f1', 0.0))})
+
     df = pd.DataFrame(rows).sort_values('f1', ascending=False)
     fig = px.bar(df, x='dataset', y='f1', color='f1', color_continuous_scale='Blues')
     fig.update_layout(
@@ -706,8 +733,7 @@ def create_app(results_dir: Path) -> Dash:
         idx = min(max(idx, 0), len(frame) - 1)
         row = frame.iloc[idx]
         fig = make_profile_radar(row)
-        report = (reports_map or {}).get(str(row.get('submission_name', '')), {})
-        dataset_bar = make_dataset_bar(report)
+        dataset_bar = make_dataset_bar(row)  # 直接传递行数据而不是报告
         return fig, dataset_bar, make_podium(rows or []), make_rank_bar(rows or [])
 
     return app
