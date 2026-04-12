@@ -143,13 +143,14 @@ def build_kpi_cards(board: pd.DataFrame, summary: dict) -> list[dbc.Col]:
             dbc.Card(
                 dbc.CardBody(
                     [
-                        html.Div(title, className='text-secondary small mb-2'),
-                        html.Div(f'{value}{suffix}', className='display-6 fw-bold'),
+                        html.Div(title, className='text-secondary small mb-1'),
+                        html.Div(f'{value}{suffix}', className='h4 fw-bold mb-0'),
                     ]
                 ),
                 className='shadow-sm border-0 leaderboard-card',
             ),
             md=3,
+            style={'padding': '4px'}
         )
         for title, value, suffix in cards
     ]
@@ -162,7 +163,7 @@ def make_status_figure(board: pd.DataFrame) -> go.Figure:
         counts,
         names='status',
         values='count',
-        hole=0.58,
+        hole=0.6,
         color='status',
         color_discrete_map={
             '成功': '#34d399',
@@ -173,13 +174,21 @@ def make_status_figure(board: pd.DataFrame) -> go.Figure:
             '拒收': '#ef4444',
         },
     )
-    fig.update_traces(textposition='inside', textinfo='percent+label')
+    fig.update_traces(
+        textposition='inside',
+        textinfo='percent+label',
+        textfont_size=11,
+        marker=dict(line=dict(color='rgba(255,255,255,0.1)', width=2))
+    )
     fig.update_layout(
-        margin=dict(l=10, r=10, t=10, b=10),
+        margin=dict(l=8, r=8, t=8, b=8),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font_color='#e6eefc',
         legend_orientation='h',
+        legend_y=-0.05,
+        height=240,
+        showlegend=True,
     )
     return fig
 
@@ -193,17 +202,19 @@ def make_runtime_scatter(board: pd.DataFrame) -> go.Figure:
         color='submission_group',
         hover_name='submission_name',
         size='samechar_f1',
-        size_max=22,
+        size_max=18,
     )
     fig.update_traces(marker=dict(line=dict(width=1, color='rgba(255,255,255,0.35)')))
     fig.update_layout(
-        margin=dict(l=20, r=20, t=30, b=20),
+        margin=dict(l=16, r=16, t=24, b=16),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font_color='#e6eefc',
-        title='运行时间 vs 总体 F1',
-        xaxis_title='运行时间 (s)',
+        title={'text': '运行时间 vs 总体 F1', 'font': {'size': 14}},
+        xaxis_title='运行时间',
         yaxis_title='总体 F1',
+        title_x=0.5,
+        height=280,
     )
     return fig
 
@@ -219,16 +230,18 @@ def make_metric_heatmap(board: pd.DataFrame) -> go.Figure:
             colorscale='Blues',
             zmin=0.0,
             zmax=1.0,
-            text=[[f'{value:.4f}' for value in row] for row in matrix.values],
+            text=[[f'{value:.3f}' for value in row] for row in matrix.values],
             texttemplate='%{text}',
         )
     )
     fig.update_layout(
-        margin=dict(l=20, r=20, t=30, b=20),
+        margin=dict(l=16, r=16, t=24, b=16),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font_color='#e6eefc',
-        title='前 10 名多指标热力图',
+        title={'text': '前 10 名多指标热力图', 'font': {'size': 14}},
+        title_x=0.5,
+        height=320,
     )
     return fig
 
@@ -243,18 +256,30 @@ def make_profile_radar(row: pd.Series) -> go.Figure:
                 theta=theta + theta[:1],
                 fill='toself',
                 name=str(row.get('submission_name', '')),
-                line=dict(color='#4da3ff', width=3),
-                fillcolor='rgba(77,163,255,0.28)',
+                line=dict(color='#4da3ff', width=2.5),
+                fillcolor='rgba(77,163,255,0.25)',
             )
         ]
     )
     fig.update_layout(
-        margin=dict(l=20, r=20, t=30, b=20),
+        margin=dict(l=20, r=20, t=40, b=20),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font_color='#e6eefc',
-        polar=dict(radialaxis=dict(range=[0, 1], showline=False, gridcolor='rgba(152,168,202,0.2)')),
-        title='单提交能力剖面',
+        font_size=11,
+        polar=dict(
+            radialaxis=dict(
+                range=[0, 1],
+                showline=False,
+                gridcolor='rgba(152,168,202,0.2)',
+                tickfont=dict(size=9)
+            ),
+            angularaxis=dict(
+                tickfont=dict(size=10)
+            )
+        ),
+        title=None,
+        height=250,
     )
     return fig
 
@@ -264,11 +289,13 @@ def make_dataset_bar(report: dict) -> go.Figure:
     if not by_dataset:
         fig = go.Figure()
         fig.update_layout(
-            margin=dict(l=20, r=20, t=30, b=20),
+            margin=dict(l=16, r=16, t=24, b=16),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
             font_color='#e6eefc',
-            title='分数据集得分',
+            title={'text': '分数据集得分', 'font': {'size': 14}},
+            title_x=0.5,
+            height=240,
         )
         return fig
     rows = []
@@ -277,15 +304,17 @@ def make_dataset_bar(report: dict) -> go.Figure:
     df = pd.DataFrame(rows).sort_values('f1', ascending=False)
     fig = px.bar(df, x='dataset', y='f1', color='f1', color_continuous_scale='Blues')
     fig.update_layout(
-        margin=dict(l=20, r=20, t=30, b=20),
+        margin=dict(l=16, r=16, t=24, b=16),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font_color='#e6eefc',
-        title='分数据集得分',
+        title={'text': '分数据集得分', 'font': {'size': 14}},
+        title_x=0.5,
         coloraxis_showscale=False,
         xaxis_title='',
         yaxis_title='F1',
         yaxis=dict(range=[0, 1]),
+        height=240,
     )
     return fig
 
@@ -295,11 +324,13 @@ def make_rank_bar(rows: list[dict]) -> go.Figure:
     if frame.empty:
         fig = go.Figure()
         fig.update_layout(
-            margin=dict(l=20, r=20, t=30, b=20),
+            margin=dict(l=16, r=16, t=24, b=16),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
             font_color='#e6eefc',
-            title='当前 Top 10 排名条形榜',
+            title={'text': '当前 Top 10 排名条形榜', 'font': {'size': 14}},
+            title_x=0.5,
+            height=280,
         )
         return fig
     top = frame.head(10).copy()
@@ -317,20 +348,25 @@ def make_rank_bar(rows: list[dict]) -> go.Figure:
             y=top['submission_name'],
             orientation='h',
             marker=dict(color=colors),
-            text=[f'{float(v):.4f}' for v in top['f1']],
-            textposition='outside',
+            text=[f'{float(v):.3f}' for v in top['f1']],
+            textposition='inside',
+            insidetextanchor='end',
+            insidetextfont=dict(color='white', size=11),
             hovertemplate='%{y}<br>总体F1=%{x:.4f}<extra></extra>',
         )
     )
     fig.update_layout(
-        margin=dict(l=20, r=30, t=30, b=20),
+        margin=dict(l=16, r=60, t=24, b=16),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font_color='#e6eefc',
-        title='当前 Top 10 排名条形榜',
+        title={'text': '当前 Top 10 排名条形榜', 'font': {'size': 14}},
+        title_x=0.5,
         xaxis_title='总体 F1',
         yaxis_title='',
         transition_duration=500,
+        height=280,
+        bargap=0.3,
     )
     return fig
 
@@ -377,7 +413,19 @@ def create_app(results_dir: Path) -> Dash:
     leaderboard_path = results_dir / 'leaderboard.csv'
     reports_dir = results_dir / 'reports'
     session_summary = load_json(results_dir / 'session_summary.json')
-    package_meta = load_json(Path(session_summary.get('package_meta', ''))) if session_summary.get('package_meta') else load_json(results_dir.parent / 'test_assets' / 'platform_eval_v2_draft' / 'package_meta.json')
+
+    # 处理package_meta路径 - 支持跨平台
+    package_meta_path = None
+    if session_summary.get('package_meta'):
+        original_path = Path(session_summary.get('package_meta', ''))
+        if original_path.exists():
+            package_meta_path = original_path
+
+    # 如果原路径不存在，使用相对路径作为备选
+    if not package_meta_path:
+        package_meta_path = results_dir.parent / 'test_assets' / 'platform_eval_v2_draft' / 'package_meta.json'
+
+    package_meta = load_json(package_meta_path) if package_meta_path.exists() else {}
     reports = load_reports(reports_dir)
     manifest_df = load_manifest(session_summary)
     common_failures = collect_common_failures(reports, manifest_df)
@@ -400,38 +448,49 @@ def create_app(results_dir: Path) -> Dash:
                     dbc.Card(
                         dbc.CardBody(
                             [
-                                html.Div('中文分词课堂平台', className='display-5 fw-bold'),
-                                html.Div(
-                                    f"数据版本：{session_summary.get('dataset_version', '未知')}｜评分规则：{session_summary.get('scoring_rule_version', '未知')}｜共 {len(board)} 条提交",
-                                    className='text-secondary mt-2',
-                                ),
+                                html.Div('中文分词竞赛平台', className='h3 fw-bold mb-2'),
+                                html.Div(className='d-flex justify-content-between align-items-center flex-wrap', children=[
+                                    html.Div(
+                                        f"数据集 {session_summary.get('dataset_version', '未知')} • 评分规则 {session_summary.get('scoring_rule_version', '未知')}",
+                                        className='text-secondary small me-3',
+                                    ),
+                                    html.Div(className='d-flex gap-3', children=[
+                                        html.Div([
+                                            html.Span(f"{len(board)} ", className='fw-bold text-info'),
+                                            html.Span('提交', className='text-secondary small')
+                                        ]),
+                                        html.Div([
+                                            html.Span(f"{int((board['status'] == '成功').sum())} ", className='fw-bold text-success'),
+                                            html.Span('成功', className='text-secondary small')
+                                        ]),
+                                        html.Div([
+                                            html.Span(f"{float(board[board['status'] == '成功']['f1'].max()) if not board[board['status'] == '成功'].empty else 0:.3f} ", className='fw-bold text-warning'),
+                                            html.Span('最佳', className='text-secondary small')
+                                        ]),
+                                        html.Div([
+                                            html.Span(f"{float(board[board['status'] == '成功']['runtime_seconds'].min()) if not board[board['status'] == '成功'].empty else 0:.2f}s ", className='fw-bold'),
+                                            html.Span('最快', className='text-secondary small')
+                                        ]),
+                                    ])
+                                ])
                             ]
                         ),
-                        className='shadow border-0 mt-4 mb-4 leaderboard-hero',
+                        className='shadow border-0 mt-3 mb-3 leaderboard-hero',
                     )
                 )
             ),
-            dbc.Row(build_kpi_cards(board, session_summary), className='g-3 mb-4'),
             dbc.Row(
                 dbc.Col(
                     dbc.Card(
                         dbc.CardBody(
                             [
-                                html.Div('当前领奖台', className='h4 mb-3'),
-                                html.Div('根据当前筛选结果实时生成前三名展示，并附带动态柱体与高亮样式。', className='text-secondary mb-2'),
+                                html.Div('🏆 实时领奖台', className='h6 mb-2 fw-bold'),
                                 html.Div(id='podium-section', className='podium-grid'),
                             ]
                         ),
-                        className='shadow-sm border-0 mb-4 podium-shell',
-                    )
-                )
-            ),
-            dbc.Row(
-                [
-                    dbc.Col(dbc.Card(dbc.CardBody(dcc.Graph(id='status-fig', figure=make_status_figure(board))), className='shadow-sm border-0 h-100'), md=4),
-                    dbc.Col(dbc.Card(dbc.CardBody(dcc.Graph(id='runtime-fig', figure=make_runtime_scatter(board))), className='shadow-sm border-0 h-100'), md=8),
-                ],
-                className='g-3 mb-4',
+                        className='shadow-sm border-0 podium-shell',
+                    ),
+                ),
             ),
             dbc.Row(
                 [
@@ -439,10 +498,11 @@ def create_app(results_dir: Path) -> Dash:
                         dbc.Card(
                             dbc.CardBody(
                                 [
-                                    dcc.Graph(id='rank-bar'),
+                                    html.Div('📊 多指标热力图', className='h6 mb-2 fw-bold'),
+                                    dcc.Graph(id='heatmap-fig', figure=make_metric_heatmap(board), style={'height': '280px'}),
                                 ]
                             ),
-                            className='shadow-sm border-0 h-100',
+                            className='shadow-sm border-0',
                         ),
                         lg=6,
                     ),
@@ -450,92 +510,61 @@ def create_app(results_dir: Path) -> Dash:
                         dbc.Card(
                             dbc.CardBody(
                                 [
-                                    html.H5('选中提交的分数据集表现', className='mb-3'),
-                                    dcc.Graph(id='dataset-bar'),
+                                    html.Div('🎯 选中提交分析', className='h6 mb-2 fw-bold'),
+                                    html.Div(className='row g-2', children=[
+                                        dbc.Col([
+                                            dcc.Graph(id='dataset-bar', style={'height': '250px'})
+                                        ], width=6),
+                                        dbc.Col([
+                                            dcc.Graph(id='profile-radar', style={'height': '250px'})
+                                        ], width=6),
+                                    ])
                                 ]
                             ),
-                            className='shadow-sm border-0 h-100',
+                            className='shadow-sm border-0',
                         ),
-                        lg=5,
-                    ),
-                    dbc.Col(
-                        dbc.Card(
-                            dbc.CardBody(
-                                [
-                                    html.H5('选中提交的错例样本', className='mb-3'),
-                                    dash_table.DataTable(
-                                        id='selected-wrong-cases',
-                                        columns=[
-                                            {'name': '行号', 'id': 'line_no'},
-                                            {'name': '原句', 'id': 'raw_text'},
-                                            {'name': '标准切分', 'id': 'gold'},
-                                            {'name': '预测结果', 'id': 'pred'},
-                                        ],
-                                        data=[],
-                                        page_size=6,
-                                        style_table={'overflowX': 'auto'},
-                                        style_header={'backgroundColor': '#112240', 'color': '#e6eefc', 'fontWeight': 'bold'},
-                                        style_cell={'backgroundColor': '#0f172a', 'color': '#dbe7ff', 'border': '1px solid rgba(93,126,182,0.18)', 'textAlign': 'left', 'whiteSpace': 'normal'},
-                                    ),
-                                ]
-                            ),
-                            className='shadow-sm border-0 h-100',
-                        ),
-                        lg=7,
+                        lg=6,
                     ),
                 ],
-                className='g-3 mb-4',
+                className='g-3 mb-3',
             ),
             dbc.Row(
                 [
-                    dbc.Col(dbc.Card(dbc.CardBody(dcc.Graph(id='heatmap-fig', figure=make_metric_heatmap(board))), className='shadow-sm border-0 h-100'), lg=8),
                     dbc.Col(
                         dbc.Card(
                             dbc.CardBody(
                                 [
-                                    html.H5('筛选与排序', className='mb-3'),
-                                    dbc.Label('搜索提交名'),
-                                    dbc.Input(id='search-input', placeholder='输入提交名、分组或说明'),
-                                    dbc.Label('提交分组', className='mt-3'),
-                                    dcc.Dropdown(
-                                        id='group-filter',
-                                        options=[{'label': '全部', 'value': 'all'}] + [{'label': value, 'value': value} for value in sorted(board['submission_group'].dropna().unique().tolist())],
-                                        value='all',
-                                        clearable=False,
-                                    ),
-                                    dbc.Label('提交模式', className='mt-3'),
-                                    dcc.Dropdown(
-                                        id='mode-filter',
-                                        options=[
-                                            {'label': '全部', 'value': 'all'},
-                                            {'label': '预测文件', 'value': 'prediction_file_only'},
-                                            {'label': '可执行包', 'value': 'executable_package'},
-                                        ],
-                                        value='all',
-                                        clearable=False,
-                                    ),
-                                    dbc.Label('提交状态', className='mt-3'),
-                                    dcc.Dropdown(
-                                        id='status-filter',
-                                        options=[{'label': '全部', 'value': 'all'}] + [{'label': value, 'value': value} for value in sorted(board['status'].dropna().unique().tolist())],
-                                        value='all',
-                                        clearable=False,
-                                    ),
-                                    dbc.Label('排序指标', className='mt-3'),
-                                    dcc.Dropdown(
-                                        id='sort-key',
-                                        options=[{'label': DISPLAY_NAMES.get(col, col), 'value': col} for col in ['f1', 'NLPCC-Weibo_f1', 'EvaHan-2022_f1', 'TCM-Ancient-Books_f1', 'samechar_f1', 'high_f1', 'specialized_f1', 'runtime_seconds']],
-                                        value='f1',
-                                        clearable=False,
-                                    ),
+                                    html.Div('📈 排名趋势', className='h6 mb-2 fw-bold'),
+                                    dcc.Graph(id='rank-bar', style={'height': '320px'}),
                                 ]
                             ),
-                            className='shadow-sm border-0 h-100',
+                            className='shadow-sm border-0',
+                        ),
+                        lg=8,
+                    ),
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                    html.Div('🔍 筛选', className='h6 mb-2 fw-bold'),
+                                    dbc.Label('搜索', className='small mb-1'),
+                                    dbc.Input(id='search-input', placeholder='提交名、分组', size='sm', className='mb-2'),
+                                    dbc.Label('分组', className='small mb-1'),
+                                    dcc.Dropdown(id='group-filter', options=[{'label': '全部', 'value': 'all'}] + [{'label': value, 'value': value} for value in sorted(board['submission_group'].dropna().unique().tolist())], value='all', clearable=False, className='mb-2'),
+                                    dbc.Label('模式', className='small mb-1'),
+                                    dcc.Dropdown(id='mode-filter', options=[{'label': '全部', 'value': 'all'}, {'label': '预测文件', 'value': 'prediction_file_only'}, {'label': '可执行包', 'value': 'executable_package'}], value='all', clearable=False, className='mb-2'),
+                                    dbc.Label('状态', className='small mb-1'),
+                                    dcc.Dropdown(id='status-filter', options=[{'label': '全部', 'value': 'all'}] + [{'label': value, 'value': value} for value in sorted(board['status'].dropna().unique().tolist())], value='all', clearable=False, className='mb-2'),
+                                    dbc.Label('排序', className='small mb-1'),
+                                    dcc.Dropdown(id='sort-key', options=[{'label': DISPLAY_NAMES.get(col, col), 'value': col} for col in ['f1', 'NLPCC-Weibo_f1', 'EvaHan-2022_f1', 'TCM-Ancient-Books_f1', 'samechar_f1', 'high_f1', 'specialized_f1', 'runtime_seconds']], value='f1', clearable=False),
+                                ]
+                            ),
+                            className='shadow-sm border-0',
                         ),
                         lg=4,
                     ),
                 ],
-                className='g-3 mb-4',
+                className='g-3 mb-3',
             ),
             dbc.Row(
                 [
@@ -543,7 +572,7 @@ def create_app(results_dir: Path) -> Dash:
                         dbc.Card(
                             dbc.CardBody(
                                 [
-                                    html.H5('排行榜', className='mb-3'),
+                                    html.Div('🏆 完整排行榜', className='h6 mb-2 fw-bold'),
                                     dash_table.DataTable(
                                         id='leaderboard-table',
                                         columns=[
@@ -551,31 +580,55 @@ def create_app(results_dir: Path) -> Dash:
                                             {'name': '提交名', 'id': 'submission_name'},
                                             {'name': '分组', 'id': 'submission_group'},
                                             {'name': '状态', 'id': 'status'},
-                                            {'name': '模式', 'id': 'mode_label'},
-                                            {'name': '总体F1', 'id': 'f1', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': 'NLPCC', 'id': 'NLPCC-Weibo_f1', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': 'EvaHan', 'id': 'EvaHan-2022_f1', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': 'TCM', 'id': 'TCM-Ancient-Books_f1', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': 'samechar', 'id': 'samechar_f1', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': '高难层', 'id': 'high_f1', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': '专项层', 'id': 'specialized_f1', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': '运行时间', 'id': 'runtime_seconds', 'type': 'numeric', 'format': {'specifier': '.4f'}},
-                                            {'name': '说明', 'id': 'message'},
+                                            {'name': '总体F1', 'id': 'f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
+                                            {'name': 'NLPCC', 'id': 'NLPCC-Weibo_f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
+                                            {'name': 'EvaHan', 'id': 'EvaHan-2022_f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
+                                            {'name': 'TCM', 'id': 'TCM-Ancient-Books_f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
+                                            {'name': '时间', 'id': 'runtime_seconds', 'type': 'numeric', 'format': {'specifier': '.3f'}},
                                         ],
                                         data=board.to_dict('records'),
                                         sort_action='native',
                                         filter_action='none',
-                                        page_size=12,
+                                        page_size=20,
                                         row_selectable='single',
                                         selected_rows=[0] if not board.empty else [],
-                                        style_as_list_view=True,
                                         style_table={'overflowX': 'auto'},
                                         style_header={'backgroundColor': '#112240', 'color': '#e6eefc', 'fontWeight': 'bold'},
-                                        style_cell={'backgroundColor': '#0f172a', 'color': '#dbe7ff', 'border': '1px solid rgba(93,126,182,0.18)', 'textAlign': 'left', 'minWidth': '90px', 'maxWidth': '280px', 'whiteSpace': 'normal'},
+                                        style_cell={'backgroundColor': '#0f172a', 'color': '#dbe7ff', 'border': '1px solid rgba(93,126,182,0.18)', 'textAlign': 'left', 'minWidth': '60px', 'maxWidth': '100px', 'whiteSpace': 'normal', 'fontSize': '0.8rem'},
                                         style_data_conditional=[
                                             {'if': {'filter_query': '{status} = 成功'}, 'backgroundColor': '#0f2e2a'},
                                             {'if': {'filter_query': '{status} contains 错误 || {status} = 拒收 || {status} = 超时'}, 'backgroundColor': '#3a1e2b'},
                                         ],
+                                    ),
+                                ]
+                            ),
+                            className='shadow-sm border-0',
+                        ),
+                    ),
+                ],
+                className='g-3 mb-3',
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                    html.Div('💡 共性错例', className='h6 mb-2 fw-bold'),
+                                    dash_table.DataTable(
+                                        id='common-failure-table',
+                                        columns=[
+                                            {'name': '行号', 'id': 'line_no'},
+                                            {'name': '数据集', 'id': 'dataset'},
+                                            {'name': '原句', 'id': 'raw_text'},
+                                            {'name': '标准', 'id': 'gold'},
+                                            {'name': '次数', 'id': 'count'},
+                                        ],
+                                        data=common_failures.to_dict('records'),
+                                        page_size=6,
+                                        style_table={'overflowX': 'auto'},
+                                        style_header={'backgroundColor': '#112240', 'color': '#e6eefc', 'fontWeight': 'bold'},
+                                        style_cell={'backgroundColor': '#0f172a', 'color': '#dbe7ff', 'border': '1px solid rgba(93,126,182,0.18)', 'textAlign': 'left', 'whiteSpace': 'normal', 'fontSize': '0.75rem'},
                                     ),
                                 ]
                             ),
@@ -587,67 +640,18 @@ def create_app(results_dir: Path) -> Dash:
                         dbc.Card(
                             dbc.CardBody(
                                 [
-                                    html.H5('提交详情', className='mb-3'),
-                                    dcc.Graph(id='profile-radar'),
-                                    html.Div(id='detail-meta', className='text-secondary small mt-2'),
-                                ]
-                            ),
-                            className='shadow-sm border-0 h-100',
-                        ),
-                        lg=4,
-                    ),
-                ],
-                className='g-3 mb-4',
-            ),
-            dbc.Row(
-                [
-                    dbc.Col(
-                        dbc.Card(
-                            dbc.CardBody(
-                                [
-                                    html.H5('共性错例', className='mb-3'),
-                                    dash_table.DataTable(
-                                        id='common-failure-table',
-                                        columns=[
-                                            {'name': '行号', 'id': 'line_no'},
-                                            {'name': '数据桶', 'id': 'dataset'},
-                                            {'name': '样本编号', 'id': 'sample_id'},
-                                            {'name': '原句', 'id': 'raw_text'},
-                                            {'name': '标准切分', 'id': 'gold'},
-                                            {'name': '失败次数', 'id': 'count'},
-                                        ],
-                                        data=common_failures.to_dict('records'),
-                                        page_size=8,
-                                        style_table={'overflowX': 'auto'},
-                                        style_header={'backgroundColor': '#112240', 'color': '#e6eefc', 'fontWeight': 'bold'},
-                                        style_cell={'backgroundColor': '#0f172a', 'color': '#dbe7ff', 'border': '1px solid rgba(93,126,182,0.18)', 'textAlign': 'left', 'whiteSpace': 'normal'},
-                                    ),
+                                    html.Div('📦 数据包', className='h6 mb-2 fw-bold'),
+                                    html.Div(f"📋 {package_meta.get('package_name', '未知')}", className='mb-1 small'),
+                                    html.Div(f"📝 {package_meta.get('line_count', 0)} 句", className='mb-1 small'),
+                                    html.Div(f"⚙️ 启动: python app/leaderboard.py", className='text-secondary small mt-2'),
                                 ]
                             ),
                             className='shadow-sm border-0',
                         ),
-                        lg=7,
-                    ),
-                    dbc.Col(
-                        dbc.Card(
-                            dbc.CardBody(
-                                [
-                                    html.H5('数据包信息', className='mb-3'),
-                                    html.Div(f"评测包：{package_meta.get('package_name', '未知')}", className='mb-2'),
-                                    html.Div(f"句数：{package_meta.get('line_count', 0)}", className='mb-2'),
-                                    html.Div(f"难度桶：{package_meta.get('difficulty_buckets', {})}", className='mb-2'),
-                                    html.Div(f"review flags：{package_meta.get('review_flag_counts', {})}", className='mb-2'),
-                                    html.Hr(),
-                                    html.Div('启动方式', className='text-secondary small mb-2'),
-                                    html.Pre(f'python app/leaderboard.py\n# 或\npython platform/app/dashboard.py', style={'whiteSpace': 'pre-wrap'}),
-                                ]
-                            ),
-                            className='shadow-sm border-0 h-100',
-                        ),
-                        lg=5,
+                        lg=4,
                     ),
                 ],
-                className='g-3 mb-4',
+                className='g-3 mb-3',
             ),
         ],
         fluid=True,
@@ -687,9 +691,7 @@ def create_app(results_dir: Path) -> Dash:
 
     @app.callback(
         Output('profile-radar', 'figure'),
-        Output('detail-meta', 'children'),
         Output('dataset-bar', 'figure'),
-        Output('selected-wrong-cases', 'data'),
         Output('podium-section', 'children'),
         Output('rank-bar', 'figure'),
         Input('leaderboard-table', 'derived_virtual_data'),
@@ -699,16 +701,14 @@ def create_app(results_dir: Path) -> Dash:
     def update_detail(rows: list[dict] | None, selected_rows: list[int] | None, reports_map: dict):
         frame = pd.DataFrame(rows or [])
         if frame.empty:
-            return go.Figure(), '暂无可展示的提交。', go.Figure(), [], make_podium([]), make_rank_bar([])
+            return go.Figure(), go.Figure(), make_podium([]), make_rank_bar([])
         idx = selected_rows[0] if selected_rows else 0
         idx = min(max(idx, 0), len(frame) - 1)
         row = frame.iloc[idx]
         fig = make_profile_radar(row)
-        meta = f"提交名：{row.get('submission_name', '')}｜状态：{row.get('status', '')}｜运行时间：{row.get('runtime_seconds', 0):.4f}s｜说明：{row.get('message', '') or '无'}"
         report = (reports_map or {}).get(str(row.get('submission_name', '')), {})
         dataset_bar = make_dataset_bar(report)
-        wrong_cases = (report.get('wrong_cases', []) or [])[:12]
-        return fig, meta, dataset_bar, wrong_cases, make_podium(rows or []), make_rank_bar(rows or [])
+        return fig, dataset_bar, make_podium(rows or []), make_rank_bar(rows or [])
 
     return app
 
