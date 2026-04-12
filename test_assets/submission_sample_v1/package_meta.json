@@ -1,0 +1,12 @@
+{
+  "name": "submission_sample_v1",
+  "source": "test_assets/platform_eval_v2_draft",
+  "counts": {
+    "NLPCC-Weibo": 18,
+    "EvaHan-2022": 6,
+    "TCM-Ancient-Books": 3,
+    "samechar": 3
+  },
+  "total_sentences": 30,
+  "selection_rule": "按数据集固定比例抽样，并在各数据集内按难度降序后均匀抽取。"
+}

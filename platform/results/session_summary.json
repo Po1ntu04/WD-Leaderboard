@@ -1,0 +1,37 @@
+{
+  "session_name": "platform_demo_v3",
+  "dataset_version": "platform_eval_v2_draft",
+  "standard_version": "mainline_modern_ancient_v2",
+  "scoring_rule_version": "benchmark_v2",
+  "submission_protocol_version": "submission_v1",
+  "submission_count": 14,
+  "success_count": 12,
+  "failure_count": 2,
+  "prediction_mode_count": 13,
+  "executable_mode_count": 1,
+  "package_meta": "/home/yu/projects/NLP/test_assets/platform_eval_v2_draft/package_meta.json",
+  "leaderboard_file": "/home/yu/projects/NLP/platform/results/leaderboard.csv",
+  "results_dir": "/home/yu/projects/NLP/platform/results",
+  "raw_path": "/home/yu/projects/NLP/test_assets/platform_eval_v2_draft/raw.txt",
+  "gold_path": "/home/yu/projects/NLP/test_assets/platform_eval_v2_draft/gold.txt",
+  "manifest_path": "/home/yu/projects/NLP/test_assets/platform_eval_v2_draft/gold_manifest.csv",
+  "benchmark_python": "/home/yu/miniconda3/envs/nlp/bin/python",
+  "available_toolkits": [
+    "jieba_toolkit",
+    "thulac_toolkit"
+  ],
+  "demo_models": [
+    "fmm",
+    "bmm",
+    "bidirectional_vote",
+    "freq_path",
+    "bigram_greedy",
+    "selfseg_ngram",
+    "hmm_bmes",
+    "perceptron_bmes",
+    "crf_bmes",
+    "bilstm_crf",
+    "jieba_toolkit",
+    "thulac_toolkit"
+  ]
+}

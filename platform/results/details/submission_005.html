@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang='zh-CN'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>FMM 可执行演示</title>
+  <style>
+    body { margin: 0; padding: 24px; background: #f7f3ed; color: #1f1b18; font-family: 'Source Han Sans SC','Noto Sans SC','Microsoft YaHei',sans-serif; }
+    main { max-width: 1200px; margin: 0 auto; }
+    .panel { background: rgba(255,252,247,.96); border: 1px solid #ddd0be; border-radius: 18px; box-shadow: 0 12px 28px rgba(88,58,28,.08); padding: 18px; margin-top: 16px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #ddd0be; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+    th { background: #ead8c5; }
+    .table-wrap { overflow: auto; max-height: 560px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class='panel'>
+      <h1 style='margin:0 0 10px'>FMM 可执行演示</h1>
+      <p><a href='../index.html'>返回首页</a></p>
+      <p>状态：<strong>运行错误</strong>；总体 F1：0.0000；运行时间：0.0000 s；错句数：0</p>
+      <p><code>/home/yu/projects/NLP/platform/runtime/FMM/output/pred.txt</code></p>
+    </div>
+    <div class='panel'>
+      <h2 style='margin:0'>错例样本</h2>
+      <div class='table-wrap'>
+        <table>
+          <thead><tr><th>行号</th><th>原句</th><th>标准</th><th>预测</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

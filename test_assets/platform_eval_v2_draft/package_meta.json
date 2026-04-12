@@ -1,0 +1,29 @@
+{
+  "package_name": "platform_eval_v2_draft",
+  "standard_version": "mainline_modern_ancient_v2",
+  "line_count": 230,
+  "targets": {
+    "NLPCC-Weibo": 138,
+    "EvaHan-2022": 46,
+    "TCM-Ancient-Books": 23,
+    "samechar": 23
+  },
+  "datasets": {
+    "NLPCC-Weibo": 138,
+    "EvaHan-2022": 46,
+    "TCM-Ancient-Books": 23,
+    "samechar": 23
+  },
+  "difficulty_buckets": {
+    "medium": 138,
+    "high": 69,
+    "specialized": 23
+  },
+  "review_flag_counts": {
+    "mixed_script": 32,
+    "very_long": 27,
+    "annotation_like": 1
+  },
+  "evahan_conservative_simplification": true,
+  "evahan_changed_rows": 45
+}

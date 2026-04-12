@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang='zh-CN'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>中文分词课堂平台</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --paper: rgba(15, 23, 42, .92);
+      --paper-soft: rgba(20, 31, 56, .92);
+      --ink: #e6eefc;
+      --muted: #98a8ca;
+      --line: rgba(93, 126, 182, .28);
+      --accent: #4da3ff;
+      --accent-2: #7dd3fc;
+      --soft: rgba(24, 38, 68, .95);
+      --ok: #34d399;
+      --bad: #fb7185;
+      --warn: #fbbf24;
+      --shadow: 0 20px 50px rgba(2, 8, 23, .35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: 'Source Han Sans SC','Noto Sans SC','Microsoft YaHei',sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(77,163,255,.18), transparent 22%),
+        radial-gradient(circle at 82% 0%, rgba(125,211,252,.13), transparent 22%),
+        linear-gradient(180deg, #09111f 0%, #0f172a 100%);
+    }
+    main { max-width: 1560px; margin: 0 auto; padding: 28px 20px 44px; }
+    .hero, .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
+    .hero { padding: 26px; }
+    .hero-top { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+    h1 { margin: 0; font-size: 34px; letter-spacing: 1px; }
+    h2 { margin: 0; font-size: 22px; }
+    .lead { margin: 10px 0 0; color: var(--muted); max-width: 920px; line-height: 1.8; }
+    .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pill { background: rgba(20,31,56,.82); border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; font-size: 13px; color: var(--muted); white-space: nowrap; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 18px; }
+    .stat { background: linear-gradient(180deg, rgba(21,32,58,.96), rgba(14,23,41,.92)); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+    .stat-value { font-size: 30px; font-weight: 800; color: var(--accent-2); }
+    .stat-label { margin-top: 6px; color: var(--muted); font-size: 13px; }
+    .panel { margin-top: 18px; padding: 18px; }
+    .panel-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .sub, .hint { color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .split-grid { display: grid; grid-template-columns: 1.35fr .9fr; gap: 18px; }
+    .double-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 14px; }
+    .card, .mini-card, .spot-card { background: linear-gradient(180deg, rgba(20,31,56,.94), rgba(14,23,41,.94)); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+    .card-title { font-weight: 700; margin-bottom: 8px; }
+    .mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+    .meta { color: var(--muted); font-size: 12px; }
+    .name { margin-top: 8px; font-weight: 700; font-size: 16px; }
+    .score { margin-top: 6px; color: var(--accent); font-weight: 700; }
+    .spot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+    .spot-score { margin-top: 8px; font-size: 24px; font-weight: 800; color: var(--accent-2); }
+    .bar { margin-top: 10px; height: 8px; border-radius: 999px; background: rgba(77,163,255,.12); overflow: hidden; }
+    .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { color: var(--muted); font-size: 12px; }
+    .field input, .field select { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: rgba(9,17,31,.88); color: var(--ink); }
+    pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: Consolas, monospace; font-size: 12px; line-height: 1.6; color: #dbe7ff; }
+    code { font-family: Consolas, monospace; font-size: 12px; color: #dbe7ff; }
+    .table-wrap { overflow: auto; border-radius: 16px; border: 1px solid var(--line); background: rgba(9,17,31,.68); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 14px; table-layout: fixed; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.65; overflow-wrap: anywhere; }
+    th { background: var(--soft); position: sticky; top: 0; z-index: 1; }
+    tbody tr:hover { background: rgba(77,163,255,.08); }
+    tbody tr:nth-child(even) { background: rgba(20,31,56,.36); }
+    .compact-table { min-width: 780px; }
+    .leaderboard-table { min-width: 1360px; }
+    .leaderboard-table td:nth-child(2) a { font-weight: 700; }
+    a { color: var(--accent); text-decoration: none; }
+    .ok { color: var(--ok); font-weight: 700; }
+    .bad { color: var(--bad); font-weight: 700; }
+    .warn { color: var(--warn); font-weight: 700; }
+    .muted { color: var(--muted); }
+    .reason { max-width: 320px; color: #dbe7ff; }
+    .src { white-space: nowrap; color: var(--muted); }
+    .empty { color: var(--muted); margin: 0; }
+    @media (max-width: 1120px) {
+      .split-grid, .double-grid { grid-template-columns: 1fr; }
+      .leaderboard-table { min-width: 1100px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class='hero'>
+      <div class='hero-top'>
+        <div>
+          <h1>中文分词课堂平台</h1>
+          <p class='lead'>此页面用于课堂线下评测与演示：统一展示分词算法的总体 F1、分桶得分、运行时间、提交状态和课堂错例。当前默认课堂评测包已切换到 <code>test_assets/platform_eval_v2_draft</code>，四个主线数据域为 <code>NLPCC-Weibo</code>、<code>EvaHan-2022</code>、<code>TCM-Ancient-Books</code> 与 <code>samechar</code>。</p>
+        </div>
+        <div class='pill-row'>
+          <div class='pill'>会话：未命名会话</div>
+          <div class='pill'>数据版本：未知</div>
+          <div class='pill'>标准版本：未知</div>
+          <div class='pill'>评分规则：未知</div>
+          <div class='pill'>提交协议：未知</div>
+          <div class='pill'>模式覆盖：预测文件 0 | 可执行包 0</div>
+        </div>
+      </div>
+      <div class='stats-grid'>
+        <div class='stat'><div class='stat-value'>14</div><div class='stat-label'>提交总数</div></div>
+        <div class='stat'><div class='stat-value'>12</div><div class='stat-label'>成功提交</div></div>
+        <div class='stat'><div class='stat-value'>0</div><div class='stat-label'>失败或异常</div></div>
+        <div class='stat'><div class='stat-value'>0.7955</div><div class='stat-label'>当前最高 F1</div></div>
+        <div class='stat'><div class='stat-value'>0</div><div class='stat-label'>评测句数</div></div>
+      </div>
+      <div class='pill-row' style='margin-top:12px'><div class='pill'>自实现基线：10</div><div class='pill'>toolkit基线：2</div><div class='pill'>演示失败：1</div><div class='pill'>可执行演示：1</div></div>
+    </section>
+
+    
+<section class='panel'>
+  <div class='panel-head'>
+    <h2>教师会话台</h2>
+    <div class='sub'>统一固定课堂常用命令、路径和提交模式。</div>
+  </div>
+  <div class='card-grid'>
+    <div class='card'>
+      <div class='card-title'>1. 单个 pred.txt 评测</div>
+      <pre>python platform/app/score_submission.py --submission path/to/pred.txt --name 学生提交名 --submission-group 课堂提交 --raw test_assets/platform_eval_v2_draft/raw.txt --gold test_assets/platform_eval_v2_draft/gold.txt --manifest test_assets/platform_eval_v2_draft/gold_manifest.csv</pre>
+      <p class='hint'>若写运行时间，请放在 <code>pred.txt</code> 最后一行：<code># runtime_seconds: 0.183</code></p>
+    </div>
+    <div class='card'>
+      <div class='card-title'>2. 可执行包评测</div>
+      <pre>python platform/app/score_executable_submission.py --submission-dir path/to/submission_dir --name 学生提交名 --submission-group 课堂提交 --raw test_assets/platform_eval_v2_draft/raw.txt --gold test_assets/platform_eval_v2_draft/gold.txt --manifest test_assets/platform_eval_v2_draft/gold_manifest.csv</pre>
+    </div>
+    <div class='card'>
+      <div class='card-title'>3. 批量会话运行</div>
+      <pre>python platform/app/run_session.py --session-name class_session --prediction-dir path/to/predictions --executable-dir path/to/submissions --raw test_assets/platform_eval_v2_draft/raw.txt --gold test_assets/platform_eval_v2_draft/gold.txt --manifest test_assets/platform_eval_v2_draft/gold_manifest.csv</pre>
+    </div>
+    <div class='card'>
+      <div class='card-title'>4. 本地展示服务</div>
+      <pre>python -m http.server 8765 --directory platform/results</pre>
+      <p class='hint'>浏览器地址：<code>http://127.0.0.1:8765/index.html</code></p>
+    </div>
+  </div>
+  <div class='mini-grid'>
+    <div class='mini-card'><strong>Benchmark Python</strong><br /><code>python</code></div>
+    <div class='mini-card'><strong>已探测 toolkit</strong><br /><span class='muted'>当前未探测到可用 toolkit</span></div>
+    <div class='mini-card'><strong>结果目录</strong><br /><code>platform/results</code></div>
+  </div>
+</section>
+
+
+    <section class='panel split-grid'>
+      <div>
+        <div class='panel-head'><h2>表现总览</h2><div class='sub'>列出课堂最常需要即时解读的最佳结果。</div></div>
+        <div class='mini-grid'><div class='mini-card'><div class='meta'>总榜最佳</div><div class='name'>频次路径基线</div><div class='score'>F1 0.7955</div><div class='meta'>时间 0.0000 s</div></div><div class='mini-card'><div class='meta'>最快成功提交</div><div class='name'>频次路径基线</div><div class='score'>F1 0.7955</div><div class='meta'>时间 0.0000 s</div></div><div class='mini-card'><div class='meta'>NLPCC 最佳</div><div class='name'>频次路径基线</div><div class='score'>F1 0.8532</div><div class='meta'>时间 0.0000 s</div></div><div class='mini-card'><div class='meta'>EvaHan 最佳</div><div class='name'>感知机 BMES 基线</div><div class='score'>F1 0.8186</div><div class='meta'>时间 0.0000 s</div></div><div class='mini-card'><div class='meta'>TCM 古籍最佳</div><div class='name'>Jieba 工具基线</div><div class='score'>F1 0.9928</div><div class='meta'>时间 0.0000 s</div></div><div class='mini-card'><div class='meta'>samechar 最佳</div><div class='name'>BiLSTM-CRF 基线</div><div class='score'>F1 0.7831</div><div class='meta'>时间 0.0000 s</div></div><div class='mini-card'><div class='meta'>高难层最佳</div><div class='name'>感知机 BMES 基线</div><div class='score'>F1 0.7880</div><div class='meta'>时间 0.0000 s</div></div><div class='mini-card'><div class='meta'>专项层最佳</div><div class='name'>BiLSTM-CRF 基线</div><div class='score'>F1 0.7831</div><div class='meta'>时间 0.0000 s</div></div></div>
+      </div>
+      <div>
+        <div class='panel-head'><h2>导出与说明</h2></div>
+        <div class='pill-row'>
+          <a class='pill' href='leaderboard.csv'>下载 leaderboard.csv</a>
+          <a class='pill' href='session_summary.json'>查看 session_summary.json</a>
+          <a class='pill' href='reports/'>打开 reports 目录</a>
+        </div>
+        <p class='sub' style='margin-top:12px'>主榜支持按综合排名、总体 F1、运行时间、NLPCC、EvaHan、TCM 古籍、samechar、高难层、专项层等多个口径切换，适合课堂主屏直接展示。</p>
+      </div>
+    </section>
+
+    <section class='panel'>
+      <div class='panel-head'><h2>分榜聚焦</h2><div class='sub'>采用 Dash 风格的信息卡，快速展示各子集和关键指标上的最佳提交。</div></div>
+      <div class='spot-grid'><div class='spot-card'><div class='meta'>总体最优</div><div class='name'>频次路径基线</div><div class='spot-score'>0.7955</div><div class='bar'><span style='width:80%'></span></div><div class='meta'>时间 0.0000 s</div></div><div class='spot-card'><div class='meta'>NLPCC</div><div class='name'>频次路径基线</div><div class='spot-score'>0.8532</div><div class='bar'><span style='width:85%'></span></div><div class='meta'>时间 0.0000 s</div></div><div class='spot-card'><div class='meta'>EvaHan</div><div class='name'>感知机 BMES 基线</div><div class='spot-score'>0.8186</div><div class='bar'><span style='width:82%'></span></div><div class='meta'>时间 0.0000 s</div></div><div class='spot-card'><div class='meta'>TCM</div><div class='name'>Jieba 工具基线</div><div class='spot-score'>0.9928</div><div class='bar'><span style='width:99%'></span></div><div class='meta'>时间 0.0000 s</div></div><div class='spot-card'><div class='meta'>samechar</div><div class='name'>BiLSTM-CRF 基线</div><div class='spot-score'>0.7831</div><div class='bar'><span style='width:78%'></span></div><div class='meta'>时间 0.0000 s</div></div><div class='spot-card'><div class='meta'>高难层</div><div class='name'>感知机 BMES 基线</div><div class='spot-score'>0.7880</div><div class='bar'><span style='width:79%'></span></div><div class='meta'>时间 0.0000 s</div></div></div>
+    </section>
+
+    <section class='panel double-grid'>
+      <div>
+        <div class='panel-head'><h2>数据包构成</h2><div class='sub'>展示当前评测包中各数据桶的来源与句数。</div></div>
+        <p class='muted'>暂无数据包说明。</p>
+      </div>
+      <div>
+        <div class='panel-head'><h2>教学错例统计</h2><div class='sub'>统计多个成功提交共同失败的样本，便于课后讲评与试题筛选。</div></div>
+        <div class='table-wrap'><table class='compact-table'><thead><tr><th>来源</th><th>原句</th><th>标准切分</th><th>失败提交数</th><th>涉及提交</th></tr></thead><tbody><tr><td class='src'>-</td><td>【Boss直聘诉拉勾网：网络招聘缠斗加剧】</td><td>【 / Boss / 直聘 / 诉 / 拉勾网 / ： / 网络 / 招聘 / 缠斗 / 加剧 / 】</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>【床上最多有200万只尘螨，学会5招除螨】</td><td>【 / 床上 / 最多 / 有 / 200万 / 只 / 尘螨 / ， / 学会 / 5 / 招 / 除螨 / 】</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>【库里低迷勇士惊险逆转悍将24+15灰熊失好局】</td><td>【 / 库里 / 低迷 / 勇士 / 惊险 / 逆转 / 悍将 / 24+15 / 灰熊 / 失 / 好局 / 】</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>据朝日新闻，2016年日本男女生校服价格分别上调5%-10%。</td><td>据 / 朝日 / 新闻 / ， / 2016年 / 日本 / 男女生 / 校服 / 价格 / 分别 / 上调 / 5%-10% / 。</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>从前有两只猫头鹰，一只干了件坏事儿，然后跑了......（Imgur）</td><td>从前 / 有 / 两 / 只 / 猫头鹰 / ， / 一 / 只 / 干 / 了 / 件 / 坏事儿 / ， / 然后 / 跑 / 了 / . / . / . / . / . / . / （ / Imgur / ）</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>上周，证券交易结算资金银证转账增加额为4557亿元，减少额为4109亿元。</td><td>上周 / ， / 证券 / 交易 / 结算 / 资金 / 银证 / 转账 / 增加额 / 为 / 4557亿 / 元 / ， / 减少额 / 为 / 4109亿 / 元 / 。</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>市民如有任何疑问，可拨打燃气公司24小时客户服务热线25199999咨询。</td><td>市民 / 如 / 有 / 任何 / 疑问 / ， / 可 / 拨打 / 燃气 / 公司 / 24小时 / 客户 / 服务 / 热线 / 25199999 / 咨询 / 。</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>速报君去铲屎官主页找了一些舞蹈作品合集，现在请大家观赏👏（图源：饲主推特ccchisa76）</td><td>速报君 / 去 / 铲屎官 / 主页 / 找 / 了 / 一些 / 舞蹈 / 作品 / 合集 / ， / 现在 / 请 / 大家 / 观赏 / 👏 / （ / 图源 / ： / 饲主 / 推特 / ccchisa76 / ）</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>受益于券商加杠杆和经济数据，A股早盘高开高走，沪指涨1.82%，深成指涨2.08%，创业板涨2.67%。</td><td>受益于 / 券商 / 加 / 杠杆 / 和 / 经济 / 数据 / ， / A股 / 早盘 / 高开 / 高走 / ， / 沪指 / 涨 / 1.82% / ， / 深成指 / 涨 / 2.08% / ， / 创业板 / 涨 / 2.67% / 。</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr><tr><td class='src'>-</td><td>勇士斯贝茨拿到全队最高的22分，利文斯顿16分，汤普森20中7，三分7投全失得到17分8板，格林9分7板7助7失误如同隐形人；</td><td>勇士 / 斯贝茨 / 拿到 / 全队 / 最 / 高 / 的 / 22 / 分 / ， / 利文斯顿 / 16 / 分 / ， / 汤普森 / 20 / 中 / 7 / ， / 三分 / 7 / 投 / 全失 / 得到 / 17 / 分 / 8 / 板 / ， / 格林 / 9 / 分 / 7 / 板 / 7 / 助 / 7 / 失误 / 如同 / 隐形人 / ；</td><td>12</td><td>BMM 基线、BiLSTM-CRF 基线、Bigram 贪心消歧、CRF BMES 基线、FMM 基线 等</td></tr></tbody></table></div><p class='hint'>仅保留适合课堂讨论的中文主体样本。</p>
+      </div>
+    </section>
+
+    <section class='panel' id='leaderboardPanel'>
+      <div class='panel-head'><h2>总榜与筛选</h2><div class='sub'>支持按分组、模式、状态和多种排序口径切换。</div></div>
+      <div class='pill-row' style='margin-top:12px'><button class='pill sort-btn' type='button' data-sort='rank'>综合排名</button><button class='pill sort-btn' type='button' data-sort='f1'>总体 F1</button><button class='pill sort-btn' type='button' data-sort='runtime'>运行时间</button><button class='pill sort-btn' type='button' data-sort='latest'>最新提交</button><button class='pill sort-btn' type='button' data-sort='nlpcc'>NLPCC-Weibo 排名</button><button class='pill sort-btn' type='button' data-sort='evahan'>EvaHan 排名</button><button class='pill sort-btn' type='button' data-sort='tcm'>TCM 古籍排名</button><button class='pill sort-btn' type='button' data-sort='samechar'>samechar 排名</button><button class='pill sort-btn' type='button' data-sort='high'>高难层排名</button><button class='pill sort-btn' type='button' data-sort='specialized'>专项层排名</button></div>
+      <div class='filter-grid'>
+        <div class='field'><label>搜索提交名</label><input id='searchBox' type='text' placeholder='输入提交名或分组名'></div>
+        <div class='field'><label>提交分组</label><select id='groupFilter'><option value='all'>全部</option></select></div>
+        <div class='field'><label>提交模式</label><select id='modeFilter'><option value='all'>全部</option><option value='prediction_file_only'>预测文件</option><option value='executable_package'>可执行包</option></select></div>
+        <div class='field'><label>提交状态</label><select id='statusFilter'><option value='all'>全部</option><option value='成功'>成功</option><option value='格式错误'>格式错误</option><option value='运行错误'>运行错误</option><option value='超时'>超时</option><option value='缺少输出'>缺少输出</option><option value='拒收'>拒收</option></select></div>
+        <div class='field'><label>排序方式</label><select id='sortFilter'><option value='rank'>综合排名</option><option value='f1'>总体 F1</option><option value='runtime'>运行时间</option><option value='latest'>最新提交</option><option value='nlpcc'>NLPCC-Weibo 排名</option><option value='evahan'>EvaHan 排名</option><option value='tcm'>TCM 古籍排名</option><option value='samechar'>samechar 排名</option><option value='high'>高难层排名</option><option value='specialized'>专项层排名</option></select></div>
+      </div>
+      <div class='table-wrap'>
+        <table class='leaderboard-table'>
+          <thead>
+            <tr>
+              <th style='width:72px'>排名</th>
+              <th style='width:220px'>提交名</th>
+              <th style='width:120px'>分组</th>
+              <th style='width:120px'>模式</th>
+              <th style='width:90px'>状态</th>
+              <th style='width:90px'>总体 F1</th>
+              <th style='width:90px'>NLPCC</th>
+              <th style='width:90px'>EvaHan</th>
+              <th style='width:90px'>TCM</th>
+              <th style='width:90px'>samechar</th>
+              <th style='width:90px'>高难层</th>
+              <th style='width:90px'>专项层</th>
+              <th style='width:90px'>错句数</th>
+              <th style='width:96px'>用时(s)</th>
+              <th style='width:144px'>提交时间</th>
+              <th style='width:240px'>说明</th>
+            </tr>
+          </thead>
+          <tbody id='boardBody'></tbody>
+        </table>
+      </div>
+      <div id='boardMeta' class='sub' style='margin-top:10px'></div>
+    </section>
+
+    <section class='panel'>
+      <div class='panel-head'><h2>失败提交一览</h2><div class='sub'>集中展示格式错误、运行错误、超时等异常。</div></div>
+      <div class='table-wrap'><table class='compact-table'><thead><tr><th>提交名</th><th>分组</th><th>状态</th><th>原因摘要</th><th>时间</th></tr></thead><tbody><tr><td>FMM 可执行演示</td><td>可执行演示</td><td><span class='bad'>运行错误</span></td><td class='reason'>当前环境缺少 Windows cmd，无法执行 run.bat。请在 Windows 教师机上使用可执行包评分模式。</td><td>2026-04-10 17:49:18</td></tr><tr><td>错误格式演示</td><td>演示失败</td><td><span class='bad'>格式错误</span></td><td class='reason'>行数不匹配：raw=230 pred=1</td><td>2026-04-10 17:49:17</td></tr></tbody></table></div>
+    </section>
+  </main>
+
+  <script>
+    const BOARD = [{"rank":1,"submission_name":"频次路径基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:09","runtime_seconds":0.0,"precision":0.7537,"recall":0.8421,"f1":0.7955,"wrong_sentence_count":205,"message":null,"NLPCC-Weibo_f1":0.8532,"EvaHan-2022_f1":0.7723,"TCM-Ancient-Books_f1":0.5891,"samechar_f1":0.6769,"high_f1":0.7558,"medium_f1":0.8532,"specialized_f1":0.6769,"detail_link":"details\/submission_014.html"},{"rank":2,"submission_name":"Bigram 贪心消歧","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:10","runtime_seconds":0.0,"precision":0.7499,"recall":0.8343,"f1":0.7898,"wrong_sentence_count":209,"message":null,"NLPCC-Weibo_f1":0.8449,"EvaHan-2022_f1":0.7658,"TCM-Ancient-Books_f1":0.5891,"samechar_f1":0.6951,"high_f1":0.7499,"medium_f1":0.8449,"specialized_f1":0.6951,"detail_link":"details\/submission_003.html"},{"rank":3,"submission_name":"FMM 基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:10","runtime_seconds":0.0,"precision":0.7464,"recall":0.8292,"f1":0.7856,"wrong_sentence_count":209,"message":null,"NLPCC-Weibo_f1":0.8366,"EvaHan-2022_f1":0.7643,"TCM-Ancient-Books_f1":0.5736,"samechar_f1":0.7111,"high_f1":0.7471,"medium_f1":0.8366,"specialized_f1":0.7111,"detail_link":"details\/submission_006.html"},{"rank":4,"submission_name":"双向投票基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:11","runtime_seconds":0.0,"precision":0.7446,"recall":0.8271,"f1":0.7837,"wrong_sentence_count":211,"message":null,"NLPCC-Weibo_f1":0.8326,"EvaHan-2022_f1":0.764,"TCM-Ancient-Books_f1":0.5736,"samechar_f1":0.7111,"high_f1":0.7468,"medium_f1":0.8326,"specialized_f1":0.7111,"detail_link":"details\/submission_010.html"},{"rank":5,"submission_name":"BMM 基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:12","runtime_seconds":0.0,"precision":0.7433,"recall":0.8255,"f1":0.7822,"wrong_sentence_count":211,"message":null,"NLPCC-Weibo_f1":0.8328,"EvaHan-2022_f1":0.7612,"TCM-Ancient-Books_f1":0.5891,"samechar_f1":0.6944,"high_f1":0.7457,"medium_f1":0.8328,"specialized_f1":0.6944,"detail_link":"details\/submission_001.html"},{"rank":6,"submission_name":"THULAC 工具基线","submission_group":"toolkit基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:12","runtime_seconds":0.0,"precision":0.7845,"recall":0.7553,"f1":0.7696,"wrong_sentence_count":213,"message":null,"NLPCC-Weibo_f1":0.8472,"EvaHan-2022_f1":0.7213,"TCM-Ancient-Books_f1":0.5312,"samechar_f1":0.6512,"high_f1":0.7039,"medium_f1":0.8472,"specialized_f1":0.6512,"detail_link":"details\/submission_009.html"},{"rank":7,"submission_name":"CRF BMES 基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:13","runtime_seconds":0.0,"precision":0.6828,"recall":0.8106,"f1":0.7413,"wrong_sentence_count":224,"message":null,"NLPCC-Weibo_f1":0.718,"EvaHan-2022_f1":0.7968,"TCM-Ancient-Books_f1":0.5427,"samechar_f1":0.6557,"high_f1":0.7738,"medium_f1":0.718,"specialized_f1":0.6557,"detail_link":"details\/submission_004.html"},{"rank":8,"submission_name":"Jieba 工具基线","submission_group":"toolkit基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:14","runtime_seconds":0.0,"precision":0.7729,"recall":0.7096,"f1":0.7399,"wrong_sentence_count":189,"message":null,"NLPCC-Weibo_f1":0.8,"EvaHan-2022_f1":0.6475,"TCM-Ancient-Books_f1":0.9928,"samechar_f1":0.7382,"high_f1":0.6784,"medium_f1":0.8,"specialized_f1":0.7382,"detail_link":"details\/submission_008.html"},{"rank":9,"submission_name":"HMM BMES 基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:14","runtime_seconds":0.0,"precision":0.7449,"recall":0.7099,"f1":0.727,"wrong_sentence_count":224,"message":null,"NLPCC-Weibo_f1":0.7592,"EvaHan-2022_f1":0.7141,"TCM-Ancient-Books_f1":0.6346,"samechar_f1":0.6276,"high_f1":0.7072,"medium_f1":0.7592,"specialized_f1":0.6276,"detail_link":"details\/submission_007.html"},{"rank":10,"submission_name":"BiLSTM-CRF 基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:15","runtime_seconds":0.0,"precision":0.6472,"recall":0.6978,"f1":0.6715,"wrong_sentence_count":219,"message":null,"NLPCC-Weibo_f1":0.5934,"EvaHan-2022_f1":0.7547,"TCM-Ancient-Books_f1":0.4966,"samechar_f1":0.7831,"high_f1":0.7328,"medium_f1":0.5934,"specialized_f1":0.7831,"detail_link":"details\/submission_002.html"},{"rank":11,"submission_name":"感知机 BMES 基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:16","runtime_seconds":0.0,"precision":0.5593,"recall":0.6543,"f1":0.6031,"wrong_sentence_count":228,"message":null,"NLPCC-Weibo_f1":0.4399,"EvaHan-2022_f1":0.8186,"TCM-Ancient-Books_f1":0.4899,"samechar_f1":0.4975,"high_f1":0.788,"medium_f1":0.4399,"specialized_f1":0.4975,"detail_link":"details\/submission_011.html"},{"rank":12,"submission_name":"自分割 Ngram 基线","submission_group":"自实现基线","mode":"prediction_file_only","status":"成功","timestamp":"2026-04-10 17:49:16","runtime_seconds":0.0,"precision":0.5516,"recall":0.6227,"f1":0.585,"wrong_sentence_count":230,"message":null,"NLPCC-Weibo_f1":0.5221,"EvaHan-2022_f1":0.6745,"TCM-Ancient-Books_f1":0.4042,"samechar_f1":0.545,"high_f1":0.6491,"medium_f1":0.5221,"specialized_f1":0.545,"detail_link":"details\/submission_012.html"},{"rank":13,"submission_name":"错误格式演示","submission_group":"演示失败","mode":"prediction_file_only","status":"格式错误","timestamp":"2026-04-10 17:49:17","runtime_seconds":0.0,"precision":0.0,"recall":0.0,"f1":0.0,"wrong_sentence_count":0,"message":"行数不匹配：raw=230 pred=1","NLPCC-Weibo_f1":null,"EvaHan-2022_f1":null,"TCM-Ancient-Books_f1":null,"samechar_f1":null,"high_f1":0.0,"medium_f1":0.0,"specialized_f1":0.0,"detail_link":"details\/submission_013.html"},{"rank":14,"submission_name":"FMM 可执行演示","submission_group":"可执行演示","mode":"executable_package","status":"运行错误","timestamp":"2026-04-10 17:49:18","runtime_seconds":0.0,"precision":0.0,"recall":0.0,"f1":0.0,"wrong_sentence_count":0,"message":"当前环境缺少 Windows cmd，无法执行 run.bat。请在 Windows 教师机上使用可执行包评分模式。","NLPCC-Weibo_f1":null,"EvaHan-2022_f1":null,"TCM-Ancient-Books_f1":null,"samechar_f1":null,"high_f1":0.0,"medium_f1":0.0,"specialized_f1":0.0,"detail_link":"details\/submission_005.html"}];
+    const groupFilter = document.getElementById('groupFilter');
+    const modeFilter = document.getElementById('modeFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const searchBox = document.getElementById('searchBox');
+    const boardBody = document.getElementById('boardBody');
+    const boardMeta = document.getElementById('boardMeta');
+
+    function metric(value) {
+      const number = Number(value);
+      return Number.isNaN(number) ? 'N/A' : number.toFixed(4);
+    }
+
+    function modeLabel(mode) {
+      return mode === 'executable_package' ? '可执行包' : '预测文件';
+    }
+
+    function statusClass(status) {
+      if (status === '成功') return 'ok';
+      if (status === '等待中' || status === '运行中' || status === '重复提交') return 'warn';
+      return 'bad';
+    }
+
+    function metricKey(key) {
+      if (key === 'rank' || key === 'f1') return 'f1';
+      if (key === 'runtime') return 'runtime_seconds';
+      if (key === 'nlpcc') return 'NLPCC-Weibo_f1';
+      if (key === 'evahan') return 'EvaHan-2022_f1';
+      if (key === 'tcm') return 'TCM-Ancient-Books_f1';
+      if (key === 'samechar') return 'samechar_f1';
+      if (key === 'high') return 'high_f1';
+      if (key === 'specialized') return 'specialized_f1';
+      return 'f1';
+    }
+
+    function numericValue(row, column) {
+      const value = Number(row[column]);
+      return Number.isNaN(value) ? null : value;
+    }
+
+    function sortedRows(rows, sortKey) {
+      const items = [...rows];
+      if (sortKey === 'latest') {
+        items.sort((a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || ''), 'zh-CN'));
+        return items;
+      }
+      if (sortKey === 'runtime') {
+        items.sort((a, b) => {
+          const av = numericValue(a, 'runtime_seconds');
+          const bv = numericValue(b, 'runtime_seconds');
+          const ax = av === null ? Number.POSITIVE_INFINITY : av;
+          const bx = bv === null ? Number.POSITIVE_INFINITY : bv;
+          if (ax !== bx) return ax - bx;
+          return (numericValue(b, 'f1') || 0) - (numericValue(a, 'f1') || 0);
+        });
+        return items;
+      }
+      if (sortKey === 'rank') {
+        items.sort((a, b) => Number(a.rank || 99999) - Number(b.rank || 99999));
+        return items;
+      }
+      const column = metricKey(sortKey);
+      items.sort((a, b) => {
+        const av = numericValue(a, column);
+        const bv = numericValue(b, column);
+        const ax = av === null ? Number.NEGATIVE_INFINITY : av;
+        const bx = bv === null ? Number.NEGATIVE_INFINITY : bv;
+        if (bx !== ax) return bx - ax;
+        return (numericValue(a, 'runtime_seconds') || 0) - (numericValue(b, 'runtime_seconds') || 0);
+      });
+      return items;
+    }
+
+    [...new Set(BOARD.map(row => row.submission_group || '未分组'))]
+      .sort((a, b) => a.localeCompare(b, 'zh-CN'))
+      .forEach(group => {
+        const option = document.createElement('option');
+        option.value = group;
+        option.textContent = group;
+        groupFilter.appendChild(option);
+      });
+
+    function renderBoard() {
+      const query = (searchBox.value || '').trim().toLowerCase();
+      const group = groupFilter.value;
+      const mode = modeFilter.value;
+      const status = statusFilter.value;
+      const sortKey = sortFilter.value;
+
+      let rows = BOARD.filter(row => {
+        const haystack = `${row.submission_name || ''} ${row.submission_group || ''} ${row.message || ''}`.toLowerCase();
+        if (query && !haystack.includes(query)) return false;
+        if (group !== 'all' && (row.submission_group || '未分组') !== group) return false;
+        if (mode !== 'all' && row.mode !== mode) return false;
+        if (status !== 'all' && row.status !== status) return false;
+        return true;
+      });
+
+      rows = sortedRows(rows, sortKey);
+      boardBody.innerHTML = rows.map((row, index) => {
+        const rank = sortKey === 'rank' ? (row.rank ?? index + 1) : index + 1;
+        const name = row.detail_link ? `<a href='${row.detail_link}'>${row.submission_name}</a>` : `${row.submission_name}`;
+        return `<tr>
+          <td>${rank}</td>
+          <td>${name}</td>
+          <td>${row.submission_group || '未分组'}</td>
+          <td>${modeLabel(row.mode)}</td>
+          <td><span class='${statusClass(row.status)}'>${row.status}</span></td>
+          <td>${metric(row.f1)}</td>
+          <td>${metric(row['NLPCC-Weibo_f1'])}</td>
+          <td>${metric(row['EvaHan-2022_f1'])}</td>
+          <td>${metric(row['TCM-Ancient-Books_f1'])}</td>
+          <td>${metric(row.samechar_f1)}</td>
+          <td>${metric(row.high_f1)}</td>
+          <td>${metric(row.specialized_f1)}</td>
+          <td>${row.wrong_sentence_count ?? 0}</td>
+          <td>${metric(row.runtime_seconds)}</td>
+          <td>${row.timestamp || ''}</td>
+          <td class='reason'>${row.message || ''}</td>
+        </tr>`;
+      }).join('');
+
+      boardMeta.textContent = `当前显示 ${rows.length} / ${BOARD.length} 条提交，排序方式：${sortFilter.options[sortFilter.selectedIndex].text}。`;
+    }
+
+    [groupFilter, modeFilter, statusFilter, sortFilter, searchBox].forEach(element => {
+      element.addEventListener('input', renderBoard);
+      element.addEventListener('change', renderBoard);
+    });
+    document.querySelectorAll('.sort-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        sortFilter.value = button.dataset.sort;
+        renderBoard();
+        document.getElementById('leaderboardPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    renderBoard();
+  </script>
+</body>
+</html>

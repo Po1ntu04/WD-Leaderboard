@@ -1,0 +1,29 @@
+{
+  "submission_name": "FMM 可执行演示",
+  "submission_group": "可执行演示",
+  "submission_path": "/home/yu/projects/NLP/platform/runtime/FMM/output/pred.txt",
+  "mode": "executable_package",
+  "status": "运行错误",
+  "timestamp": "2026-04-10 17:49:18",
+  "runtime_seconds": 0.0,
+  "overall": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "gold_words": 0,
+    "pred_words": 0,
+    "correct_words": 0,
+    "exact_match_sentences": 0,
+    "total_sentences": 230
+  },
+  "wrong_sentence_count": 0,
+  "message": "当前环境缺少 Windows cmd，无法执行 run.bat。请在 Windows 教师机上使用可执行包评分模式。",
+  "by_dataset": {},
+  "by_difficulty": {},
+  "validation_errors": [
+    "当前环境缺少 Windows cmd，无法执行 run.bat。请在 Windows 教师机上使用可执行包评分模式。",
+    "未找到输出文件 pred.txt。"
+  ],
+  "eval_warnings": [],
+  "wrong_cases": []
+}
