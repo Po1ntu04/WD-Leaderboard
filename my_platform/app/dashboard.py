@@ -11,6 +11,8 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from eval_core import load_prediction_submission, normalize_prediction_rows_tolerant
+from algorithms.common.io import read_raw_file, read_segmented_file
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -76,38 +78,93 @@ def load_manifest(summary: dict) -> pd.DataFrame:
 
 
 def collect_common_failures(reports: dict[str, dict], manifest_df: pd.DataFrame) -> pd.DataFrame:
-    manifest_rows = {}
-    if not manifest_df.empty and 'line_no' in manifest_df.columns:
-        manifest_rows = {int(row['line_no']): row for _, row in manifest_df.iterrows()}
+    if manifest_df.empty:
+        return pd.DataFrame()
+    manifest_rows = {int(row['line_no']): row for _, row in manifest_df.iterrows()}
+    raw_path = Path(manifest_df.attrs.get('raw_path', '')) if manifest_df.attrs.get('raw_path') else None
+    gold_path = Path(manifest_df.attrs.get('gold_path', '')) if manifest_df.attrs.get('gold_path') else None
+    if not raw_path or not gold_path or not raw_path.exists() or not gold_path.exists():
+        return pd.DataFrame()
 
+    raw_rows = read_raw_file(raw_path)
+    gold_rows = read_segmented_file(gold_path)
     aggregate: dict[tuple[int, str], dict] = {}
     for submission_name, report in reports.items():
-        if report.get('status') != '成功':
+        if report.get('submission_group') != '课堂提交':
             continue
-        for case in report.get('wrong_cases', []) or []:
-            line_no = int(case.get('line_no', 0) or 0)
-            raw = str(case.get('raw_text', '')).strip()
-            gold = str(case.get('gold', '')).strip()
-            if not raw or not gold:
+        submission_path = Path(str(report.get('submission_path', '')))
+        if not submission_path.exists():
+            continue
+        pred_rows, errors, _ = load_prediction_submission(submission_path)
+        if errors and not pred_rows:
+            continue
+        pred_rows, _, _ = normalize_prediction_rows_tolerant(raw_rows, pred_rows)
+        for idx, (raw_text, gold, pred) in enumerate(zip(raw_rows, gold_rows, pred_rows), start=1):
+            if gold == pred:
                 continue
-            key = (line_no, raw)
-            manifest_row = manifest_rows.get(line_no, {})
+            key = (idx, raw_text)
+            manifest_row = manifest_rows.get(idx, {})
             item = aggregate.setdefault(
                 key,
                 {
-                    'line_no': line_no,
-                    'raw_text': raw,
-                    'gold': gold,
+                    'line_no': idx,
+                    'raw_text': raw_text,
+                    'gold': ' / '.join(gold),
                     'dataset': str(manifest_row.get('dataset', '')),
                     'sample_id': str(manifest_row.get('sample_id', '')),
                     'count': 0,
                     'submissions': [],
+                    'examples': [],
                 },
             )
             item['count'] += 1
             item['submissions'].append(submission_name)
-    rows = sorted(aggregate.values(), key=lambda row: (-row['count'], row['line_no']))[:20]
+            if len(item['examples']) < 3:
+                item['examples'].append({'submission_name': submission_name, 'pred': ' / '.join(pred)})
+    rows = sorted(aggregate.values(), key=lambda row: (-row['count'], row['line_no']))
     return pd.DataFrame(rows)
+
+
+def segmentation_tokens(segmentation: str) -> list[str]:
+    text = str(segmentation or '').strip()
+    if not text:
+        return []
+    return [token.strip() for token in text.split(' / ') if token.strip()]
+
+
+def word_spans(tokens: list[str]) -> list[tuple[int, int]]:
+    spans: list[tuple[int, int]] = []
+    start = 0
+    for token in tokens:
+        end = start + len(token)
+        spans.append((start, end))
+        start = end
+    return spans
+
+
+def render_segment_html(label: str, segmentation: str, other_segmentation: str, *, base_color: str) -> html.Div:
+    tokens = segmentation_tokens(segmentation)
+    other_tokens = segmentation_tokens(other_segmentation)
+    spans = word_spans(tokens)
+    other_span_set = set(word_spans(other_tokens))
+    children: list = [html.Div(label, className='small text-secondary mb-1')]
+    line: list = []
+    for idx, (token, span) in enumerate(zip(tokens, spans)):
+        mismatch = span not in other_span_set
+        line.append(
+            html.Span(
+                token,
+                style={
+                    'color': '#fb7185' if mismatch else base_color,
+                    'fontWeight': '700' if mismatch else '500',
+                    'padding': '0 1px',
+                },
+            )
+        )
+        if idx < len(tokens) - 1:
+            line.append(html.Span(' / ', style={'color': '#94a3b8'}))
+    children.append(html.Div(line, style={'lineHeight': '1.9', 'wordBreak': 'break-word'}))
+    return html.Div(children, className='mb-3')
 
 
 def normalize_board(board: pd.DataFrame) -> pd.DataFrame:
@@ -446,6 +503,9 @@ def create_app(results_dir: Path) -> Dash:
     package_meta = load_json(package_meta_path) if package_meta_path.exists() else {}
     reports = load_reports(reports_dir)
     manifest_df = load_manifest(session_summary)
+    if not manifest_df.empty:
+        manifest_df.attrs['raw_path'] = session_summary.get('raw_path', '')
+        manifest_df.attrs['gold_path'] = session_summary.get('gold_path', '')
     common_failures = collect_common_failures(reports, manifest_df)
 
     board = pd.read_csv(leaderboard_path, encoding='utf-8-sig') if leaderboard_path.exists() else pd.DataFrame(columns=['submission_name'])
@@ -461,6 +521,7 @@ def create_app(results_dir: Path) -> Dash:
         [
             dcc.Store(id='board-store', data=board.to_dict('records')),
             dcc.Store(id='reports-store', data=reports),
+            dcc.Store(id='common-failure-store', data=common_failures.to_dict('records')),
             dbc.Row(
                 dbc.Col(
                     dbc.Card(
@@ -639,6 +700,16 @@ def create_app(results_dir: Path) -> Dash:
                             dbc.CardBody(
                                 [
                                     html.Div('💡 共性错例', className='h6 mb-2 fw-bold'),
+                                    dcc.Dropdown(
+                                        id='common-dataset-filter',
+                                        options=[{'label': '全部数据集', 'value': 'all'}] + [
+                                            {'label': DATASET_DISPLAY_NAMES.get(name, name), 'value': name}
+                                            for name in ['NLPCC-Weibo', 'EvaHan-2022', 'TCM-Ancient-Books', 'samechar']
+                                        ],
+                                        value='all',
+                                        clearable=False,
+                                        className='mb-2',
+                                    ),
                                     dash_table.DataTable(
                                         id='common-failure-table',
                                         columns=[
@@ -650,10 +721,13 @@ def create_app(results_dir: Path) -> Dash:
                                         ],
                                         data=common_failures.to_dict('records'),
                                         page_size=6,
+                                        row_selectable='single',
+                                        selected_rows=[0] if not common_failures.empty else [],
                                         style_table={'overflowX': 'auto'},
                                         style_header={'backgroundColor': '#112240', 'color': '#e6eefc', 'fontWeight': 'bold'},
                                         style_cell={'backgroundColor': '#0f172a', 'color': '#dbe7ff', 'border': '1px solid rgba(93,126,182,0.18)', 'textAlign': 'left', 'whiteSpace': 'normal', 'fontSize': '0.75rem'},
                                     ),
+                                    html.Div(id='common-failure-detail', className='mt-3'),
                                 ]
                             ),
                             className='shadow-sm border-0',
@@ -715,6 +789,20 @@ def create_app(results_dir: Path) -> Dash:
         return frame.to_dict('records')
 
     @app.callback(
+        Output('common-failure-table', 'data'),
+        Input('common-failure-store', 'data'),
+        Input('common-dataset-filter', 'value'),
+    )
+    def filter_common_failures(rows: list[dict] | None, dataset_value: str):
+        frame = pd.DataFrame(rows or [])
+        if frame.empty:
+            return []
+        if dataset_value and dataset_value != 'all':
+            frame = frame[frame['dataset'] == dataset_value]
+        frame = frame.sort_values(['count', 'line_no'], ascending=[False, True]).reset_index(drop=True)
+        return frame.to_dict('records')
+
+    @app.callback(
         Output('profile-radar', 'figure'),
         Output('dataset-bar', 'figure'),
         Output('podium-section', 'children'),
@@ -733,6 +821,36 @@ def create_app(results_dir: Path) -> Dash:
         fig = make_profile_radar(row)
         dataset_bar = make_dataset_bar(row)  # 直接传递行数据而不是报告
         return fig, dataset_bar, make_podium(rows or []), make_rank_bar(rows or [])
+
+    @app.callback(
+        Output('common-failure-detail', 'children'),
+        Input('common-failure-table', 'derived_virtual_data'),
+        Input('common-failure-table', 'selected_rows'),
+    )
+    def render_common_failure_detail(rows: list[dict] | None, selected_rows: list[int] | None):
+        frame = pd.DataFrame(rows or [])
+        if frame.empty:
+            return html.Div('当前筛选条件下没有共性错例。', className='text-secondary small')
+        idx = selected_rows[0] if selected_rows else 0
+        idx = min(max(idx, 0), len(frame) - 1)
+        row = frame.iloc[idx]
+        examples = row.get('examples', [])
+        blocks = [
+            html.Div(f"行号 {int(row.get('line_no', 0))} ｜ {DATASET_DISPLAY_NAMES.get(str(row.get('dataset', '')), str(row.get('dataset', '')))} ｜ 失败次数 {int(row.get('count', 0))}", className='text-secondary small mb-2'),
+            html.Div(str(row.get('raw_text', '')), className='mb-3', style={'fontWeight': '700', 'lineHeight': '1.7', 'wordBreak': 'break-word'}),
+            render_segment_html('标准切分', str(row.get('gold', '')), str(examples[0]['pred']) if examples else '', base_color='#e6eefc'),
+        ]
+        for example in examples[:3]:
+            blocks.append(
+                render_segment_html(
+                    f"学生样例：{example.get('submission_name', '')}",
+                    str(example.get('pred', '')),
+                    str(row.get('gold', '')),
+                    base_color='#dbe7ff',
+                )
+            )
+        blocks.append(html.Div('红色位置表示相较于对照切分中更可能出问题的边界块。', className='text-secondary small'))
+        return html.Div(blocks)
 
     return app
 

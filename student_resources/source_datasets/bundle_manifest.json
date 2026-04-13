@@ -1,0 +1,33 @@
+{
+  "bundle_root": "student_resources/source_datasets",
+  "datasets": [
+    {
+      "dataset": "NLPCC-Weibo",
+      "splits": {
+        "train": 20135,
+        "dev": 2052,
+        "test": 8592
+      }
+    },
+    {
+      "dataset": "EvaHan-2022",
+      "splits": {
+        "train": 8699,
+        "test_a": 1593,
+        "test_b": 2149
+      }
+    },
+    {
+      "dataset": "TCM-Ancient-Books",
+      "splits": {
+        "full": 464
+      }
+    },
+    {
+      "dataset": "samechar",
+      "splits": {
+        "full": 23
+      }
+    }
+  ]
+}
