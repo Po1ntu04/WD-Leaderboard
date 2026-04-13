@@ -6,6 +6,9 @@ from dataclasses import dataclass
 from algorithms.common.io import SEGMENT_DELIMITER_PADDED
 
 
+ELLIPSIS_CHARS = {'.', '。', '…', '．'}
+
+
 @dataclass
 class ScoreResult:
     precision: float
@@ -40,12 +43,35 @@ def _word_spans(words: list[str]) -> set[tuple[int, int]]:
     return spans
 
 
+def _normalize_ellipsis_tokens(words: list[str]) -> list[str]:
+    normalized: list[str] = []
+    i = 0
+    while i < len(words):
+        token = words[i]
+        if token and all(ch in ELLIPSIS_CHARS for ch in token):
+            j = i
+            parts: list[str] = []
+            while j < len(words) and words[j] and all(ch in ELLIPSIS_CHARS for ch in words[j]):
+                parts.append(words[j])
+                j += 1
+            merged = ''.join(parts)
+            if len(merged) >= 3:
+                normalized.append(merged)
+                i = j
+                continue
+        normalized.append(token)
+        i += 1
+    return normalized
+
+
 def score_predictions(gold_rows: list[list[str]], pred_rows: list[list[str]]) -> ScoreResult:
     if len(gold_rows) != len(pred_rows):
         raise ValueError("gold and prediction line counts do not match")
 
     gold_words = pred_words = correct_words = exact_match = 0
     for gold, pred in zip(gold_rows, pred_rows):
+        gold = _normalize_ellipsis_tokens(gold)
+        pred = _normalize_ellipsis_tokens(pred)
         gold_words += len(gold)
         pred_words += len(pred)
         g_spans = _word_spans(gold)
@@ -110,7 +136,7 @@ def oov_recall(gold_rows: list[list[str]], pred_rows: list[list[str]], train_voc
 def collect_wrong_cases(raw_rows: list[str], gold_rows: list[list[str]], pred_rows: list[list[str]], limit: int = 50) -> list[dict]:
     errors = []
     for idx, (raw, gold, pred) in enumerate(zip(raw_rows, gold_rows, pred_rows), start=1):
-        if gold == pred:
+        if _normalize_ellipsis_tokens(gold) == _normalize_ellipsis_tokens(pred):
             continue
         errors.append(
             {

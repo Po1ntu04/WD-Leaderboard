@@ -1,92 +1,522 @@
 {
-  "session_name": "完整评测",
+  "session_name": "2026_spring_word_competition_tolerant",
   "dataset_version": "platform_eval_v2_draft",
   "scoring_rule_version": "benchmark_v2",
   "submission_protocol_version": "submission_v1",
-  "submission_count": 15,
-  "success_count": 13,
-  "failure_count": 2,
-  "prediction_mode_count": 14,
-  "executable_mode_count": 1,
-  "results_dir": "E:/同济-大三/中文信息处理/WD-Leaderboard/my_platform/results",
-  "raw_path": "E:/同济-大三/中文信息处理/WD-Leaderboard/test_assets/platform_eval_v2_draft/platform_eval_v2_draft/raw.txt",
-  "gold_path": "E:/同济-大三/中文信息处理/WD-Leaderboard/test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold.txt",
-  "manifest_path": "E:/同济-大三/中文信息处理/WD-Leaderboard/test_assets/platform_eval_v2_draft/platform_eval_v2_draft/gold_manifest.csv",
+  "submission_count": 101,
+  "success_count": 101,
+  "failure_count": 0,
+  "prediction_mode_count": 101,
+  "executable_mode_count": 0,
+  "results_dir": "/home/yu/projects/NLP/my_platform/results",
+  "raw_path": "/home/yu/projects/NLP/test_assets/platform_eval_v2_draft/raw.txt",
+  "gold_path": "/home/yu/projects/NLP/test_assets/platform_eval_v2_draft/gold.txt",
+  "manifest_path": "/home/yu/projects/NLP/test_assets/platform_eval_v2_draft/gold_manifest.csv",
   "scored_items": [
+    {
+      "name": "2250889_廖玲艺",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2250889_廖玲艺_pred.txt"
+    },
+    {
+      "name": "2251029_张承睿",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2251029_张承睿_pred.txt"
+    },
+    {
+      "name": "2251196_关嘉瑞",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2251196_关嘉瑞_pred.txt"
+    },
+    {
+      "name": "2251415_杨婧",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2251415_杨婧_pred.txt"
+    },
+    {
+      "name": "2251545_邢致远",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2251545_邢致远_pred.txt"
+    },
+    {
+      "name": "2252036_苏惠",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2252036_苏惠_pred.txt"
+    },
+    {
+      "name": "2252334_孙毓涵",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2252334_孙毓涵_pred.txt"
+    },
+    {
+      "name": "2253102_鲁浩宇",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2253102_鲁浩宇_pred.txt"
+    },
+    {
+      "name": "2253797_黄艺鑫",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2253797_黄艺鑫_pred.txt"
+    },
+    {
+      "name": "2253874_邝家琪",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2253874_邝家琪_pred.txt"
+    },
+    {
+      "name": "2254231_成嘉怡",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2254231_成嘉怡_pred.txt"
+    },
+    {
+      "name": "2256215_古文煜",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2256215_古文煜_pred.txt"
+    },
+    {
+      "name": "2350218_陈佳怡",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350218_陈佳怡_pred.txt"
+    },
+    {
+      "name": "2350222_盛曦",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350222_盛曦_pred.txt"
+    },
+    {
+      "name": "2350232_席逸辰",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350232_席逸辰_pred.txt"
+    },
+    {
+      "name": "2350233_叶辰",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350233_叶辰_pred.txt"
+    },
+    {
+      "name": "2350262_樊祺",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350262_樊祺_pred.txt"
+    },
+    {
+      "name": "2350489_王奕杰",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350489_王奕杰_pred.txt"
+    },
+    {
+      "name": "2350501_王杏",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350501_王杏_pred.txt"
+    },
+    {
+      "name": "2350698_陈鲲鹏",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350698_陈鲲鹏_pred.txt"
+    },
+    {
+      "name": "2350795_魏子鸣",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350795_魏子鸣_pred.txt"
+    },
+    {
+      "name": "2350960_孙瑞",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350960_孙瑞_pred.txt"
+    },
+    {
+      "name": "2350999_殷和尘",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2350999_殷和尘_pred.txt"
+    },
+    {
+      "name": "2351026_林美汐",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351026_林美汐_pred.txt"
+    },
+    {
+      "name": "2351136_李盛鹏",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351136_李盛鹏_pred.txt"
+    },
+    {
+      "name": "2351138_邱子峰",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351138_邱子峰_pred.txt"
+    },
+    {
+      "name": "2351276_彭煦",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351276_彭煦_pred.txt"
+    },
+    {
+      "name": "2351278_严梓杰",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351278_严梓杰_pred.txt"
+    },
+    {
+      "name": "2351285_李翰宇",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351285_李翰宇_pred.txt"
+    },
+    {
+      "name": "2351295_胡桥健",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351295_胡桥健_pred.txt"
+    },
+    {
+      "name": "2351351_肖逸恺",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351351_肖逸恺_pred.txt"
+    },
+    {
+      "name": "2351406_吕景琦",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351406_吕景琦_pred.txt"
+    },
+    {
+      "name": "2351407_楼思含",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351407_楼思含_pred.txt"
+    },
+    {
+      "name": "2351439_王梓彦",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351439_王梓彦_pred.txt"
+    },
+    {
+      "name": "2351450_郑梓健",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351450_郑梓健_pred.txt"
+    },
+    {
+      "name": "2351457_张健翔",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351457_张健翔_pred.txt"
+    },
+    {
+      "name": "2351564_张艺泷",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351564_张艺泷_pred.txt"
+    },
+    {
+      "name": "2351570_樊林珂",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351570_樊林珂_pred.txt"
+    },
+    {
+      "name": "2351577_张宸浩",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351577_张宸浩_pred.txt"
+    },
+    {
+      "name": "2351583_马浩然",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351583_马浩然_pred.txt"
+    },
+    {
+      "name": "2351610_李睿",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351610_李睿_pred.txt"
+    },
+    {
+      "name": "2351753_黄保翔",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351753_黄保翔_pred.txt"
+    },
+    {
+      "name": "2351871_郎若谷",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351871_郎若谷_pred.txt"
+    },
+    {
+      "name": "2351879_闫睿阳",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2351879_闫睿阳_pred.txt"
+    },
+    {
+      "name": "2352008_李奕璇",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352008_李奕璇_pred.txt"
+    },
+    {
+      "name": "2352018_刘彦",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352018_刘彦_pred.txt"
+    },
+    {
+      "name": "2352032_王潇扬",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352032_王潇扬_pred.txt"
+    },
     {
       "name": "2352035_曹劭杰",
       "mode": "prediction_file_only",
-      "path": "E:\\同济-大三\\中文信息处理\\WD-Leaderboard\\my_platform\\results\\2352035_曹劭杰_pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352035_曹劭杰_pred.txt"
     },
     {
-      "name": "BMM 基线",
+      "name": "2352189_杜海扬",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bmm.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352189_杜海扬_pred.txt"
     },
     {
-      "name": "BiLSTM-CRF 基线",
+      "name": "2352201_燕欣睿",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bilstm_crf.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352201_燕欣睿_pred.txt"
     },
     {
-      "name": "Bigram 贪心消歧",
+      "name": "2352209_郑以琳",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bigram_greedy.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352209_郑以琳_pred.txt"
     },
     {
-      "name": "CRF BMES 基线",
+      "name": "2352455_陈柯",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/crf_bmes.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352455_陈柯_pred.txt"
     },
     {
-      "name": "FMM 可执行演示",
-      "mode": "executable_package",
-      "path": "test_assets/submission_sample_v1/fmm_demo/output/pred.txt"
-    },
-    {
-      "name": "FMM 基线",
+      "name": "2352462_崔皓哲",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/fmm.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352462_崔皓哲_pred.txt"
     },
     {
-      "name": "HMM BMES 基线",
+      "name": "2352469_左知行",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/hmm_bmes.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352469_左知行_pred.txt"
     },
     {
-      "name": "Jieba 工具基线",
+      "name": "2352596_潘启豪",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/jieba_toolkit.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352596_潘启豪_pred.txt"
     },
     {
-      "name": "THULAC 工具基线",
+      "name": "2352611_简君睿",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/thulac_toolkit.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352611_简君睿_pred.txt"
     },
     {
-      "name": "双向投票基线",
+      "name": "2352614_汤佑森",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/bidirectional_voting.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352614_汤佑森_pred.txt"
     },
     {
-      "name": "感知机 BMES 基线",
+      "name": "2352627_梁凯毅",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/perceptron_bmes.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352627_梁凯毅_pred.txt"
     },
     {
-      "name": "自分割 Ngram 基线",
+      "name": "2352733_白佳煜",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/self_segment_ngram.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352733_白佳煜_pred.txt"
     },
     {
-      "name": "错误格式演示",
+      "name": "2352748_杨钦战",
       "mode": "prediction_file_only",
-      "path": "test_assets/submission_sample_v1/bad_format_demo/output/pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352748_杨钦战_pred.txt"
     },
     {
-      "name": "频次路径基线",
+      "name": "2352753_霍子轩",
       "mode": "prediction_file_only",
-      "path": "/home/yu/projects/NLP/algorithms/experiments/output_platform_demo_v2/freq_path.pred.txt"
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352753_霍子轩_pred.txt"
+    },
+    {
+      "name": "2352831_李政翰",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352831_李政翰_pred.txt"
+    },
+    {
+      "name": "2352837_王采毅",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352837_王采毅_pred.txt"
+    },
+    {
+      "name": "2352841_刘佳鑫",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352841_刘佳鑫_pred.txt"
+    },
+    {
+      "name": "2352846_金凡越",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352846_金凡越_pred.txt"
+    },
+    {
+      "name": "2352847_张静敏",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352847_张静敏_pred.txt"
+    },
+    {
+      "name": "2352960_雷天博",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352960_雷天博_pred.txt"
+    },
+    {
+      "name": "2352976_吉镓熠",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352976_吉镓熠_pred.txt"
+    },
+    {
+      "name": "2353105_倪雨舒",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353105_倪雨舒_pred.txt"
+    },
+    {
+      "name": "2353106_王大中",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353106_王大中_pred.txt"
+    },
+    {
+      "name": "2353113_李阔",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353113_李阔_pred.txt"
+    },
+    {
+      "name": "2353123_黄唯轩",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353123_黄唯轩_pred.txt"
+    },
+    {
+      "name": "2353125_郑凯博",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353125_郑凯博_pred.txt"
+    },
+    {
+      "name": "2353235_钟艾玲",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353235_钟艾玲_pred.txt"
+    },
+    {
+      "name": "2353259_梁家瑞",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353259_梁家瑞_pred.txt"
+    },
+    {
+      "name": "2353404_田煜峰",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353404_田煜峰_pred.txt"
+    },
+    {
+      "name": "2353547_陈欣",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353547_陈欣_pred.txt"
+    },
+    {
+      "name": "2353568_周豪",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353568_周豪_pred.txt"
+    },
+    {
+      "name": "2353597_王雪宸",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353597_王雪宸_pred.txt"
+    },
+    {
+      "name": "2353598_张云夏",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353598_张云夏_pred.txt"
+    },
+    {
+      "name": "2353599_冯灏然",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353599_冯灏然_pred.txt"
+    },
+    {
+      "name": "2353734_石韫嘉",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353734_石韫嘉_pred.txt"
+    },
+    {
+      "name": "2353738_姜观博",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353738_姜观博_pred.txt"
+    },
+    {
+      "name": "2353798_常凯鑫",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353798_常凯鑫_pred.txt"
+    },
+    {
+      "name": "2353806_赵翌佟",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353806_赵翌佟_pred.txt"
+    },
+    {
+      "name": "2353900_汪嘉晨",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353900_汪嘉晨_pred.txt"
+    },
+    {
+      "name": "2353901_张恒",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353901_张恒_pred.txt"
+    },
+    {
+      "name": "2353911_李浩瑞",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353911_李浩瑞_pred.txt"
+    },
+    {
+      "name": "2353912_马潇函",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353912_马潇函_pred.txt"
+    },
+    {
+      "name": "2353940_魏嘉泽",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2353940_魏嘉泽_pred.txt"
+    },
+    {
+      "name": "2354008_冯浩航",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2354008_冯浩航_pred.txt"
+    },
+    {
+      "name": "2354091_李秉洲",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2354091_李秉洲_pred.txt"
+    },
+    {
+      "name": "2354248_陈奕畅",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2354248_陈奕畅_pred.txt"
+    },
+    {
+      "name": "2354273_谢羽涵",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2354273_谢羽涵_pred.txt"
+    },
+    {
+      "name": "2356184_钟夏馨",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2356184_钟夏馨_pred.txt"
+    },
+    {
+      "name": "2356185_陈劲宏",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2356185_陈劲宏_pred.txt"
+    },
+    {
+      "name": "2450442_刘恩琦",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2450442_刘恩琦_pred.txt"
+    },
+    {
+      "name": "2452101_凌霄",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2452101_凌霄_pred.txt"
+    },
+    {
+      "name": "2452523_孙程尧",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2452523_孙程尧_pred.txt"
+    },
+    {
+      "name": "2453798_谢天泓",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2453798_谢天泓_pred.txt"
+    },
+    {
+      "name": "2454193_杨续博",
+      "mode": "prediction_file_only",
+      "path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2454193_杨续博_pred.txt"
     }
   ]
 }

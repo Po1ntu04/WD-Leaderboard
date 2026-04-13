@@ -144,13 +144,6 @@ body {
   text-overflow: ellipsis;
 }
 
-.podium-group {
-  color: #a9bbdc;
-  font-size: 0.75rem;
-  margin-top: 4px;
-  font-weight: 500;
-}
-
 .podium-runtime,
 .podium-meta {
   color: #94a3b8;
@@ -195,8 +188,14 @@ body {
 }
 
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner tr:hover td {
-  background-color: rgba(77, 163, 255, 0.15) !important;
+  background-color: rgba(59, 130, 246, 0.28) !important;
+  color: #f8fbff !important;
   transform: scale(1.01);
+}
+
+#common-failure-table .dash-spreadsheet-container .dash-spreadsheet-inner tr:hover td {
+  background-color: rgba(34, 197, 94, 0.24) !important;
+  color: #f8fbff !important;
 }
 
 .card {

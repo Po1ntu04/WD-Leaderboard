@@ -159,6 +159,21 @@
 # runtime_seconds: 0.183
 ```
 
+当前教师侧程序对最后一行 runtime 元信息做了兼容处理，以下常见写法都能识别：
+
+```text
+# runtime_seconds: 0.183
+# Runtime_seconds: 0.183
+# runtime_seconds 0.183
+# runtime_seconds: 0.183 // include loading time
+```
+
+但为了减少歧义，仍建议统一使用：
+
+```text
+# runtime_seconds: 0.183
+```
+
 ---
 
 ## 五、常见错误提醒（请务必避免）

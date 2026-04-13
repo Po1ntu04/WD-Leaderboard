@@ -1,11 +1,11 @@
 {
   "submission_name": "2352035_曹劭杰",
   "submission_group": "课堂提交",
-  "submission_path": "E:/同济-大三/中文信息处理/WD-Leaderboard/my_platform/results/2352035_曹劭杰_pred.txt",
+  "submission_path": "/home/yu/projects/NLP/submit/2026春-分词大赛(word)/predictions/2352035_曹劭杰_pred.txt",
   "mode": "prediction_file_only",
   "status": "成功",
-  "timestamp": "2026-04-12 20:20:45",
-  "runtime_seconds": 3.017,
+  "timestamp": "2026-04-13 10:47:31",
+  "runtime_seconds": 0.33,
   "overall": {
     "precision": 0.6838,
     "recall": 0.6402,
@@ -17,6 +17,7 @@
     "total_sentences": 230
   },
   "wrong_sentence_count": 220,
+  "tolerant_issue_count": 0,
   "message": "",
   "by_dataset": {
     "EvaHan-2022": {

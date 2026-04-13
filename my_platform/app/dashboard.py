@@ -22,10 +22,7 @@ DISPLAY_NAMES = {
     'NLPCC-Weibo_f1': 'NLPCC',
     'EvaHan-2022_f1': 'EvaHan',
     'TCM-Ancient-Books_f1': 'TCM',
-    'samechar_f1': 'samechar',
-    'high_f1': '高难层',
-    'medium_f1': '中难层',
-    'specialized_f1': '专项层',
+    'samechar_f1': 'samechar专项',
     'f1': '总体F1',
     'runtime_seconds': '运行时间(s)',
 }
@@ -34,10 +31,7 @@ DATASET_DISPLAY_NAMES = {
     'NLPCC-Weibo': 'NLPCC微博',
     'EvaHan-2022': 'EvaHan',
     'TCM-Ancient-Books': 'TCM古籍',
-    'samechar': '同字符',
-    'high': '高难层',
-    'medium': '中难层',
-    'specialized': '专项层',
+    'samechar': 'samechar专项',
 }
 
 METRIC_COLUMNS = [
@@ -46,9 +40,6 @@ METRIC_COLUMNS = [
     'EvaHan-2022_f1',
     'TCM-Ancient-Books_f1',
     'samechar_f1',
-    'high_f1',
-    'medium_f1',
-    'specialized_f1',
 ]
 
 
@@ -135,6 +126,10 @@ def normalize_board(board: pd.DataFrame) -> pd.DataFrame:
                 'executable_package': '可执行包',
             }
         ).fillna(frame['mode'])
+    if 'submission_group' in frame.columns:
+        frame['comparison_kind'] = frame['submission_group'].fillna('').map(
+            lambda value: 'reference' if any(key in str(value) for key in ['工具', 'tool', 'AI', '大模型', 'LLM']) else 'student'
+        )
     return frame
 
 
@@ -209,7 +204,7 @@ def make_runtime_scatter(board: pd.DataFrame) -> go.Figure:
         success,
         x='runtime_seconds',
         y='f1',
-        color='submission_group',
+        color='mode_label',
         hover_name='submission_name',
         size='samechar_f1',
         size_max=18,
@@ -300,10 +295,7 @@ def make_dataset_bar(row: pd.Series) -> go.Figure:
         'NLPCC-Weibo_f1': 'NLPCC微博',
         'EvaHan-2022_f1': 'EvaHan',
         'TCM-Ancient-Books_f1': 'TCM古籍',
-        'samechar_f1': 'samechar',
-        'high_f1': '高难层',
-        'medium_f1': '中难层',
-        'specialized_f1': '专项层',
+        'samechar_f1': 'samechar专项',
     }
 
     rows = []
@@ -424,7 +416,6 @@ def make_podium(rows: list[dict]) -> list[html.Div]:
                 [
                     html.Div(f'#{rank}', className=f'podium-rank podium-{tone}'),
                     html.Div(str(row.get('submission_name', '')), className='podium-name'),
-                    html.Div(str(row.get('submission_group', '')), className='podium-group'),
                     html.Div(f"总体 F1 {float(row.get('f1', 0.0)):.4f}", className='podium-score'),
                     html.Div(f"运行时间 {float(row.get('runtime_seconds', 0.0)):.4f} s", className='podium-runtime'),
                     html.Div(' ｜ '.join(metric_bits[:2]), className='podium-meta'),
@@ -575,15 +566,20 @@ def create_app(results_dir: Path) -> Dash:
                                 [
                                     html.Div('🔍 筛选', className='h6 mb-2 fw-bold'),
                                     dbc.Label('搜索', className='small mb-1'),
-                                    dbc.Input(id='search-input', placeholder='提交名、分组', size='sm', className='mb-2'),
-                                    dbc.Label('分组', className='small mb-1'),
-                                    dcc.Dropdown(id='group-filter', options=[{'label': '全部', 'value': 'all'}] + [{'label': value, 'value': value} for value in sorted(board['submission_group'].dropna().unique().tolist())], value='all', clearable=False, className='mb-2'),
+                                    dbc.Input(id='search-input', placeholder='提交名、说明', size='sm', className='mb-2'),
+                                    dbc.Checklist(
+                                        id='reference-toggle',
+                                        options=[{'label': '加入 AI / 工具对比', 'value': 'show'}],
+                                        value=[],
+                                        switch=True,
+                                        className='mb-2',
+                                    ),
                                     dbc.Label('模式', className='small mb-1'),
                                     dcc.Dropdown(id='mode-filter', options=[{'label': '全部', 'value': 'all'}, {'label': '预测文件', 'value': 'prediction_file_only'}, {'label': '可执行包', 'value': 'executable_package'}], value='all', clearable=False, className='mb-2'),
                                     dbc.Label('状态', className='small mb-1'),
                                     dcc.Dropdown(id='status-filter', options=[{'label': '全部', 'value': 'all'}] + [{'label': value, 'value': value} for value in sorted(board['status'].dropna().unique().tolist())], value='all', clearable=False, className='mb-2'),
                                     dbc.Label('排序', className='small mb-1'),
-                                    dcc.Dropdown(id='sort-key', options=[{'label': DISPLAY_NAMES.get(col, col), 'value': col} for col in ['f1', 'NLPCC-Weibo_f1', 'EvaHan-2022_f1', 'TCM-Ancient-Books_f1', 'samechar_f1', 'high_f1', 'specialized_f1', 'runtime_seconds']], value='f1', clearable=False),
+                                    dcc.Dropdown(id='sort-key', options=[{'label': DISPLAY_NAMES.get(col, col), 'value': col} for col in ['f1', 'NLPCC-Weibo_f1', 'EvaHan-2022_f1', 'TCM-Ancient-Books_f1', 'samechar_f1', 'runtime_seconds']], value='f1', clearable=False),
                                 ]
                             ),
                             className='shadow-sm border-0',
@@ -605,12 +601,12 @@ def create_app(results_dir: Path) -> Dash:
                                         columns=[
                                             {'name': '排名', 'id': 'rank'},
                                             {'name': '提交名', 'id': 'submission_name'},
-                                            {'name': '分组', 'id': 'submission_group'},
                                             {'name': '状态', 'id': 'status'},
                                             {'name': '总体F1', 'id': 'f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
                                             {'name': 'NLPCC', 'id': 'NLPCC-Weibo_f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
                                             {'name': 'EvaHan', 'id': 'EvaHan-2022_f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
                                             {'name': 'TCM', 'id': 'TCM-Ancient-Books_f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
+                                            {'name': 'samechar专项', 'id': 'samechar_f1', 'type': 'numeric', 'format': {'specifier': '.3f'}},
                                             {'name': '时间', 'id': 'runtime_seconds', 'type': 'numeric', 'format': {'specifier': '.3f'}},
                                         ],
                                         data=board.to_dict('records'),
@@ -625,6 +621,7 @@ def create_app(results_dir: Path) -> Dash:
                                         style_data_conditional=[
                                             {'if': {'filter_query': '{status} = 成功'}, 'backgroundColor': '#0f2e2a'},
                                             {'if': {'filter_query': '{status} contains 错误 || {status} = 拒收 || {status} = 超时'}, 'backgroundColor': '#3a1e2b'},
+                                            {'if': {'filter_query': '{comparison_kind} = reference'}, 'backgroundColor': '#5a4b16', 'color': '#fff7d6'},
                                         ],
                                     ),
                                 ]
@@ -689,21 +686,22 @@ def create_app(results_dir: Path) -> Dash:
         Output('leaderboard-table', 'data'),
         Input('board-store', 'data'),
         Input('search-input', 'value'),
-        Input('group-filter', 'value'),
+        Input('reference-toggle', 'value'),
         Input('mode-filter', 'value'),
         Input('status-filter', 'value'),
         Input('sort-key', 'value'),
     )
-    def filter_board(rows: list[dict], query: str, group: str, mode: str, status: str, sort_key: str) -> list[dict]:
+    def filter_board(rows: list[dict], query: str, reference_toggle: list[str], mode: str, status: str, sort_key: str) -> list[dict]:
         frame = pd.DataFrame(rows)
         if frame.empty:
             return []
+        include_reference = 'show' in (reference_toggle or [])
+        if not include_reference and 'comparison_kind' in frame.columns:
+            frame = frame[frame['comparison_kind'] != 'reference']
         if query:
             q = query.lower().strip()
-            mask = frame.apply(lambda row: q in ' '.join(str(row.get(col, '')).lower() for col in ['submission_name', 'submission_group', 'message']), axis=1)
+            mask = frame.apply(lambda row: q in ' '.join(str(row.get(col, '')).lower() for col in ['submission_name', 'message']), axis=1)
             frame = frame[mask]
-        if group != 'all':
-            frame = frame[frame['submission_group'] == group]
         if mode != 'all':
             frame = frame[frame['mode'] == mode]
         if status != 'all':

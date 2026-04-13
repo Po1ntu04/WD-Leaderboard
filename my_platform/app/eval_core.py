@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from pathlib import Path
+from difflib import SequenceMatcher
 import re
 
 import pandas as pd
@@ -23,7 +24,10 @@ STATUS_REJECTED = '拒收'
 DEFAULT_SUBMISSION_GROUP = '课堂提交'
 MAX_SUBMISSION_BYTES = 2 * 1024 * 1024
 MAX_PREDICTION_LINE_CHARS = 10000
-RUNTIME_PATTERN = re.compile(r'^#\s*runtime_seconds\s*:\s*([0-9]+(?:\.[0-9]+)?)\s*$')
+RUNTIME_PATTERN = re.compile(
+    r'^#\s*runtime_seconds\b\s*:?\s*([0-9]+(?:\.[0-9]+)?)\b(?:\s*(?://.*)?)?\s*$',
+    re.IGNORECASE,
+)
 
 LEADERBOARD_COLUMNS = [
     'rank',
@@ -92,7 +96,7 @@ def load_prediction_submission(submission_path: str | Path) -> tuple[list[list[s
                 runtime_seconds = float(match.group(1))
                 runtime_line_idx = last_nonempty_idx
             else:
-                errors.append('最后一行元信息格式错误，应为 # runtime_seconds: 数值')
+                errors.append('最后一行元信息格式错误，应以 # 开头并包含 runtime_seconds 数值')
 
     pred_rows: list[list[str]] = []
     for line_no, raw_line in enumerate(lines, start=1):
@@ -105,7 +109,7 @@ def load_prediction_submission(submission_path: str | Path) -> tuple[list[list[s
         if stripped.startswith('#'):
             if runtime_line_idx is not None and line_no - 1 == runtime_line_idx:
                 continue
-            errors.append('元信息行只能放在最后一行，且格式为 # runtime_seconds: 数值')
+            errors.append('元信息行只能放在最后一行，且需要包含 runtime_seconds 数值')
             continue
         pred_rows.append(parse_segmented_line(raw_line))
 
@@ -123,6 +127,56 @@ def validate_prediction_lines(raw_rows: list[str], pred_rows: list[list[str]]) -
             if len(errors) >= 20:
                 break
     return errors
+
+
+def invalid_prediction_row(raw_line: str) -> list[str]:
+    return [raw_line + '¤']
+
+
+def normalize_prediction_rows_tolerant(raw_rows: list[str], pred_rows: list[list[str]]) -> tuple[list[list[str]], list[str], int]:
+    pred_texts = [''.join(row) for row in pred_rows]
+    matcher = SequenceMatcher(a=raw_rows, b=pred_texts, autojunk=False)
+    normalized: list[list[str]] = []
+    warnings: list[str] = []
+    issue_count = 0
+
+    def add_warning(message: str) -> None:
+        if len(warnings) < 20:
+            warnings.append(message)
+
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == 'equal':
+            normalized.extend(pred_rows[j1:j2])
+            continue
+        if tag == 'insert':
+            extra = j2 - j1
+            issue_count += extra
+            add_warning(f'检测到 {extra} 行额外输出，已忽略。')
+            continue
+        if tag == 'delete':
+            for idx in range(i1, i2):
+                normalized.append(invalid_prediction_row(raw_rows[idx]))
+                issue_count += 1
+                add_warning(f'第 {idx + 1} 行缺失，按0分处理。')
+            continue
+        # replace
+        for idx in range(i1, i2):
+            normalized.append(invalid_prediction_row(raw_rows[idx]))
+            issue_count += 1
+            add_warning(f'第 {idx + 1} 行无法还原原句，按0分处理。')
+
+    if len(normalized) < len(raw_rows):
+        for idx in range(len(normalized), len(raw_rows)):
+            normalized.append(invalid_prediction_row(raw_rows[idx]))
+            issue_count += 1
+            add_warning(f'第 {idx + 1} 行缺失，按0分处理。')
+    elif len(normalized) > len(raw_rows):
+        normalized = normalized[:len(raw_rows)]
+
+    if issue_count > len(warnings):
+        warnings.append(f'其余 {issue_count - len(warnings)} 个问题行已按0分处理。')
+
+    return normalized, warnings, issue_count
 
 
 def first_message(validation_errors: list[str], eval_warnings: list[str]) -> str:
@@ -147,6 +201,7 @@ def build_score_payload(
     timestamp: str,
     validation_errors: list[str],
     runtime_seconds: float | None = None,
+    issue_count: int = 0,
 ) -> tuple[dict, dict]:
     eval_warnings: list[str] = []
     by_dataset: dict[str, dict] = {}
@@ -183,6 +238,7 @@ def build_score_payload(
         'runtime_seconds': round(float(runtime_seconds or 0.0), 6),
         'overall': overall,
         'wrong_sentence_count': wrong_sentence_count,
+        'tolerant_issue_count': issue_count,
         'message': message,
         'by_dataset': by_dataset,
         'by_difficulty': by_difficulty,
@@ -202,6 +258,7 @@ def build_score_payload(
         'recall': overall.get('recall', 0.0),
         'f1': overall.get('f1', 0.0),
         'wrong_sentence_count': wrong_sentence_count,
+        'tolerant_issue_count': issue_count,
         'message': message,
         'NLPCC-Weibo_f1': by_dataset.get('NLPCC-Weibo', {}).get('f1'),
         'EvaHan-2022_f1': by_dataset.get('EvaHan-2022', {}).get('f1'),
@@ -278,8 +335,10 @@ def score_prediction_submission(
     errors = list(execution_errors or [])
     errors.extend(parse_errors)
     effective_runtime = runtime_seconds if runtime_seconds is not None else runtime_from_file
+    tolerant_warnings: list[str] = []
+    issue_count = 0
     if submission_path.exists() and not errors:
-        errors.extend(validate_prediction_lines(raw_rows, pred_rows))
+        pred_rows, tolerant_warnings, issue_count = normalize_prediction_rows_tolerant(raw_rows, pred_rows)
 
     status = STATUS_SUCCESS if not errors else (failure_status or STATUS_FORMAT_ERROR)
     report, row = build_score_payload(
@@ -295,7 +354,12 @@ def score_prediction_submission(
         timestamp=timestamp,
         validation_errors=errors,
         runtime_seconds=effective_runtime,
+        issue_count=issue_count,
     )
+    if tolerant_warnings:
+        report['eval_warnings'] = tolerant_warnings
+        row['message'] = first_message(errors, tolerant_warnings)
+        report['message'] = row['message']
     write_report(report, reports_dir)
     board = update_leaderboard(leaderboard_path, row)
     return report, board
