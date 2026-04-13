@@ -116,6 +116,52 @@ def load_prediction_submission(submission_path: str | Path) -> tuple[list[list[s
     return pred_rows, errors, runtime_seconds
 
 
+def recover_single_line_prediction(raw_rows: list[str], submission_path: str | Path) -> tuple[list[list[str]], list[str]]:
+    path = Path(submission_path)
+    text = path.read_text(encoding='utf-8-sig')
+    content_lines = [line for line in text.splitlines() if line.strip() and not line.strip().startswith('#')]
+    if len(content_lines) != 1:
+        return [], []
+    tokens = parse_segmented_line(content_lines[0])
+    if not tokens:
+        return [], []
+
+    rebuilt: list[list[str]] = []
+    current: list[str] = []
+    row_idx = 0
+    consumed = 0
+    for token in tokens:
+        remaining_token = token
+        while row_idx < len(raw_rows) and remaining_token:
+            target = len(raw_rows[row_idx]) - consumed
+            token_len = len(remaining_token)
+            if token_len < target:
+                current.append(remaining_token)
+                consumed += token_len
+                remaining_token = ''
+            elif token_len == target:
+                current.append(remaining_token)
+                rebuilt.append(current)
+                current = []
+                row_idx += 1
+                consumed = 0
+                remaining_token = ''
+            else:
+                current.append(remaining_token[:target])
+                rebuilt.append(current)
+                current = []
+                row_idx += 1
+                consumed = 0
+                remaining_token = remaining_token[target:]
+    if current and row_idx < len(raw_rows):
+        rebuilt.append(current)
+        row_idx += 1
+    while row_idx < len(raw_rows):
+        rebuilt.append([])
+        row_idx += 1
+    return rebuilt[:len(raw_rows)], ['检测到单行超长提交，已自动按句长重排后评测。']
+
+
 def validate_prediction_lines(raw_rows: list[str], pred_rows: list[list[str]]) -> list[str]:
     errors: list[str] = []
     if len(raw_rows) != len(pred_rows):
@@ -339,6 +385,13 @@ def score_prediction_submission(
     issue_count = 0
     if submission_path.exists() and not errors:
         pred_rows, tolerant_warnings, issue_count = normalize_prediction_rows_tolerant(raw_rows, pred_rows)
+    elif submission_path.exists() and errors and pred_rows == [] and len(errors) == 1 and '第 1 行过长' in errors[0]:
+        recovered_rows, recovery_warnings = recover_single_line_prediction(raw_rows, submission_path)
+        if recovered_rows:
+            pred_rows = recovered_rows
+            errors = []
+            pred_rows, tolerant_warnings, issue_count = normalize_prediction_rows_tolerant(raw_rows, pred_rows)
+            tolerant_warnings = recovery_warnings + tolerant_warnings
 
     status = STATUS_SUCCESS if not errors else (failure_status or STATUS_FORMAT_ERROR)
     report, row = build_score_payload(
