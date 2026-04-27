@@ -45,6 +45,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--reports-dir', default='platform/results/reports')
     parser.add_argument('--runtime-root', default='platform/runtime')
     parser.add_argument('--timeout-seconds', type=int, default=120)
+    parser.add_argument('--defer-standard-export', action='store_true', help='Skip standardized table export; run_session exports once after batch scoring.')
     return parser.parse_args()
 
 
@@ -65,6 +66,7 @@ def main() -> None:
             reports_dir=args.reports_dir,
             execution_errors=['缺少 run.bat。'],
             failure_status='拒收',
+            export_tables=not args.defer_standard_export,
         )
         print(f'提交失败：{report["status"]}')
         print(board.to_string())
@@ -137,6 +139,7 @@ def main() -> None:
         runtime_seconds=runtime_seconds,
         execution_errors=execution_errors,
         failure_status=failure_status,
+        export_tables=not args.defer_standard_export,
     )
     print(f'已更新排行榜：{Path(args.leaderboard)}')
     print(f'提交状态：{report["status"]}')
@@ -145,4 +148,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-

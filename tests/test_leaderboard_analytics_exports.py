@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'platform' / 'app'))
 
 from algorithms.common.io import write_lines
-from my_platform.app.analytics_exports import (
+from analytics_exports import (
     aggregate_score_rows,
     build_sentence_table,
     evaluate_submission,
@@ -96,7 +99,7 @@ def test_evaluate_submission_exports_flat_submission_row(tmp_path: Path) -> None
 
 
 def test_dashboard_sample_covers_required_scoring_cases(tmp_path: Path) -> None:
-    from my_platform.app.eval_core import score_prediction_submission
+    from eval_core import score_prediction_submission
 
     root = Path('test_assets/dashboard_sample')
     results_dir = tmp_path / 'results'
@@ -151,8 +154,13 @@ def test_dashboard_sample_covers_required_scoring_cases(tmp_path: Path) -> None:
         leaderboard_path=results_dir / 'leaderboard.csv',
         reports_dir=results_dir / 'reports',
     )
-    assert invalid_report['status'] == '格式错误'
+    assert invalid_report['status'] == '成功'
+    assert invalid_report['tolerant_issue_count'] == 1
     assert '无法还原原句' in invalid_report['message']
+    bad_rows = [row for row in invalid_report['sentence_score_rows'] if row['validation_status'] == 'reconstruction_mismatch']
+    assert len(bad_rows) == 1
+    assert bad_rows[0]['word_f1'] == 0
+    assert bad_rows[0]['boundary_f1'] == 0
 
     sentence_table = (results_dir / 'sentence_table.csv').read_text(encoding='utf-8-sig')
     submission_table = (results_dir / 'submission_table.csv').read_text(encoding='utf-8-sig')
@@ -160,3 +168,90 @@ def test_dashboard_sample_covers_required_scoring_cases(tmp_path: Path) -> None:
     assert 'discrimination_index' in sentence_table
     assert 'leaderboard.json' in {path.name for path in results_dir.iterdir()}
     assert 'perfect' in submission_table
+
+
+def test_tolerant_policy_handles_missing_and_extra_lines(tmp_path: Path) -> None:
+    from eval_core import score_prediction_submission
+
+    root = Path('test_assets/dashboard_sample')
+    results_dir = tmp_path / 'results'
+    missing = tmp_path / 'missing_pred.txt'
+    missing.write_text('我 / 爱 / 北京\nab / c\n哈哈 / 哈哈\n重复 / 重复\n', encoding='utf-8')
+    missing_report, _ = score_prediction_submission(
+        submission_path=missing,
+        submission_name='missing',
+        mode='prediction_file_only',
+        raw_path=root / 'raw.txt',
+        gold_path=root / 'gold.txt',
+        manifest_path=root / 'manifest.csv',
+        leaderboard_path=results_dir / 'leaderboard.csv',
+        reports_dir=results_dir / 'reports',
+    )
+    assert missing_report['status'] == '成功'
+    assert missing_report['tolerant_issue_count'] == 1
+    assert '缺失' in missing_report['message']
+    assert any(row['validation_status'] == 'missing_line' and row['word_f1'] == 0 for row in missing_report['sentence_score_rows'])
+
+    extra = tmp_path / 'extra_pred.txt'
+    extra.write_text((root / 'submissions/perfect_pred.txt').read_text(encoding='utf-8') + '额外 / 行\n', encoding='utf-8')
+    extra_report, _ = score_prediction_submission(
+        submission_path=extra,
+        submission_name='extra',
+        mode='prediction_file_only',
+        raw_path=root / 'raw.txt',
+        gold_path=root / 'gold.txt',
+        manifest_path=root / 'manifest.csv',
+        leaderboard_path=results_dir / 'leaderboard.csv',
+        reports_dir=results_dir / 'reports',
+    )
+    assert extra_report['status'] == '成功'
+    assert extra_report['tolerant_issue_count'] == 1
+    assert '额外输出' in extra_report['message']
+
+
+def test_fatal_file_and_encoding_errors_fail_submission(tmp_path: Path) -> None:
+    from eval_core import score_prediction_submission
+
+    root = Path('test_assets/dashboard_sample')
+    results_dir = tmp_path / 'results'
+    missing_report, _ = score_prediction_submission(
+        submission_path=tmp_path / 'does_not_exist.txt',
+        submission_name='missing_file',
+        mode='prediction_file_only',
+        raw_path=root / 'raw.txt',
+        gold_path=root / 'gold.txt',
+        manifest_path=root / 'manifest.csv',
+        leaderboard_path=results_dir / 'leaderboard.csv',
+        reports_dir=results_dir / 'reports',
+    )
+    assert missing_report['status'] == '格式错误'
+    assert '未找到输出文件' in missing_report['message']
+
+    bad_encoding = tmp_path / 'bad_encoding.txt'
+    bad_encoding.write_bytes(b'\xff\xfe\x00\x00')
+    encoding_report, _ = score_prediction_submission(
+        submission_path=bad_encoding,
+        submission_name='bad_encoding',
+        mode='prediction_file_only',
+        raw_path=root / 'raw.txt',
+        gold_path=root / 'gold.txt',
+        manifest_path=root / 'manifest.csv',
+        leaderboard_path=results_dir / 'leaderboard.csv',
+        reports_dir=results_dir / 'reports',
+    )
+    assert encoding_report['status'] == '格式错误'
+    assert 'UTF-8' in encoding_report['message']
+
+
+def test_repeated_single_character_tokens_are_scored_by_span() -> None:
+    score_row, _, _ = score_sentence(
+        submission_name='repeat',
+        sentence_id=1,
+        raw_text='哈哈',
+        gold_tokens=['哈', '哈'],
+        pred_tokens=['哈', '哈'],
+        subsets={'source': 'toy', 'difficulty': 'medium', 'sentence_type': 'repeated'},
+        validation_status='ok',
+    )
+    assert score_row['correct_word_count'] == 2
+    assert score_row['word_f1'] == 1.0

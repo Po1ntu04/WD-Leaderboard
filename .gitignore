@@ -10,9 +10,7 @@ venv/
 .codex/
 .vscode/
 outputs/
-platform/results/
 platform/runtime/
-my_platform/results/
 archive/
 models/
 deliverables/

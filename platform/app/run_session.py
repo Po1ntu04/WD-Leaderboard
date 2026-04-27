@@ -78,6 +78,7 @@ def score_prediction_files(prediction_dir: Path, args: argparse.Namespace, resul
             '--manifest', args.manifest,
             '--leaderboard', str(results_dir / 'leaderboard.csv'),
             '--reports-dir', str(results_dir / 'reports'),
+            '--defer-standard-export',
         ])
         scored.append({'name': name, 'mode': 'prediction_file_only', 'path': str(pred_file)})
     return scored
@@ -98,6 +99,7 @@ def score_executable_dirs(executable_dir: Path, args: argparse.Namespace, result
             '--leaderboard', str(results_dir / 'leaderboard.csv'),
             '--reports-dir', str(results_dir / 'reports'),
             '--timeout-seconds', str(args.timeout_seconds),
+            '--defer-standard-export',
         ])
         scored.append({'name': name, 'mode': 'executable_package', 'path': str(submission_dir)})
     return scored
@@ -164,4 +166,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-

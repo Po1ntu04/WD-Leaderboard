@@ -428,8 +428,10 @@ def evaluate_submission(
     mode: str = "",
     submission_path: str = "",
     timestamp: str = "",
+    validation_statuses: dict[int, str] | None = None,
 ) -> dict[str, Any]:
     _, sentence_errors = validate_prediction_rows(raw_rows, pred_rows)
+    sentence_errors.update(validation_statuses or {})
     sentence_score_rows: list[dict[str, Any]] = []
     boundary_rows: list[dict[str, Any]] = []
     span_error_rows: list[dict[str, Any]] = []
@@ -439,7 +441,7 @@ def evaluate_submission(
         sentence_id = index + 1
         gold_status = _sentence_gold_status(sentence_table, sentence_id)
         pred_tokens = pred_rows[index] if scoring_enabled and index < len(pred_rows) else []
-        validation_status = "ok" if scoring_enabled else sentence_errors.get(sentence_id, "submission_invalid")
+        validation_status = sentence_errors.get(sentence_id, "ok") if scoring_enabled else sentence_errors.get(sentence_id, "submission_invalid")
         if validation_status == "ok" and gold_status == GOLD_STATUS_EXCLUDED:
             validation_status = "gold_excluded"
         score_row, boundary, span_errors = score_sentence(

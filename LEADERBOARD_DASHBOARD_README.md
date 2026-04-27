@@ -2,6 +2,8 @@
 
 This repository includes a local, offline leaderboard and visual analytics dashboard for Chinese Word Segmentation submissions.
 
+Canonical implementation directory: `platform/`. The `app/` scripts are thin compatibility wrappers that dispatch to `platform/app/*`.
+
 ## Inputs
 
 Required files:
@@ -115,18 +117,18 @@ python -m pip install -r requirements.txt
 Run the bundled small sample:
 
 ```bash
-python my_platform/app/run_session.py \
+python platform/app/run_session.py \
   --prediction-dir test_assets/dashboard_sample/submissions \
   --raw test_assets/dashboard_sample/raw.txt \
   --gold test_assets/dashboard_sample/gold.txt \
   --manifest test_assets/dashboard_sample/manifest.csv \
-  --results-dir my_platform/results/dashboard_sample
+  --results-dir platform/results/dashboard_sample
 ```
 
 Open the dashboard:
 
 ```bash
-python my_platform/app/dashboard.py --results-dir my_platform/results/dashboard_sample
+python platform/app/dashboard.py --results-dir platform/results/dashboard_sample
 ```
 
 Simplified entry points also exist:

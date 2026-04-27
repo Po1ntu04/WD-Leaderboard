@@ -54,6 +54,7 @@ LEADERBOARD_COLUMNS = [
     'over_segmentation_count',
     'under_segmentation_count',
     'wrong_sentence_count',
+    'tolerant_issue_count',
     'message',
     'NLPCC-Weibo_f1',
     'EvaHan-2022_f1',
@@ -192,12 +193,16 @@ def invalid_prediction_row(raw_line: str) -> list[str]:
     return [raw_line + '¤']
 
 
-def normalize_prediction_rows_tolerant(raw_rows: list[str], pred_rows: list[list[str]]) -> tuple[list[list[str]], list[str], int]:
+def normalize_prediction_rows_tolerant(raw_rows: list[str], pred_rows: list[list[str]]) -> tuple[list[list[str]], list[str], int, dict[int, str]]:
     pred_texts = [''.join(row) for row in pred_rows]
     matcher = SequenceMatcher(a=raw_rows, b=pred_texts, autojunk=False)
     normalized: list[list[str]] = []
     warnings: list[str] = []
     issue_count = 0
+    validation_statuses: dict[int, str] = {}
+    mismatch_count = 0
+    missing_count = 0
+    extra_count = 0
 
     def add_warning(message: str) -> None:
         if len(warnings) < 20:
@@ -209,33 +214,54 @@ def normalize_prediction_rows_tolerant(raw_rows: list[str], pred_rows: list[list
             continue
         if tag == 'insert':
             extra = j2 - j1
+            extra_count += extra
             issue_count += extra
             add_warning(f'检测到 {extra} 行额外输出，已忽略。')
             continue
         if tag == 'delete':
             for idx in range(i1, i2):
                 normalized.append(invalid_prediction_row(raw_rows[idx]))
+                validation_statuses[idx + 1] = 'missing_line'
+                missing_count += 1
                 issue_count += 1
                 add_warning(f'第 {idx + 1} 行缺失，按0分处理。')
             continue
         # replace
         for idx in range(i1, i2):
             normalized.append(invalid_prediction_row(raw_rows[idx]))
+            validation_statuses[idx + 1] = 'reconstruction_mismatch'
+            mismatch_count += 1
             issue_count += 1
             add_warning(f'第 {idx + 1} 行无法还原原句，按0分处理。')
+        if (j2 - j1) > (i2 - i1):
+            extra = (j2 - j1) - (i2 - i1)
+            extra_count += extra
+            issue_count += extra
+            add_warning(f'检测到 {extra} 行额外输出，已忽略。')
 
     if len(normalized) < len(raw_rows):
         for idx in range(len(normalized), len(raw_rows)):
             normalized.append(invalid_prediction_row(raw_rows[idx]))
+            validation_statuses[idx + 1] = 'missing_line'
+            missing_count += 1
             issue_count += 1
             add_warning(f'第 {idx + 1} 行缺失，按0分处理。')
     elif len(normalized) > len(raw_rows):
         normalized = normalized[:len(raw_rows)]
 
+    summary_parts: list[str] = []
+    if mismatch_count:
+        summary_parts.append(f'{mismatch_count} 行无法还原原句，已按0分处理。')
+    if missing_count:
+        summary_parts.append(f'{missing_count} 行缺失，已按0分处理。')
+    if extra_count:
+        summary_parts.append(f'{extra_count} 行额外输出，已忽略。')
+    if summary_parts:
+        warnings.insert(0, ''.join(summary_parts))
     if issue_count > len(warnings):
         warnings.append(f'其余 {issue_count - len(warnings)} 个问题行已按0分处理。')
 
-    return normalized, warnings, issue_count
+    return normalized, warnings, issue_count, validation_statuses
 
 
 def first_message(validation_errors: list[str], eval_warnings: list[str]) -> str:
@@ -259,10 +285,12 @@ def build_score_payload(
     status: str,
     timestamp: str,
     validation_errors: list[str],
+    validation_warnings: list[str] | None = None,
+    validation_statuses: dict[int, str] | None = None,
     runtime_seconds: float | None = None,
     issue_count: int = 0,
 ) -> tuple[dict, dict]:
-    eval_warnings: list[str] = []
+    eval_warnings: list[str] = list(validation_warnings or [])
     by_dataset: dict[str, dict] = {}
     by_difficulty: dict[str, dict] = {}
     by_sentence_type: dict[str, dict] = {}
@@ -281,6 +309,7 @@ def build_score_payload(
         timestamp=timestamp,
         validation_errors=validation_errors,
         runtime_seconds=runtime_seconds,
+        validation_statuses=validation_statuses,
     )
 
     if status == STATUS_SUCCESS:
@@ -341,6 +370,7 @@ def build_score_payload(
         'by_sentence_type': by_sentence_type,
         'subset_scores': analytics['subset_scores'],
         'validation_errors': validation_errors,
+        'validation_warnings': eval_warnings,
         'eval_warnings': eval_warnings,
         'wrong_cases': wrong_cases[:20],
         'submission_row': submission_row,
@@ -435,6 +465,7 @@ def score_prediction_submission(
     runtime_seconds: float | None = None,
     execution_errors: list[str] | None = None,
     failure_status: str | None = None,
+    export_tables: bool = True,
 ) -> tuple[dict, pd.DataFrame]:
     raw_rows = read_raw_file(raw_path)
     gold_rows = read_segmented_file(gold_path)
@@ -447,8 +478,10 @@ def score_prediction_submission(
     errors.extend(parse_errors)
     effective_runtime = runtime_seconds if runtime_seconds is not None else runtime_from_file
     issue_count = 0
+    tolerant_warnings: list[str] = []
+    validation_statuses: dict[int, str] = {}
     if submission_path.exists() and not errors:
-        errors.extend(validate_prediction_lines(raw_rows, pred_rows))
+        pred_rows, tolerant_warnings, issue_count, validation_statuses = normalize_prediction_rows_tolerant(raw_rows, pred_rows)
 
     status = STATUS_SUCCESS if not errors else (failure_status or STATUS_FORMAT_ERROR)
     report, row = build_score_payload(
@@ -463,15 +496,18 @@ def score_prediction_submission(
         status=status,
         timestamp=timestamp,
         validation_errors=errors,
+        validation_warnings=tolerant_warnings,
+        validation_statuses=validation_statuses,
         runtime_seconds=effective_runtime,
         issue_count=issue_count,
     )
     write_report(report, reports_dir)
     board = update_leaderboard(leaderboard_path, row)
-    export_standard_tables(
-        results_dir=Path(leaderboard_path).parent,
-        raw_path=raw_path,
-        gold_path=gold_path,
-        manifest_path=manifest_path,
-    )
+    if export_tables:
+        export_standard_tables(
+            results_dir=Path(leaderboard_path).parent,
+            raw_path=raw_path,
+            gold_path=gold_path,
+            manifest_path=manifest_path,
+        )
     return report, board

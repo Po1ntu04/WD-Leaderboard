@@ -8,4 +8,4 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 if __name__ == '__main__':
-    runpy.run_path(str(ROOT / 'my_platform' / 'app' / 'dashboard.py'), run_name='__main__')
+    runpy.run_path(str(ROOT / 'platform' / 'app' / 'dashboard.py'), run_name='__main__')
