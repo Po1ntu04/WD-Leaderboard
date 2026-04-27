@@ -1,8 +1,37 @@
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+.pytest_cache/
 .venv/
 venv/
-.pytest_cache/
-platform/results/*.tmp
+
+# Runtime / generated outputs
+.omx/
+.codex/
+.vscode/
+outputs/
+platform/results/
+platform/runtime/
+my_platform/results/
+archive/
+models/
+deliverables/
+submit/
+student_resources/
+
+# Large source/reference datasets and binaries kept outside this focused repo commit
+*.zip
+*.exe
+*.pptx
+*.docx
+*.pdf
+*.xlsx
+unified_cws_browser*/
+LT4HALA/
+NLPCC-WordSeg-Weibo/
+CWSA/
+Database information-OAS/
+
+# OS / editor
+.DS_Store
+nul

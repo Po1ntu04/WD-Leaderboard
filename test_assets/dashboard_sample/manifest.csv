@@ -1,0 +1,6 @@
+line_no,dataset,difficulty_bucket,sentence_type,gold_status,selection_tags,raw_text
+1,toy,medium,standard,confirmed,sentence_level,我爱北京
+2,toy,high,mixed_script,confirmed,mixed_script,abc
+3,toy,medium,repeated,confirmed,repeated,哈哈哈哈
+4,toy,high,repeated,suspicious,repeated,重复重复
+5,toy,medium,standard,excluded,sentence_level,坏样例

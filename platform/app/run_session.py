@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import argparse
 import json
@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--raw', default='test_assets/platform_eval_v2_draft/raw.txt')
     parser.add_argument('--gold', default='test_assets/platform_eval_v2_draft/gold.txt')
     parser.add_argument('--manifest', default='test_assets/platform_eval_v2_draft/gold_manifest.csv')
-    parser.add_argument('--results-dir', default='my_platform/results')
+    parser.add_argument('--results-dir', default='platform/results')
     parser.add_argument('--timeout-seconds', type=int, default=120)
     return parser.parse_args()
 

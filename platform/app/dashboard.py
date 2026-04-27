@@ -40,7 +40,7 @@ PLOT_LAYOUT = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Run the Chinese Word Segmentation analytics dashboard.')
-    parser.add_argument('--results-dir', default='my_platform/results')
+    parser.add_argument('--results-dir', default='platform/results')
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=8050)
     parser.add_argument('--debug', action='store_true')
