@@ -11,13 +11,17 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from eval_core import load_prediction_submission, normalize_prediction_rows_tolerant
-from algorithms.common.io import read_raw_file, read_segmented_file
 
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+APP_DIR = Path(__file__).resolve().parent
+if str(APP_DIR) not in sys.path:
+    sys.path.insert(0, str(APP_DIR))
+
+from eval_core import load_prediction_submission, normalize_prediction_rows_tolerant
+from algorithms.common.io import read_raw_file, read_segmented_file
 
 
 DISPLAY_NAMES = {
