@@ -162,12 +162,40 @@ python app/leaderboard.py
 The dashboard uses five grouped tabs instead of separate peer tabs for every visualization:
 
 1. **Overview** — title, data version, KPI cards, leaderboard preview, top-15 bar chart, metric heatmap, and source summary.
-2. **Leaderboard** — official table, subset heatmap, rank-delta view, and student/method profile.
-3. **Diagnostics** — character-level boundary diff viewer, error-type chart, sentence difficulty map, and expandable long tables.
-4. **Gold Review** — review console for `confirmed` / `suspicious` / `excluded` gold rows.
-5. **Experimental** — word cloud, Sankey, clustering, and network graph. These are exploratory only and are not used for official ranking.
+2. **Leaderboard** — official table, subset heatmap, metric-scope rank comparison, and student/method profile.
+3. **Diagnostics** — character-level boundary diff viewer, error-type chart, sentence difficulty map, and collapsed developer/raw artifact views.
+4. **Gold Review** — review console for `confirmed` / `suspicious` / `excluded` gold rows, with low-F1 and high-discrimination review reasons.
+5. **Experimental** — exploratory Top-N token/error bars, error-flow Sankey, metric-space scatter, and collapsed similarity network. These are exploratory only and are not used for official ranking.
 
 The visual design is intentionally clean and academic: `#f8fafc` background, white cards, blue-gray accents, dense readable tables, no 3D charts, and every chart maps back to an exported table.
+
+## PPT-ready figure export
+
+Export static 16:9 PNG figures for slides:
+
+```bash
+python app/export_figures.py \
+  --results-dir platform/results \
+  --out-dir platform/results/figures \
+  --font-path /path/to/ChineseFont.ttf
+```
+
+The `--font-path` argument is recommended for Chinese word clouds; font files are not committed to this repository.
+
+The exporter writes:
+
+- `01_leaderboard_top12.png`
+- `02_metric_space_scatter.png`
+- `03_subset_heatmap_top20.png`
+- `04_error_type_distribution.png`
+- `05_sentence_difficulty_map.png`
+- `06_dataset_source_distribution.png`
+- `07_boundary_diff_case.png`
+- `08_gold_review_low_f1_cases.png`
+- `wordcloud_dataset_gold.png`
+- `wordcloud_common_error_spans.png`
+
+Static Plotly PNG export uses `kaleido`; word clouds use `wordcloud`. Both are listed in `requirements.txt`.
 
 ## Tests
 

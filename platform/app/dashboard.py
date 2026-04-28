@@ -7,8 +7,9 @@ from pathlib import Path
 from typing import Any
 
 import dash
-from dash import Dash, Input, Output, dash_table, dcc, html
+from dash import Dash, Input, Output, State, dash_table, dcc, html
 import dash_bootstrap_components as dbc
+from dash.exceptions import PreventUpdate
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -64,6 +65,7 @@ DISPLAY_LABELS = {
     'gold': 'Gold',
     'gold_preview': 'Gold Preview',
     'review_flags': 'Review Flags',
+    'review_reason': 'Review Reason',
     'sentence_avg_word_f1': 'Avg Word F1',
     'sentence_avg_boundary_f1': 'Avg Boundary F1',
     'avg_f1': 'Avg F1',
@@ -695,6 +697,15 @@ def network_graph(sentence_scores: pd.DataFrame, submissions: pd.DataFrame | Non
     return fig
 
 
+def network_visual(sentence_scores: pd.DataFrame, submissions: pd.DataFrame | None = None) -> Any:
+    fig = network_graph(sentence_scores, submissions)
+    if not fig.data:
+        title = getattr(fig.layout, 'title', None)
+        message = title.text if title and title.text else 'Similarity network is not available for this result set.'
+        return html.Div(message, className='network-note text-muted')
+    return dashboard_graph(figure=fig)
+
+
 LEADERBOARD_VISIBLE_COLUMNS = [
     'rank',
     'submission_name',
@@ -783,14 +794,23 @@ def kpi_cards(submissions: pd.DataFrame, sentence_table: pd.DataFrame) -> list[d
     best_word_f1 = numeric(success, 'word_f1').max() if not success.empty else 0.0
     best_boundary_f1 = numeric(success, 'boundary_f1').max() if not success.empty else 0.0
     exact = numeric(success, 'exact_match_sentence_rate').max() if not success.empty else 0.0
+    best_word_name = '—'
+    best_boundary_name = '—'
+    if not success.empty and 'submission_name' in success.columns:
+        word_values = numeric(success, 'word_f1')
+        boundary_values = numeric(success, 'boundary_f1')
+        if not word_values.empty:
+            best_word_name = text_preview(success.loc[word_values.idxmax(), 'submission_name'], 22)
+        if not boundary_values.empty:
+            best_boundary_name = text_preview(success.loc[boundary_values.idxmax(), 'submission_name'], 22)
     total_issues = int(numeric(submissions, 'tolerant_issue_count').sum()) if not submissions.empty else 0
     excluded = int((sentence_table.get('gold_status', pd.Series(dtype=str)) == 'excluded').sum()) if not sentence_table.empty else 0
     values = [
         ('Submissions', len(submissions), '参与提交 / 方法数'),
         ('Sentences', len(sentence_table), f'excluded gold: {excluded}'),
-        ('Best Word F1', f'{best_word_f1:.4f}', 'span-level word metric'),
-        ('Best Boundary F1', f'{best_boundary_f1:.4f}', 'boundary-position metric'),
-        ('Best Exact Match', f'{exact:.4f}', 'sentence-level exact rate'),
+        ('Best Word F1', f'{best_word_f1:.4f}', best_word_name),
+        ('Best Boundary F1', f'{best_boundary_f1:.4f}', best_boundary_name),
+        ('Best Exact Match', f'{exact:.4f}', 'strict sentence-level exact rate'),
         ('Tolerant Issues', total_issues, 'row-level warnings'),
     ]
     return [
@@ -825,6 +845,8 @@ def character_boundary_diff(raw_text: str, boundary_rows: pd.DataFrame) -> html.
                 continue
 
     cells: list[Any] = []
+    since_break = 0
+    punctuation_breaks = set('，。！？；：、,.!?;:')
     for index, char in enumerate(raw_text):
         boundary_position = index + 1
         marker = html.Span('', className='boundary-marker boundary-none')
@@ -834,6 +856,10 @@ def character_boundary_diff(raw_text: str, boundary_rows: pd.DataFrame) -> html.
             marker = html.Span('', className=f'boundary-marker {boundary_case_class(row)}')
             tooltip = f"pos={boundary_position} case={row.get('boundary_case', '')} gold={row.get('gold_boundary', '')} pred={row.get('pred_boundary', '')}"
         cells.append(html.Span([html.Span(char, className='char-glyph'), marker], className='char-cell', title=tooltip))
+        since_break += 1
+        if (char in punctuation_breaks and since_break >= 18) or since_break >= 38:
+            cells.append(html.Span('', className='boundary-line-break'))
+            since_break = 0
     return html.Div([
         html.Div(cells, className='boundary-cell-grid'),
         html.Div([
@@ -851,8 +877,14 @@ def tokens_from_boundaries(raw_text: str, boundaries: list[int] | set[int]) -> l
     return [raw_text[start:end] for start, end in zip(starts, ends)]
 
 
-def token_row(tokens: list[str], label: str, class_name: str = '') -> html.Div:
-    chips = [html.Span(token, className=f'token-chip {class_name}', title=token) for token in tokens]
+def token_row(tokens: list[str], label: str, class_name: str = '', reference_tokens: list[str] | None = None) -> html.Div:
+    reference = Counter(reference_tokens or [])
+    seen: Counter[str] = Counter()
+    chips = []
+    for token in tokens:
+        seen[token] += 1
+        mismatch = bool(reference_tokens is not None and seen[token] > reference.get(token, 0))
+        chips.append(html.Span(token, className=f"token-chip {class_name} {'token-mismatch' if mismatch else ''}".strip(), title=token))
     return html.Div([html.Div(label, className='token-row-label'), html.Div(chips, className='token-row-wrap')], className='token-row')
 
 
@@ -863,27 +895,63 @@ def sentence_review_frame(sentence_table: pd.DataFrame) -> pd.DataFrame:
     frame['avg_f1'] = pd.to_numeric(frame.get('sentence_avg_word_f1', 0), errors='coerce').fillna(0.0)
     frame['raw_text_preview'] = frame.get('raw_text', pd.Series(dtype=str)).fillna('').astype(str).map(lambda value: text_preview(value, 72))
     frame['gold_preview'] = frame.get('gold', pd.Series(dtype=str)).fillna('').astype(str).map(lambda value: text_preview(value, 72))
+    discrim = pd.to_numeric(frame.get('discrimination_index', 0), errors='coerce').fillna(0.0)
     if 'review_flags' not in frame.columns:
         frame['review_flags'] = ''
-    columns = ['sentence_id', 'source', 'difficulty', 'gold_status', 'avg_f1', 'discrimination_index', 'raw_text_preview', 'gold_preview', 'review_flags']
+    frame['review_flags'] = frame['review_flags'].fillna('').astype(str)
+    frame['review_reason'] = [
+        review_reason(status, avg, disc, flags)
+        for status, avg, disc, flags in zip(frame.get('gold_status', ''), frame['avg_f1'], discrim, frame['review_flags'])
+    ]
+    columns = ['sentence_id', 'source', 'difficulty', 'gold_status', 'avg_f1', 'discrimination_index', 'review_reason', 'raw_text_preview', 'gold_preview', 'review_flags']
     return frame[[column for column in columns if column in frame.columns]]
+
+
+def review_reason(gold_status: Any, avg_f1: float, discrimination: float, flags: Any = '') -> str:
+    reasons: list[str] = []
+    if safe_float(avg_f1) < 0.5:
+        reasons.append('low average F1')
+    if safe_float(discrimination) >= 0.25:
+        reasons.append('high discrimination')
+    flag_text = str(flags or '').lower()
+    if flag_text:
+        reasons.append('existing review flag')
+    if str(gold_status) == 'suspicious':
+        reasons.append('possible gold ambiguity')
+    if str(gold_status) == 'excluded':
+        reasons.append('excluded from ranking')
+    return '; '.join(reasons) or 'routine review'
 
 
 def gold_review_cards(sentence_table: pd.DataFrame) -> list[dbc.Col]:
     if sentence_table.empty:
-        values = [('Confirmed', 0), ('Suspicious', 0), ('Excluded', 0), ('Low Avg F1', 0), ('High Discrimination', 0)]
+        values = [('confirmed', 'Confirmed', 0), ('suspicious', 'Suspicious', 0), ('excluded', 'Excluded', 0), ('low_avg', 'Low Avg F1', 0), ('high_discrimination', 'High Discrimination', 0)]
     else:
         status = sentence_table.get('gold_status', pd.Series(dtype=str)).fillna('').astype(str)
         avg_f1 = pd.to_numeric(sentence_table.get('sentence_avg_word_f1', 0), errors='coerce').fillna(0.0)
         discrim = pd.to_numeric(sentence_table.get('discrimination_index', 0), errors='coerce').fillna(0.0)
         values = [
-            ('Confirmed', int((status == 'confirmed').sum())),
-            ('Suspicious', int((status == 'suspicious').sum())),
-            ('Excluded', int((status == 'excluded').sum())),
-            ('Low Avg F1', int((avg_f1 < 0.5).sum())),
-            ('High Discrimination', int((discrim >= 0.25).sum())),
+            ('confirmed', 'Confirmed', int((status == 'confirmed').sum())),
+            ('suspicious', 'Suspicious', int((status == 'suspicious').sum())),
+            ('excluded', 'Excluded', int((status == 'excluded').sum())),
+            ('low_avg', 'Low Avg F1', int((avg_f1 < 0.5).sum())),
+            ('high_discrimination', 'High Discrimination', int((discrim >= 0.25).sum())),
         ]
-    return [dbc.Col(html.Div([html.Div(label, className='kpi-label'), html.Div(str(value), className='kpi-value')], className='kpi-card compact-kpi'), lg=2, md=4, sm=6) for label, value in values]
+    return [
+        dbc.Col(
+            html.Button(
+                [html.Div(label, className='kpi-label'), html.Div(str(value), className='kpi-value')],
+                id=f'gold-card-{key}',
+                n_clicks=0,
+                className='kpi-card compact-kpi review-filter-card',
+                title='Click to filter review rows',
+            ),
+            lg=2,
+            md=4,
+            sm=6,
+        )
+        for key, label, value in values
+    ]
 
 
 def profile_subset_frame(row: pd.Series) -> pd.DataFrame:
@@ -972,6 +1040,7 @@ def apply_gold_filters(
     difficulties: list[str] | None,
     review_flags: list[str] | None,
     avg_range: list[float] | None,
+    quick_filter: dict[str, Any] | None = None,
 ) -> pd.DataFrame:
     frame = sentence_review_frame(sentence_table)
     if frame.empty:
@@ -989,7 +1058,14 @@ def apply_gold_filters(
         lo, hi = float(avg_range[0]), float(avg_range[1])
         avg = pd.to_numeric(frame.get('avg_f1', 0), errors='coerce').fillna(0.0)
         frame = frame[(avg >= lo) & (avg <= hi)]
-    return frame.sort_values(['gold_status', 'avg_f1', 'discrimination_index'], ascending=[False, True, False])
+    quick_type = (quick_filter or {}).get('type')
+    if quick_type == 'low_avg':
+        frame = frame[pd.to_numeric(frame.get('avg_f1', 0), errors='coerce').fillna(0.0) < 0.5]
+    elif quick_type == 'high_discrimination':
+        frame = frame[pd.to_numeric(frame.get('discrimination_index', 0), errors='coerce').fillna(0.0) >= 0.25]
+    elif quick_type in {'confirmed', 'suspicious', 'excluded'}:
+        frame = frame[frame.get('gold_status', '').astype(str) == quick_type]
+    return frame.sort_values(['avg_f1', 'discrimination_index'], ascending=[True, False])
 
 
 def gold_detail_card(sentence_id: int | None, sentence_table: pd.DataFrame, span_errors: pd.DataFrame, sentence_scores: pd.DataFrame) -> html.Div:
@@ -1020,11 +1096,15 @@ def gold_detail_card(sentence_id: int | None, sentence_table: pd.DataFrame, span
         html.Div(str(series.get('raw_text', '')), className='review-text-block'),
         html.Div('Gold segmentation', className='subsection-title'),
         html.Div(str(series.get('gold', '')), className='review-text-block gold-text'),
+        html.Div('Review reason', className='subsection-title'),
+        html.Div(review_reason(series.get('gold_status', ''), series.get('sentence_avg_word_f1', 0), series.get('discrimination_index', 0), series.get('review_flags', '')), className='review-text-block'),
         html.Div('Common prediction variants', className='subsection-title'),
         html.Div(variants or [html.Span('No repeated variants available.', className='text-muted')], className='variant-row'),
+        html.Div('Top span errors', className='subsection-title'),
+        datatable('gold-detail-errors-default', top_errors, page_size=8, filter_action='none'),
         html.Details([
-            html.Summary('Show top span errors for this sentence', className='details-summary'),
-            datatable('gold-detail-errors', top_errors, page_size=8, filter_action='none'),
+            html.Summary('Show raw span error rows for this sentence', className='details-summary'),
+            datatable('gold-detail-errors', errors, page_size=8),
         ], className='details-panel'),
     ], className='review-detail-card')
 
@@ -1053,7 +1133,7 @@ def create_app(results_dir: Path) -> Dash:
     else:
         submissions_ranked = submissions
         leaderboard_preview = submissions.head(12).copy() if not submissions.empty else submissions
-    gold_review_initial = sentence_review_frame(sentence_table)
+    gold_review_initial = apply_gold_filters(sentence_table, None, None, None, None, [0, 1])
 
     overview_tab = html.Div([
         html.Div([
@@ -1068,18 +1148,18 @@ def create_app(results_dir: Path) -> Dash:
         dbc.Row([
             dbc.Col(panel([section_title('Leaderboard Preview', 'Top submissions with official ranking columns.'), datatable('leaderboard-preview-table', leaderboard_preview, page_size=12, visible_columns=LEADERBOARD_VISIBLE_COLUMNS, filter_action='none', sort_action='none')]), lg=7),
             dbc.Col(panel([section_title('Top 15', 'Primary metric ranking preview.'), dashboard_graph(figure=top_bar(submissions, default_metric))]), lg=5),
-        ], className='g-3'),
+        ], className='g-3 overview-equal-row'),
         dbc.Row([
             dbc.Col(panel([section_title('Metric Heatmap', 'Cross-metric comparison for leading submissions.'), dashboard_graph(figure=metric_heatmap(submissions))]), lg=7),
             dbc.Col(panel([section_title('Dataset / Source Summary', 'Sentence distribution by source.'), source_summary_cards(sentence_table), dashboard_graph(figure=source_summary_figure(sentence_table))]), lg=5),
-        ], className='g-3 mt-1'),
+        ], className='g-3 mt-1 overview-equal-row'),
     ], className='tab-body')
 
     leaderboard_tab = html.Div([
         panel([
             section_title('Official Leaderboard', 'Default columns emphasize ranking metrics; subset metrics are available in details.'),
             datatable('leaderboard-table', submissions_ranked, page_size=18, visible_columns=LEADERBOARD_VISIBLE_COLUMNS),
-            html.Details([html.Summary('Show full submission table with subset columns', className='details-summary'), datatable('leaderboard-full-table', submissions_ranked, page_size=12)], className='details-panel'),
+            html.Details([html.Summary('Full metrics table', className='details-summary'), datatable('leaderboard-full-table', submissions_ranked, page_size=12)], className='details-panel'),
         ]),
         dbc.Row([
             dbc.Col(panel([section_title('Subset Score Heatmap', 'Scores by source, difficulty, and sentence type.'), dashboard_graph(figure=subset_score_heatmap(submissions))]), lg=7),
@@ -1109,7 +1189,7 @@ def create_app(results_dir: Path) -> Dash:
             dbc.Col(panel([section_title('Sentence Difficulty Map', 'Average sentence score and discrimination by source.'), dashboard_graph(figure=sentence_scatter(sentence_table))]), lg=7),
         ], className='g-3 mt-1'),
         panel([
-            section_title('Diagnostics Long Tables', 'Raw rows are expandable; these tables come directly from exported artifacts.'),
+            section_title('Developer / Raw Artifact Views', 'Collapsed by default; these long tables are for audit and handoff validation.'),
             html.Details([html.Summary('Show span_error_table', className='details-summary'), datatable('span-error-table', span_errors, page_size=12)], className='details-panel'),
             html.Details([html.Summary('Show boundary_table', className='details-summary'), datatable('boundary-table', boundary_table, page_size=12)], className='details-panel'),
             html.Details([html.Summary('Show sentence_table', className='details-summary'), datatable('sentence-difficulty-table', sentence_table, page_size=12)], className='details-panel'),
@@ -1120,6 +1200,7 @@ def create_app(results_dir: Path) -> Dash:
         panel([
             section_title('Gold Review Console', 'Review confirmed / suspicious / excluded gold rows. Excluded rows are visible but not ranked.'),
             dbc.Alert('gold_status=excluded rows are excluded from official denominators; suspicious rows remain scored and should be reviewed.', color='info', className='academic-alert'),
+            dcc.Store(id='gold-quick-filter', data={}),
             dbc.Row(gold_review_cards(sentence_table), className='g-3 mb-3'),
             html.Div([
                 html.Div([html.Label('Gold Status'), dcc.Dropdown(id='gold-status-filter', options=filter_options(sentence_table, 'gold_status'), multi=True)], className='filter-control'),
@@ -1139,7 +1220,6 @@ def create_app(results_dir: Path) -> Dash:
     def experimental_section(title: str, subtitle: str, children: list[Any], *, open_by_default: bool = False) -> html.Details:
         return html.Details([
             html.Summary([html.Span(title, className='experimental-summary-title'), html.Span(subtitle, className='experimental-summary-subtitle')], className='experimental-summary'),
-            dbc.Alert(experimental_note, color='warning', className='academic-alert experimental-note'),
             html.Div(children, className='experimental-section-body'),
         ], open=open_by_default, className='experimental-section')
 
@@ -1152,13 +1232,6 @@ def create_app(results_dir: Path) -> Dash:
                 dbc.Col(panel([section_title('Dataset top tokens', 'Top tokens from sentence_table.gold.'), dashboard_graph(figure=token_bar_chart(dataset_tokens, 'Dataset Top Tokens'))]), lg=6),
                 dbc.Col(panel([section_title('Common error spans', 'Top local raw spans from span_error_table.raw_span.'), dashboard_graph(figure=token_bar_chart(error_spans, 'Common Error Spans'))]), lg=6),
             ], className='g-3'),
-            html.Details([
-                html.Summary('Show auxiliary compact word clouds', className='details-summary'),
-                dbc.Row([
-                    dbc.Col(panel(simple_word_cloud(dataset_tokens, 'Auxiliary dataset word cloud')), lg=6),
-                    dbc.Col(panel(simple_word_cloud(error_word_counter(span_errors), 'Auxiliary error token cloud')), lg=6),
-                ], className='g-3'),
-            ], className='details-panel'),
         ], open_by_default=True),
         experimental_section('Error Flow', 'Sankey charts exclude true_positive and visualize errors only.', [
             dbc.Row([
@@ -1170,7 +1243,7 @@ def create_app(results_dir: Path) -> Dash:
             panel([section_title('Metric Space Scatter', 'Includes y=x reference line and rich tooltips.'), dashboard_graph(figure=clustering_scatter(submissions))]),
         ], open_by_default=True),
         experimental_section('Similarity Network', 'Top-ranked 20 submissions; each node links to its 2 nearest neighbors.', [
-            panel([section_title('Similarity Network', 'Collapsed by default to avoid visual noise.'), dashboard_graph(figure=network_graph(sentence_scores, submissions))]),
+            panel([section_title('Similarity Network', 'Collapsed by default to avoid visual noise.'), network_visual(sentence_scores, submissions)]),
         ], open_by_default=False),
     ], className='tab-body experimental-tab')
 
@@ -1212,8 +1285,8 @@ def create_app(results_dir: Path) -> Dash:
             html.Div(f'句子 #{sentence_id}: {text_preview(raw, 140)}', className='boundary-sentence-title'),
             html.Div(metadata, className='boundary-sentence-meta'),
             character_boundary_diff(raw, boundary_rows),
-            token_row(gold_tokens, 'Gold segmentation', 'gold-token'),
-            token_row(pred_tokens, 'Pred segmentation', 'pred-token'),
+            token_row(gold_tokens, 'Gold segmentation', 'gold-token', pred_tokens),
+            token_row(pred_tokens, 'Pred segmentation', 'pred-token', gold_tokens),
             html.Div('Selected sentence score', className='subsection-title'),
             datatable('selected-sentence-score', score_rows, page_size=4),
             html.Details([html.Summary('Show raw boundary rows', className='details-summary'), datatable('selected-boundary-diff', boundary_rows, page_size=10)], className='details-panel'),
@@ -1249,11 +1322,31 @@ def create_app(results_dir: Path) -> Dash:
         Input('gold-difficulty-filter', 'value'),
         Input('gold-review-flags-filter', 'value'),
         Input('gold-avg-f1-range', 'value'),
+        Input('gold-quick-filter', 'data'),
     )
-    def update_gold_review_table(gold_status, sources, difficulties, review_flags, avg_range):
-        frame = apply_gold_filters(sentence_table, gold_status, sources, difficulties, review_flags, avg_range)
+    def update_gold_review_table(gold_status, sources, difficulties, review_flags, avg_range, quick_filter):
+        frame = apply_gold_filters(sentence_table, gold_status, sources, difficulties, review_flags, avg_range, quick_filter)
         columns = [{'name': display_label(column), 'id': column} for column in frame.columns]
         return table_records(format_frame(frame)), columns, ([0] if not frame.empty else [])
+
+    @app.callback(
+        Output('gold-quick-filter', 'data'),
+        Input('gold-card-low_avg', 'n_clicks'),
+        Input('gold-card-high_discrimination', 'n_clicks'),
+        Input('gold-card-suspicious', 'n_clicks'),
+        Input('gold-card-excluded', 'n_clicks'),
+        Input('gold-card-confirmed', 'n_clicks'),
+        State('gold-quick-filter', 'data'),
+        prevent_initial_call=True,
+    )
+    def set_gold_quick_filter(low_avg, high_discrimination, suspicious, excluded, confirmed, current):
+        del low_avg, high_discrimination, suspicious, excluded, confirmed
+        triggered = dash.callback_context.triggered
+        if not triggered:
+            raise PreventUpdate
+        key = triggered[0]['prop_id'].split('.')[0].replace('gold-card-', '')
+        current_type = (current or {}).get('type')
+        return {} if current_type == key else {'type': key}
 
     @app.callback(Output('gold-detail-card', 'children'), Input('gold-review-table', 'data'), Input('gold-review-table', 'selected_rows'))
     def update_gold_detail(rows, selected_rows):

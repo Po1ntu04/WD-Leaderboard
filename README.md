@@ -41,6 +41,21 @@ Windows 下也可以直接双击：
 
 - `run_dashboard.bat`
 
+### 1b. 导出 PPT 静态图片
+
+```bash
+python app/export_figures.py --results-dir platform/results --out-dir platform/results/figures
+```
+
+如需中文词云正常显示，请提供本机中文字体路径：
+
+```bash
+python app/export_figures.py \
+  --results-dir platform/results \
+  --out-dir platform/results/figures \
+  --font-path /path/to/ChineseFont.ttf
+```
+
 ### 2. 评测单个 `pred.txt`
 
 ```bash
@@ -67,6 +82,7 @@ python app/session.py --prediction-dir path/to/predictions
 ## 目录说明
 
 - `platform/app/`：评分、前端、批量会话脚本
+- `platform/app/export_figures.py`：PPT-ready 静态图导出脚本
 - `platform/results/`：当前 demo 结果
 - `app/`：简化入口
 - `algorithms/common/`：评分依赖的通用读写与 scorer

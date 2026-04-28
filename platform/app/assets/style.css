@@ -118,9 +118,19 @@ body {
   overflow-x: hidden;
 }
 
+.overview-equal-row > [class*="col-"] {
+  display: flex;
+}
+
+.overview-equal-row .analytics-panel {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .kpi-card {
-  min-height: 132px;
-  padding: 18px;
+  min-height: 116px;
+  padding: 15px 16px;
 }
 
 .kpi-label {
@@ -133,7 +143,7 @@ body {
 
 .kpi-value {
   color: var(--primary);
-  font-size: 1.75rem;
+  font-size: 1.55rem;
   line-height: 1.1;
   font-weight: 850;
   margin-top: 8px;
@@ -143,6 +153,9 @@ body {
   color: var(--muted);
   font-size: 0.86rem;
   margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .section-heading {
@@ -216,6 +229,11 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   word-break: break-word;
+}
+
+.boundary-line-break {
+  flex-basis: 100%;
+  height: 2px;
 }
 
 .char-cell {
@@ -321,6 +339,19 @@ body {
   min-height: 96px;
 }
 
+.review-filter-card {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+.review-filter-card:hover {
+  transform: translateY(-1px);
+  border-color: #93c5fd;
+  box-shadow: 0 14px 32px rgba(37, 99, 235, .12);
+}
+
 .filter-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -389,6 +420,13 @@ body {
   color: #166534;
 }
 
+.token-mismatch {
+  border-color: #fdba74 !important;
+  background: #fff7ed !important;
+  color: #9a3412 !important;
+  box-shadow: inset 0 0 0 1px rgba(249, 115, 22, .25);
+}
+
 .review-detail-card {
   border: 1px solid #dbeafe;
   border-radius: 16px;
@@ -432,8 +470,23 @@ body {
   overflow: hidden;
 }
 
+.network-note {
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  padding: 32px;
+  text-align: center;
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+}
+
 .experimental-tab .analytics-panel {
-  opacity: 0.94;
+  opacity: 0.92;
+}
+
+.experimental-tab {
+  color: #334155;
 }
 
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner tr:hover td {
