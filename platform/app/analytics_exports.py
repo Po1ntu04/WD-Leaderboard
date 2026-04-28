@@ -546,6 +546,19 @@ def _write_table_pair(frame: pd.DataFrame, csv_path: Path, json_path: Path | Non
         _write_json_records(json_path, frame.to_dict(orient="records"))
 
 
+def _write_long_table(frame: pd.DataFrame, csv_path: Path) -> dict[str, Any]:
+    frame.to_csv(csv_path, index=False, encoding="utf-8-sig")
+    gzip_path = csv_path.with_suffix(csv_path.suffix + ".gz")
+    frame.to_csv(gzip_path, index=False, encoding="utf-8-sig", compression="gzip")
+    return {
+        "csv": str(csv_path.resolve()),
+        "csv_gzip": str(gzip_path.resolve()),
+        "row_count": int(len(frame)),
+        "column_count": int(len(frame.columns)),
+        "columns": list(frame.columns),
+    }
+
+
 def _write_parquet(frame: pd.DataFrame, parquet_path: Path) -> None:
     try:
         frame.to_parquet(parquet_path, index=False)
@@ -629,9 +642,20 @@ def export_standard_tables(
     _write_table_pair(sentence_table, results / "sentence_table.csv", results / "sentence_table.json")
     _write_table_pair(submission_table, results / "submission_table.csv", results / "submission_table.json")
     _write_json_records(results / "leaderboard.json", submission_table.to_dict(orient="records"))
-    sentence_score_table.to_csv(results / "sentence_score_table.csv", index=False, encoding="utf-8-sig")
-    boundary_table.to_csv(results / "boundary_table.csv", index=False, encoding="utf-8-sig")
-    span_error_table.to_csv(results / "span_error_table.csv", index=False, encoding="utf-8-sig")
+    long_table_manifest = {
+        "note": (
+            "Long-form analytics tables are exported as CSV plus CSV.GZ. "
+            "GitHub may not preview large CSV files; use the .csv.gz or parquet artifacts "
+            "or regenerate locally with python app/session.py --prediction-dir <demo_predictions_dir>."
+        ),
+        "tables": {
+            "sentence_score_table": _write_long_table(sentence_score_table, results / "sentence_score_table.csv"),
+            "boundary_table": _write_long_table(boundary_table, results / "boundary_table.csv"),
+            "span_error_table": _write_long_table(span_error_table, results / "span_error_table.csv"),
+        },
+    }
+    manifest_text = json.dumps(long_table_manifest, ensure_ascii=False, indent=2)
+    (results / "long_tables_manifest.json").write_text(manifest_text, encoding="utf-8")
     _write_parquet(sentence_score_table, results / "sentence_score_table.parquet")
     _write_parquet(boundary_table, results / "boundary_table.parquet")
     _write_parquet(span_error_table, results / "span_error_table.parquet")

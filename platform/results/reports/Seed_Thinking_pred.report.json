@@ -4,7 +4,7 @@
   "submission_path": "/tmp/wd-leaderboard-fix/submit/2026春-分词大赛(word)/predictions/Seed Thinking_pred.txt",
   "mode": "prediction_file_only",
   "status": "格式错误",
-  "timestamp": "2026-04-28 18:29:59",
+  "timestamp": "2026-04-28 19:10:18",
   "runtime_seconds": 0.0,
   "overall": {
     "precision": 0.0,
@@ -55,7 +55,7 @@
     "submission_group": "课堂提交",
     "mode": "prediction_file_only",
     "status": "格式错误",
-    "timestamp": "2026-04-28 18:29:59",
+    "timestamp": "2026-04-28 19:10:18",
     "runtime_seconds": 0.0,
     "message": "第 1 行过长，请检查是否误写了异常内容。",
     "precision": 0.0,

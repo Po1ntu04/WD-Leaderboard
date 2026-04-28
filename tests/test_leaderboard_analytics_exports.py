@@ -178,6 +178,56 @@ def test_dashboard_sample_covers_required_scoring_cases(tmp_path: Path) -> None:
     assert 'leaderboard.json' in {path.name for path in results_dir.iterdir()}
     assert 'perfect' in submission_table
 
+    import pandas as pd
+
+    sentence_score_table = pd.read_csv(results_dir / 'sentence_score_table.csv')
+    boundary_table = pd.read_csv(results_dir / 'boundary_table.csv')
+    span_error_table = pd.read_csv(results_dir / 'span_error_table.csv')
+    assert not sentence_score_table.empty
+    assert {
+        'submission_name',
+        'sentence_id',
+        'validation_status',
+        'pred_valid',
+        'is_evaluable',
+        'word_f1',
+        'boundary_f1',
+        'exact_match',
+        'source',
+        'difficulty',
+        'sentence_type',
+    } <= set(sentence_score_table.columns)
+    assert not boundary_table.empty
+    assert {
+        'submission_name',
+        'sentence_id',
+        'boundary_position',
+        'left_char',
+        'right_char',
+        'left_context',
+        'right_context',
+        'gold_boundary',
+        'pred_boundary',
+        'boundary_case',
+        'boundary_type',
+    } <= set(boundary_table.columns)
+    assert not span_error_table.empty
+    assert {
+        'submission_name',
+        'sentence_id',
+        'raw_span',
+        'gold_span_tokens',
+        'pred_span_tokens',
+        'start_char',
+        'end_char',
+        'error_type',
+        'severity',
+    } <= set(span_error_table.columns)
+    assert (results_dir / 'sentence_score_table.csv.gz').exists()
+    assert (results_dir / 'boundary_table.csv.gz').exists()
+    assert (results_dir / 'span_error_table.csv.gz').exists()
+    assert (results_dir / 'long_tables_manifest.json').exists()
+
 
 def test_tolerant_policy_handles_missing_and_extra_lines(tmp_path: Path) -> None:
     from eval_core import score_prediction_submission

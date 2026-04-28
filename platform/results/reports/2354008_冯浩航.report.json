@@ -4,7 +4,7 @@
   "submission_path": "/tmp/wd-leaderboard-fix/submit/2026春-分词大赛(word)/predictions/2354008_冯浩航_pred.txt",
   "mode": "prediction_file_only",
   "status": "成功",
-  "timestamp": "2026-04-28 18:29:50",
+  "timestamp": "2026-04-28 19:10:07",
   "runtime_seconds": 114.641,
   "overall": {
     "precision": 0.815372,
@@ -667,7 +667,7 @@
     "submission_group": "课堂提交",
     "mode": "prediction_file_only",
     "status": "成功",
-    "timestamp": "2026-04-28 18:29:50",
+    "timestamp": "2026-04-28 19:10:07",
     "runtime_seconds": 114.641,
     "message": "",
     "precision": 0.815372,

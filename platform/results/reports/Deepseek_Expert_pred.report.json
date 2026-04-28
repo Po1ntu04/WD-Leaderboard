@@ -4,7 +4,7 @@
   "submission_path": "/tmp/wd-leaderboard-fix/submit/2026春-分词大赛(word)/predictions/Deepseek Expert_pred.txt",
   "mode": "prediction_file_only",
   "status": "成功",
-  "timestamp": "2026-04-28 18:29:58",
+  "timestamp": "2026-04-28 19:10:16",
   "runtime_seconds": 0.0,
   "overall": {
     "precision": 0.808483,
@@ -681,7 +681,7 @@
     "submission_group": "课堂提交",
     "mode": "prediction_file_only",
     "status": "成功",
-    "timestamp": "2026-04-28 18:29:58",
+    "timestamp": "2026-04-28 19:10:16",
     "runtime_seconds": 0.0,
     "message": "5 行无法还原原句，已按0分处理。",
     "precision": 0.808483,

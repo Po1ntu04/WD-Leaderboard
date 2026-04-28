@@ -112,14 +112,18 @@ sentence_table.json
 submission_table.csv
 submission_table.json
 sentence_score_table.csv
+sentence_score_table.csv.gz
 sentence_score_table.parquet
 boundary_table.csv
+boundary_table.csv.gz
 boundary_table.parquet
 span_error_table.csv
+span_error_table.csv.gz
 span_error_table.parquet
+long_tables_manifest.json
 ```
 
-Parquet export requires `pyarrow`. If unavailable, CSV remains the canonical fallback.
+Parquet export requires `pyarrow`. If unavailable, CSV remains the canonical fallback. The long tables are also written as `.csv.gz` because GitHub may not preview very large CSV files; `long_tables_manifest.json` records row counts, columns, and artifact paths for handoff validation.
 
 ## Run
 

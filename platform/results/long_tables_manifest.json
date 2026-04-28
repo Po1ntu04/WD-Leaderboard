@@ -1,0 +1,82 @@
+{
+  "note": "Long-form analytics tables are exported as CSV plus CSV.GZ. GitHub may not preview large CSV files; use the .csv.gz or parquet artifacts or regenerate locally with python app/session.py --prediction-dir <demo_predictions_dir>.",
+  "tables": {
+    "sentence_score_table": {
+      "csv": "/tmp/wd-leaderboard-fix/platform/results/sentence_score_table.csv",
+      "csv_gzip": "/tmp/wd-leaderboard-fix/platform/results/sentence_score_table.csv.gz",
+      "row_count": 23920,
+      "column_count": 25,
+      "columns": [
+        "submission_name",
+        "sentence_id",
+        "source",
+        "difficulty",
+        "sentence_type",
+        "validation_status",
+        "gold_status",
+        "pred_valid",
+        "is_evaluable",
+        "is_scored",
+        "word_precision",
+        "word_recall",
+        "word_f1",
+        "boundary_precision",
+        "boundary_recall",
+        "boundary_f1",
+        "exact_match",
+        "gold_word_count",
+        "pred_word_count",
+        "correct_word_count",
+        "gold_boundary_count",
+        "pred_boundary_count",
+        "correct_boundary_count",
+        "over_segmentation_count",
+        "under_segmentation_count"
+      ]
+    },
+    "boundary_table": {
+      "csv": "/tmp/wd-leaderboard-fix/platform/results/boundary_table.csv",
+      "csv_gzip": "/tmp/wd-leaderboard-fix/platform/results/boundary_table.csv.gz",
+      "row_count": 792008,
+      "column_count": 14,
+      "columns": [
+        "submission_name",
+        "sentence_id",
+        "source",
+        "difficulty",
+        "sentence_type",
+        "boundary_position",
+        "left_char",
+        "right_char",
+        "left_context",
+        "right_context",
+        "gold_boundary",
+        "pred_boundary",
+        "boundary_case",
+        "boundary_type"
+      ]
+    },
+    "span_error_table": {
+      "csv": "/tmp/wd-leaderboard-fix/platform/results/span_error_table.csv",
+      "csv_gzip": "/tmp/wd-leaderboard-fix/platform/results/span_error_table.csv.gz",
+      "row_count": 126091,
+      "column_count": 14,
+      "columns": [
+        "submission_name",
+        "sentence_id",
+        "source",
+        "difficulty",
+        "sentence_type",
+        "raw_span",
+        "gold_span_tokens",
+        "pred_span_tokens",
+        "start_char",
+        "end_char",
+        "error_type",
+        "severity",
+        "false_positive_boundary_count",
+        "false_negative_boundary_count"
+      ]
+    }
+  }
+}
