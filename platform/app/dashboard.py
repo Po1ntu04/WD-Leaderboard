@@ -264,15 +264,47 @@ def rank_delta_view(submissions: pd.DataFrame) -> go.Figure:
     return fig
 
 
+def truncate_token(token: str, max_len: int = 18) -> str:
+    token = str(token)
+    return token if len(token) <= max_len else f"{token[: max_len - 1]}…"
+
+
+def counter_to_frame(words: Counter[str], top_n: int = 25) -> pd.DataFrame:
+    return pd.DataFrame(
+        [{"token": token, "display_token": truncate_token(token), "count": int(count)} for token, count in words.most_common(top_n)]
+    )
+
+
+def token_bar_chart(words: Counter[str], title: str, top_n: int = 25) -> go.Figure:
+    frame = counter_to_frame(words, top_n=top_n)
+    if frame.empty:
+        return empty_figure('暂无 token frequency 数据')
+    frame = frame.sort_values('count', ascending=True)
+    fig = px.bar(
+        frame,
+        x='count',
+        y='display_token',
+        orientation='h',
+        hover_data={'token': True, 'display_token': False, 'count': True},
+        color='count',
+        color_continuous_scale='Blues',
+        title=title,
+    )
+    fig.update_layout(height=400, yaxis_title='', xaxis_title='Count', coloraxis_showscale=False, **PLOT_LAYOUT)
+    fig.update_traces(marker_line_width=0, cliponaxis=False)
+    return fig
+
+
 def simple_word_cloud(words: Counter[str], title: str) -> html.Div:
     if not words:
         return html.Div('暂无词云数据。', className='text-muted')
     max_count = max(words.values())
     spans = []
-    for word, count in words.most_common(60):
-        size = 12 + 28 * (count / max_count)
-        spans.append(html.Span(word, title=str(count), style={'fontSize': f'{size:.1f}px', 'margin': '6px 10px', 'display': 'inline-block', 'color': '#1d4ed8'}))
-    return html.Div([html.Div(title, className='fw-bold mb-2'), html.Div(spans, style={'lineHeight': '2.2', 'background': '#ffffff', 'border': '1px solid #cbd5e1', 'borderRadius': '8px', 'padding': '16px'})])
+    for word, count in words.most_common(45):
+        size = min(24, 11 + 16 * (count / max_count))
+        display = truncate_token(word, max_len=16)
+        spans.append(html.Span(display, title=f'{word} ({count})', className='token-cloud-chip', style={'fontSize': f'{size:.1f}px'}))
+    return html.Div([html.Div(title, className='fw-bold mb-2'), html.Div(spans, className='token-cloud')])
 
 
 def dataset_word_counter(sentence_table: pd.DataFrame) -> Counter[str]:
@@ -282,6 +314,17 @@ def dataset_word_counter(sentence_table: pd.DataFrame) -> Counter[str]:
             token = token.strip()
             if token:
                 counter[token] += 1
+    return counter
+
+
+def error_span_counter(span_errors: pd.DataFrame) -> Counter[str]:
+    counter: Counter[str] = Counter()
+    if 'raw_span' not in span_errors.columns:
+        return counter
+    for token in span_errors['raw_span'].dropna().astype(str):
+        token = token.strip()
+        if token:
+            counter[token] += 1
     return counter
 
 
@@ -298,54 +341,143 @@ def error_word_counter(span_errors: pd.DataFrame) -> Counter[str]:
     return counter
 
 
-def sankey_chart(boundary_table: pd.DataFrame) -> go.Figure:
-    if boundary_table.empty or not {'source', 'boundary_type'}.issubset(boundary_table.columns):
+ERROR_COLOR_MAP = {
+    'over_segmentation': '#f97316',
+    'under_segmentation': '#dc2626',
+    'true_positive': '#16a34a',
+}
+
+
+def sankey_chart(boundary_table: pd.DataFrame, *, normalized: bool = False) -> go.Figure:
+    required = {'source', 'boundary_type'}
+    if boundary_table.empty or not required.issubset(boundary_table.columns):
         return empty_figure('暂无 Sankey 数据')
-    counts = boundary_table.groupby(['source', 'boundary_type']).size().reset_index(name='count')
-    labels = list(pd.unique(pd.concat([counts['source'], counts['boundary_type']], ignore_index=True)))
+    frame = boundary_table[boundary_table['boundary_type'].isin(['over_segmentation', 'under_segmentation'])].copy()
+    if frame.empty:
+        return empty_figure('暂无错误流数据（已排除 true_positive）')
+    counts = frame.groupby(['source', 'boundary_type']).size().reset_index(name='count')
+    if normalized:
+        totals = counts.groupby('source')['count'].transform('sum')
+        counts['value'] = counts['count'] / totals.replace(0, 1)
+        value_label = 'normalized share'
+        title = 'Normalized Error Flow — This chart visualizes error flow only, not official ranking.'
+    else:
+        counts['value'] = counts['count']
+        value_label = 'count'
+        title = 'Error Flow — This chart visualizes error flow only, not official ranking.'
+    labels = list(pd.unique(pd.concat([counts['source'].astype(str), counts['boundary_type'].astype(str)], ignore_index=True)))
     idx = {label: i for i, label in enumerate(labels)}
-    fig = go.Figure(data=[go.Sankey(node=dict(label=labels, color='#bfdbfe'), link=dict(source=[idx[v] for v in counts['source']], target=[idx[v] for v in counts['boundary_type']], value=counts['count']))])
-    fig.update_layout(title='Sankey Chart: source → boundary error type（来自 boundary_table）', height=420, **PLOT_LAYOUT)
+    node_colors = ['#dbeafe' if label not in ERROR_COLOR_MAP else ERROR_COLOR_MAP[label] for label in labels]
+    link_colors = [ERROR_COLOR_MAP.get(str(row['boundary_type']), '#94a3b8') for _, row in counts.iterrows()]
+    custom = [f"count={int(row['count'])}<br>{value_label}={float(row['value']):.4f}" for _, row in counts.iterrows()]
+    fig = go.Figure(data=[go.Sankey(
+        arrangement='snap',
+        node=dict(label=labels, color=node_colors, pad=12, thickness=14),
+        link=dict(
+            source=[idx[str(v)] for v in counts['source']],
+            target=[idx[str(v)] for v in counts['boundary_type']],
+            value=counts['value'],
+            color=link_colors,
+            customdata=custom,
+            hovertemplate='%{source.label} → %{target.label}<br>%{customdata}<extra></extra>',
+        ),
+    )])
+    fig.update_layout(title=title, height=420, **PLOT_LAYOUT)
     return fig
 
 
 def clustering_scatter(submissions: pd.DataFrame) -> go.Figure:
     if submissions.empty or not {'word_f1', 'boundary_f1'}.issubset(submissions.columns):
-        return empty_figure('暂无聚类数据')
+        return empty_figure('暂无 metric space 数据')
     frame = submissions.copy()
     frame['word_f1'] = numeric(frame, 'word_f1')
     frame['boundary_f1'] = numeric(frame, 'boundary_f1')
     frame['exact_match_sentence_rate'] = numeric(frame, 'exact_match_sentence_rate')
-    fig = px.scatter(frame, x='word_f1', y='boundary_f1', color='status' if 'status' in frame.columns else None, size='exact_match_sentence_rate', hover_name='submission_name', title='Student Clustering（metric-space scatter，来自 submission_table）')
+    frame['tolerant_issue_count'] = numeric(frame, 'tolerant_issue_count')
+    fig = px.scatter(
+        frame,
+        x='word_f1',
+        y='boundary_f1',
+        color='status' if 'status' in frame.columns else None,
+        size='exact_match_sentence_rate',
+        hover_name='submission_name',
+        hover_data={
+            'word_f1': ':.4f',
+            'boundary_f1': ':.4f',
+            'exact_match_sentence_rate': ':.4f',
+            'tolerant_issue_count': ':.0f',
+        },
+        title='Metric Space Scatter（not clustering; official ranking is unchanged）',
+    )
+    fig.add_trace(go.Scatter(x=[0, 1], y=[0, 1], mode='lines', line=dict(color='#94a3b8', width=1, dash='dash'), name='y = x'))
+    fig.update_xaxes(range=[0, 1], title='Word F1')
+    fig.update_yaxes(range=[0, 1], title='Boundary F1')
     fig.update_layout(height=420, **PLOT_LAYOUT)
     return fig
 
 
-def network_graph(sentence_scores: pd.DataFrame) -> go.Figure:
+def short_label(name: str, max_len: int = 10) -> str:
+    name = str(name)
+    return name if len(name) <= max_len else f'{name[: max_len - 1]}…'
+
+
+def network_graph(sentence_scores: pd.DataFrame, submissions: pd.DataFrame | None = None, *, top_n: int = 20, k: int = 2) -> go.Figure:
     if sentence_scores.empty or 'submission_name' not in sentence_scores.columns:
         return empty_figure('暂无网络图数据')
-    names = sorted(sentence_scores['submission_name'].dropna().astype(str).unique().tolist())[:12]
-    if len(names) < 2:
+    if submissions is not None and not submissions.empty and {'submission_name', 'rank'}.issubset(submissions.columns):
+        ranked = submissions.copy()
+        ranked['rank'] = pd.to_numeric(ranked['rank'], errors='coerce')
+        names = ranked.sort_values('rank')['submission_name'].dropna().astype(str).head(top_n).tolist()
+    else:
+        names = sorted(sentence_scores['submission_name'].dropna().astype(str).unique().tolist())[:top_n]
+    if len(names) < 3:
         return empty_figure('提交数量不足，无法构建相似网络')
     pivot = sentence_scores[sentence_scores['submission_name'].isin(names)].pivot_table(index='submission_name', columns='sentence_id', values='word_f1', fill_value=0.0)
-    positions = {name: (0.5 + 0.42 * __import__('math').cos(2 * __import__('math').pi * i / len(names)), 0.5 + 0.42 * __import__('math').sin(2 * __import__('math').pi * i / len(names))) for i, name in enumerate(names)}
+    names = list(pivot.index.astype(str))
+    edges: set[tuple[str, str]] = set()
+    edge_scores: dict[tuple[str, str], float] = {}
+    for source in names:
+        sims: list[tuple[str, float]] = []
+        for target in names:
+            if source == target:
+                continue
+            sim = 1.0 - float((pivot.loc[source] - pivot.loc[target]).abs().mean())
+            sims.append((target, sim))
+        for target, sim in sorted(sims, key=lambda item: item[1], reverse=True)[:k]:
+            edge = tuple(sorted((source, target)))
+            edges.add(edge)
+            edge_scores[edge] = max(edge_scores.get(edge, 0.0), sim)
+    if len(edges) < 3:
+        return empty_figure('相似边少于 3 条；不绘制空网络。')
+
+    import math
+
+    positions = {name: (0.5 + 0.38 * math.cos(2 * math.pi * i / len(names)), 0.5 + 0.38 * math.sin(2 * math.pi * i / len(names))) for i, name in enumerate(names)}
     edge_x: list[float | None] = []
     edge_y: list[float | None] = []
-    for a, b in itertools.combinations(names, 2):
-        va = pivot.loc[a]
-        vb = pivot.loc[b]
-        sim = 1.0 - float((va - vb).abs().mean())
-        if sim >= 0.9:
-            edge_x.extend([positions[a][0], positions[b][0], None])
-            edge_y.extend([positions[a][1], positions[b][1], None])
+    edge_text: list[str] = []
+    for a, b in sorted(edges):
+        edge_x.extend([positions[a][0], positions[b][0], None])
+        edge_y.extend([positions[a][1], positions[b][1], None])
+        edge_text.extend([f'{a} ↔ {b}<br>similarity={edge_scores[(a, b)]:.4f}', f'{a} ↔ {b}<br>similarity={edge_scores[(a, b)]:.4f}', ''])
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=edge_x, y=edge_y, mode='lines', line=dict(color='#94a3b8', width=1), hoverinfo='none'))
-    fig.add_trace(go.Scatter(x=[positions[n][0] for n in names], y=[positions[n][1] for n in names], mode='markers+text', text=names, textposition='top center', marker=dict(size=12, color='#2563eb')))
-    fig.update_xaxes(visible=False)
-    fig.update_yaxes(visible=False)
-    fig.update_layout(title='Network Graph: similar sentence-score profiles（来自 sentence_score_table）', height=430, **PLOT_LAYOUT)
+    fig.add_trace(go.Scatter(x=edge_x, y=edge_y, mode='lines', line=dict(color='#cbd5e1', width=1.2), text=edge_text, hoverinfo='text', name='2-nearest-neighbor links'))
+    fig.add_trace(go.Scatter(
+        x=[positions[n][0] for n in names],
+        y=[positions[n][1] for n in names],
+        mode='markers+text',
+        text=[short_label(n) for n in names],
+        customdata=names,
+        hovertemplate='%{customdata}<extra></extra>',
+        textposition='top center',
+        textfont=dict(size=10),
+        marker=dict(size=12, color='#2563eb', line=dict(color='#ffffff', width=1)),
+        name='submissions',
+    ))
+    fig.update_xaxes(visible=False, range=[0, 1])
+    fig.update_yaxes(visible=False, range=[0, 1], scaleanchor='x', scaleratio=1)
+    fig.update_layout(title='Similarity Network: top-ranked 20, k=2 nearest neighbors（exploratory only）', height=430, showlegend=False, **PLOT_LAYOUT)
     return fig
-
 
 
 LEADERBOARD_VISIBLE_COLUMNS = [
@@ -553,17 +685,44 @@ def create_app(results_dir: Path) -> Dash:
         ]),
     ], className='tab-body')
 
+    experimental_note = 'Experimental visualizations are exploratory only and are not used for official ranking.'
+
+    def experimental_section(title: str, subtitle: str, children: list[Any], *, open_by_default: bool = False) -> html.Details:
+        return html.Details([
+            html.Summary([html.Span(title, className='experimental-summary-title'), html.Span(subtitle, className='experimental-summary-subtitle')], className='experimental-summary'),
+            dbc.Alert(experimental_note, color='warning', className='academic-alert experimental-note'),
+            html.Div(children, className='experimental-section-body'),
+        ], open=open_by_default, className='experimental-section')
+
+    dataset_tokens = dataset_word_counter(sentence_table)
+    error_spans = error_span_counter(span_errors)
     experimental_tab = html.Div([
-        dbc.Alert('Experimental visualizations are exploratory only and are not used for official ranking.', color='warning', className='academic-alert'),
-        dbc.Row([
-            dbc.Col(panel(simple_word_cloud(dataset_word_counter(sentence_table), 'Dataset overview word cloud（来自 sentence_table.gold）')), lg=6),
-            dbc.Col(panel(simple_word_cloud(error_word_counter(span_errors), 'Common error spans word cloud（来自 span_error_table.raw_span）')), lg=6),
-        ], className='g-3'),
-        dbc.Row([
-            dbc.Col(panel([section_title('Sankey Chart', 'Source to boundary error flow.'), dcc.Graph(figure=sankey_chart(boundary_table), className='dashboard-graph')]), lg=6),
-            dbc.Col(panel([section_title('Student Clustering', 'Metric-space exploratory scatter.'), dcc.Graph(figure=clustering_scatter(submissions), className='dashboard-graph')]), lg=6),
-        ], className='g-3 mt-1'),
-        panel([section_title('Network Graph', 'Exploratory similarity network from sentence-score profiles.'), dcc.Graph(figure=network_graph(sentence_scores), className='dashboard-graph')], 'mt-3'),
+        dbc.Alert(experimental_note, color='warning', className='academic-alert'),
+        experimental_section('Token Frequency', 'Top-N bars first; compact word clouds are auxiliary.', [
+            dbc.Row([
+                dbc.Col(panel([section_title('Dataset top tokens', 'Top tokens from sentence_table.gold.'), dcc.Graph(figure=token_bar_chart(dataset_tokens, 'Dataset Top Tokens'), className='dashboard-graph')]), lg=6),
+                dbc.Col(panel([section_title('Common error spans', 'Top local raw spans from span_error_table.raw_span.'), dcc.Graph(figure=token_bar_chart(error_spans, 'Common Error Spans'), className='dashboard-graph')]), lg=6),
+            ], className='g-3'),
+            html.Details([
+                html.Summary('Show auxiliary compact word clouds', className='details-summary'),
+                dbc.Row([
+                    dbc.Col(panel(simple_word_cloud(dataset_tokens, 'Auxiliary dataset word cloud')), lg=6),
+                    dbc.Col(panel(simple_word_cloud(error_word_counter(span_errors), 'Auxiliary error token cloud')), lg=6),
+                ], className='g-3'),
+            ], className='details-panel'),
+        ], open_by_default=True),
+        experimental_section('Error Flow', 'Sankey charts exclude true_positive and visualize errors only.', [
+            dbc.Row([
+                dbc.Col(panel([section_title('Raw error flow', 'Only over_segmentation and under_segmentation are shown.'), dcc.Graph(figure=sankey_chart(boundary_table, normalized=False), className='dashboard-graph')]), lg=6),
+                dbc.Col(panel([section_title('Normalized error flow', 'Within-source normalization prevents large subsets from dominating.'), dcc.Graph(figure=sankey_chart(boundary_table, normalized=True), className='dashboard-graph')]), lg=6),
+            ], className='g-3'),
+        ], open_by_default=False),
+        experimental_section('Metric Space', 'Scatter plot of official metrics, not a clustering model.', [
+            panel([section_title('Metric Space Scatter', 'Includes y=x reference line and rich tooltips.'), dcc.Graph(figure=clustering_scatter(submissions), className='dashboard-graph')]),
+        ], open_by_default=True),
+        experimental_section('Similarity Network', 'Top-ranked 20 submissions; each node links to its 2 nearest neighbors.', [
+            panel([section_title('Similarity Network', 'Collapsed by default to avoid visual noise.'), dcc.Graph(figure=network_graph(sentence_scores, submissions), className='dashboard-graph')]),
+        ], open_by_default=False),
     ], className='tab-body experimental-tab')
 
     app.layout = dbc.Container([
