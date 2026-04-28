@@ -34,7 +34,10 @@ def test_span_and_boundary_metrics_distinguish_under_and_over_segmentation() -> 
     assert score_row['under_segmentation_count'] == 1
     assert score_row['over_segmentation_count'] == 0
     assert {row['boundary_type'] for row in boundary_rows} == {'true_positive', 'under_segmentation'}
-    assert {row['error_type'] for row in span_errors} == {'false_positive_span', 'false_negative_span'}
+    assert {row['boundary_case'] for row in boundary_rows} == {'TP', 'FN'}
+    assert span_errors[0]['error_type'] == 'under_seg'
+    assert span_errors[0]['raw_span'] == '我爱'
+    assert {'left_char', 'right_char', 'left_context', 'right_context', 'gold_boundary', 'pred_boundary', 'boundary_case'} <= set(boundary_rows[0])
 
     over_row, _, _ = score_sentence(
         submission_name='method_b',
@@ -118,7 +121,7 @@ def test_dashboard_sample_covers_required_scoring_cases(tmp_path: Path) -> None:
     assert perfect_report['overall']['word_f1'] == 1.0
     assert perfect_report['overall']['boundary_f1'] == 1.0
     assert perfect_report['overall']['total_sentences'] == 4  # excluded gold is not ranked/scored
-    assert any(row['gold_status'] == 'excluded' and row['is_scored'] == 0 for row in perfect_report['sentence_score_rows'])
+    assert any(row['gold_status'] == 'excluded' and row['is_evaluable'] == 0 for row in perfect_report['sentence_score_rows'])
 
     over_report, _ = score_prediction_submission(
         submission_path=root / 'submissions/over_pred.txt',
@@ -159,8 +162,14 @@ def test_dashboard_sample_covers_required_scoring_cases(tmp_path: Path) -> None:
     assert '无法还原原句' in invalid_report['message']
     bad_rows = [row for row in invalid_report['sentence_score_rows'] if row['validation_status'] == 'reconstruction_mismatch']
     assert len(bad_rows) == 1
+    assert bad_rows[0]['pred_valid'] == 0
+    assert bad_rows[0]['is_evaluable'] == 1
+    assert bad_rows[0]['pred_word_count'] == 0
     assert bad_rows[0]['word_f1'] == 0
     assert bad_rows[0]['boundary_f1'] == 0
+    assert invalid_report['overall']['total_sentences'] == 4
+    assert invalid_report['overall']['gold_words'] == perfect_report['overall']['gold_words']
+    assert invalid_report['overall']['word_f1'] < perfect_report['overall']['word_f1']
 
     sentence_table = (results_dir / 'sentence_table.csv').read_text(encoding='utf-8-sig')
     submission_table = (results_dir / 'submission_table.csv').read_text(encoding='utf-8-sig')
@@ -176,7 +185,7 @@ def test_tolerant_policy_handles_missing_and_extra_lines(tmp_path: Path) -> None
     root = Path('test_assets/dashboard_sample')
     results_dir = tmp_path / 'results'
     missing = tmp_path / 'missing_pred.txt'
-    missing.write_text('我 / 爱 / 北京\nab / c\n哈哈 / 哈哈\n重复 / 重复\n', encoding='utf-8')
+    missing.write_text('我 / 爱 / 北京\nab / c\n重复 / 重复\n坏 / 样例\n', encoding='utf-8')
     missing_report, _ = score_prediction_submission(
         submission_path=missing,
         submission_name='missing',
@@ -190,7 +199,12 @@ def test_tolerant_policy_handles_missing_and_extra_lines(tmp_path: Path) -> None
     assert missing_report['status'] == '成功'
     assert missing_report['tolerant_issue_count'] == 1
     assert '缺失' in missing_report['message']
-    assert any(row['validation_status'] == 'missing_line' and row['word_f1'] == 0 for row in missing_report['sentence_score_rows'])
+    missing_rows = [row for row in missing_report['sentence_score_rows'] if row['validation_status'] == 'missing_line']
+    assert len(missing_rows) == 1
+    assert missing_rows[0]['is_evaluable'] == 1
+    assert missing_rows[0]['pred_word_count'] == 0
+    assert missing_rows[0]['word_f1'] == 0
+    assert missing_report['overall']['total_sentences'] == 4
 
     extra = tmp_path / 'extra_pred.txt'
     extra.write_text((root / 'submissions/perfect_pred.txt').read_text(encoding='utf-8') + '额外 / 行\n', encoding='utf-8')
@@ -207,6 +221,7 @@ def test_tolerant_policy_handles_missing_and_extra_lines(tmp_path: Path) -> None
     assert extra_report['status'] == '成功'
     assert extra_report['tolerant_issue_count'] == 1
     assert '额外输出' in extra_report['message']
+    assert all(row['validation_status'] == 'ok' or row['gold_status'] == 'excluded' for row in extra_report['sentence_score_rows'])
 
 
 def test_fatal_file_and_encoding_errors_fail_submission(tmp_path: Path) -> None:

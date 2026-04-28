@@ -49,14 +49,19 @@ Internally, tokens are normalized before validation and scoring.
 All metrics are computed in the scoring/export layer before dashboard rendering.
 The dashboard only reads exported tables.
 
-### Validation
+### Validation and tolerant row-level scoring
 
-A prediction file is valid only when:
+The scoring layer uses policy B:
 
-1. line count equals `raw.txt` line count;
-2. for every line, `''.join(pred_tokens) == raw_text`.
+1. File-level fatal issues still fail the whole submission, including missing file, non-UTF-8 encoding, illegal control characters, invalid runtime metadata, oversized files, and unrecoverable severe format problems.
+2. Row-level issues do not fail the whole submission:
+   - `reconstruction_mismatch`: the predicted tokens cannot reconstruct the corresponding raw sentence;
+   - `missing_line`: the prediction line is missing;
+   - extra prediction lines are ignored and reported as warnings.
+3. `reconstruction_mismatch` and `missing_line` rows remain in the denominator and are scored as 0. Their exported `pred_valid=0`, `is_evaluable=1`, predicted spans/boundaries are empty, and word/boundary F1 are 0.
+4. `gold_status=excluded` rows remain visible for review but use `is_evaluable=0`, so they are excluded from ranking denominators.
 
-Invalid submissions are exported with failure status and zero ranking score.
+The leaderboard includes `tolerant_issue_count`; reports include `validation_warnings` / `eval_warnings`.
 
 ### Word-level metrics
 
@@ -71,6 +76,16 @@ Boundary metrics compare internal word-boundary character positions.
 
 - predicted boundary not in gold = over-segmentation;
 - gold boundary not predicted = under-segmentation.
+
+`boundary_table` stores only non-TN boundary positions:
+
+- `boundary_case=TP`: gold and prediction both have the boundary;
+- `boundary_case=FP`: prediction has an extra boundary;
+- `boundary_case=FN`: gold has a missing boundary in the prediction.
+
+True negatives are not stored because character positions without a gold or predicted boundary dominate the table and do not aid boundary-error inspection.
+
+`span_error_table` groups continuous local boundary mismatches into reviewable error fragments with `raw_span`, `gold_span_tokens`, `pred_span_tokens`, `start_char`, `end_char`, `error_type`, and `severity`.
 
 ### Sentence metrics
 

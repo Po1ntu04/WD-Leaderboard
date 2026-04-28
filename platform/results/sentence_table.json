@@ -17,11 +17,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.557367,
-    "sentence_avg_boundary_f1": 0.798157,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.53593,
+    "sentence_avg_boundary_f1": 0.767459,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.359783
+    "discrimination_index": 0.419311
   },
   {
     "sentence_id": 2,
@@ -41,11 +41,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.720056,
-    "sentence_avg_boundary_f1": 0.876256,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.292455
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.692361,
+    "sentence_avg_boundary_f1": 0.842554,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.381791
   },
   {
     "sentence_id": 3,
@@ -65,11 +65,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.680341,
-    "sentence_avg_boundary_f1": 0.849471,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.654174,
+    "sentence_avg_boundary_f1": 0.816799,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.30407
+    "discrimination_index": 0.386753
   },
   {
     "sentence_id": 4,
@@ -89,11 +89,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.748569,
-    "sentence_avg_boundary_f1": 0.873632,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.29388
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.71258,
+    "sentence_avg_boundary_f1": 0.831631,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.409209
   },
   {
     "sentence_id": 5,
@@ -113,11 +113,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.709136,
-    "sentence_avg_boundary_f1": 0.828871,
-    "sentence_exact_match_rate": 0.1,
-    "discrimination_index": 0.417876
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.681861,
+    "sentence_avg_boundary_f1": 0.796991,
+    "sentence_exact_match_rate": 0.096154,
+    "discrimination_index": 0.497326
   },
   {
     "sentence_id": 6,
@@ -137,11 +137,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.720906,
-    "sentence_avg_boundary_f1": 0.868865,
-    "sentence_exact_match_rate": 0.15,
-    "discrimination_index": 0.499948
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.693178,
+    "sentence_avg_boundary_f1": 0.835447,
+    "sentence_exact_match_rate": 0.144231,
+    "discrimination_index": 0.57389
   },
   {
     "sentence_id": 7,
@@ -161,11 +161,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.592862,
-    "sentence_avg_boundary_f1": 0.769171,
-    "sentence_exact_match_rate": 0.02,
-    "discrimination_index": 0.414141
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.57006,
+    "sentence_avg_boundary_f1": 0.739587,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.478704
   },
   {
     "sentence_id": 8,
@@ -185,11 +185,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.728635,
-    "sentence_avg_boundary_f1": 0.863299,
-    "sentence_exact_match_rate": 0.05,
-    "discrimination_index": 0.349518
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.700611,
+    "sentence_avg_boundary_f1": 0.830095,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.436596
   },
   {
     "sentence_id": 9,
@@ -209,11 +209,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.477512,
-    "sentence_avg_boundary_f1": 0.707113,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.524974
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.459146,
+    "sentence_avg_boundary_f1": 0.679917,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.561675
   },
   {
     "sentence_id": 10,
@@ -233,11 +233,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.687356,
-    "sentence_avg_boundary_f1": 0.825633,
-    "sentence_exact_match_rate": 0.12,
-    "discrimination_index": 0.369804
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.660919,
+    "sentence_avg_boundary_f1": 0.793878,
+    "sentence_exact_match_rate": 0.115385,
+    "discrimination_index": 0.44979
   },
   {
     "sentence_id": 11,
@@ -257,11 +257,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.50723,
-    "sentence_avg_boundary_f1": 0.753965,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.487721,
+    "sentence_avg_boundary_f1": 0.724967,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.349608
+    "discrimination_index": 0.403806
   },
   {
     "sentence_id": 12,
@@ -281,11 +281,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.60196,
-    "sentence_avg_boundary_f1": 0.787923,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.381441
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.578807,
+    "sentence_avg_boundary_f1": 0.757618,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.446582
   },
   {
     "sentence_id": 13,
@@ -305,11 +305,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.736016,
-    "sentence_avg_boundary_f1": 0.876885,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.693553,
+    "sentence_avg_boundary_f1": 0.826296,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.250073
+    "discrimination_index": 0.388637
   },
   {
     "sentence_id": 14,
@@ -329,11 +329,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.743798,
-    "sentence_avg_boundary_f1": 0.875758,
-    "sentence_exact_match_rate": 0.019802,
-    "discrimination_index": 0.391899
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.722342,
+    "sentence_avg_boundary_f1": 0.850495,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.455283
   },
   {
     "sentence_id": 15,
@@ -353,11 +353,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.581874,
-    "sentence_avg_boundary_f1": 0.826182,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.559494,
+    "sentence_avg_boundary_f1": 0.794406,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.446713
+    "discrimination_index": 0.502682
   },
   {
     "sentence_id": 16,
@@ -377,11 +377,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.698308,
-    "sentence_avg_boundary_f1": 0.851419,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.678164,
+    "sentence_avg_boundary_f1": 0.826859,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.379307
+    "discrimination_index": 0.438387
   },
   {
     "sentence_id": 17,
@@ -401,11 +401,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.621018,
-    "sentence_avg_boundary_f1": 0.811195,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.341494
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.597132,
+    "sentence_avg_boundary_f1": 0.779995,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.413713
   },
   {
     "sentence_id": 18,
@@ -425,11 +425,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.705204,
-    "sentence_avg_boundary_f1": 0.869189,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.684862,
+    "sentence_avg_boundary_f1": 0.844117,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.398881
+    "discrimination_index": 0.458373
   },
   {
     "sentence_id": 19,
@@ -449,11 +449,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.630788,
-    "sentence_avg_boundary_f1": 0.784074,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.404811
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.606527,
+    "sentence_avg_boundary_f1": 0.753918,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.474769
   },
   {
     "sentence_id": 20,
@@ -473,11 +473,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.530193,
-    "sentence_avg_boundary_f1": 0.776921,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.384227
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.509801,
+    "sentence_avg_boundary_f1": 0.74704,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.439421
   },
   {
     "sentence_id": 21,
@@ -497,11 +497,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.731372,
-    "sentence_avg_boundary_f1": 0.86876,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.69621,
+    "sentence_avg_boundary_f1": 0.826993,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.377887
+    "discrimination_index": 0.48549
   },
   {
     "sentence_id": 22,
@@ -521,11 +521,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.710398,
-    "sentence_avg_boundary_f1": 0.859528,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.676244,
+    "sentence_avg_boundary_f1": 0.818205,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.30112
+    "discrimination_index": 0.408988
   },
   {
     "sentence_id": 23,
@@ -545,11 +545,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.686785,
-    "sentence_avg_boundary_f1": 0.862179,
-    "sentence_exact_match_rate": 0.009901,
-    "discrimination_index": 0.354445
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.666974,
+    "sentence_avg_boundary_f1": 0.837308,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.413232
   },
   {
     "sentence_id": 24,
@@ -569,11 +569,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.742768,
-    "sentence_avg_boundary_f1": 0.882823,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.312525
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.7142,
+    "sentence_avg_boundary_f1": 0.848868,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.404865
   },
   {
     "sentence_id": 25,
@@ -593,11 +593,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.682295,
-    "sentence_avg_boundary_f1": 0.84616,
-    "sentence_exact_match_rate": 0.039604,
-    "discrimination_index": 0.401695
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.662613,
+    "sentence_avg_boundary_f1": 0.821751,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.457291
   },
   {
     "sentence_id": 26,
@@ -617,11 +617,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.442705,
-    "sentence_avg_boundary_f1": 0.617424,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.425678,
+    "sentence_avg_boundary_f1": 0.593677,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.314872
+    "discrimination_index": 0.358884
   },
   {
     "sentence_id": 27,
@@ -641,11 +641,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.718928,
-    "sentence_avg_boundary_f1": 0.866513,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.311487
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.691277,
+    "sentence_avg_boundary_f1": 0.833186,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.399622
   },
   {
     "sentence_id": 28,
@@ -665,11 +665,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.823245,
-    "sentence_avg_boundary_f1": 0.920498,
-    "sentence_exact_match_rate": 0.11,
-    "discrimination_index": 0.29748
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.791581,
+    "sentence_avg_boundary_f1": 0.885094,
+    "sentence_exact_match_rate": 0.105769,
+    "discrimination_index": 0.39968
   },
   {
     "sentence_id": 29,
@@ -689,11 +689,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.769081,
-    "sentence_avg_boundary_f1": 0.890855,
-    "sentence_exact_match_rate": 0.019802,
-    "discrimination_index": 0.315581
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.746896,
+    "sentence_avg_boundary_f1": 0.865157,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.385957
   },
   {
     "sentence_id": 30,
@@ -713,11 +713,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 95,
-    "sentence_avg_word_f1": 0.686539,
-    "sentence_avg_boundary_f1": 0.839336,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.627127,
+    "sentence_avg_boundary_f1": 0.766701,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.264537
+    "discrimination_index": 0.456907
   },
   {
     "sentence_id": 31,
@@ -737,11 +737,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.770391,
-    "sentence_avg_boundary_f1": 0.903827,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.748168,
+    "sentence_avg_boundary_f1": 0.877755,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.296189
+    "discrimination_index": 0.366994
   },
   {
     "sentence_id": 32,
@@ -761,11 +761,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.694282,
-    "sentence_avg_boundary_f1": 0.851498,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.667578,
+    "sentence_avg_boundary_f1": 0.818748,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.360256
+    "discrimination_index": 0.43909
   },
   {
     "sentence_id": 33,
@@ -785,11 +785,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.787774,
-    "sentence_avg_boundary_f1": 0.895298,
-    "sentence_exact_match_rate": 0.11,
-    "discrimination_index": 0.341608
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.757475,
+    "sentence_avg_boundary_f1": 0.860864,
+    "sentence_exact_match_rate": 0.105769,
+    "discrimination_index": 0.437606
   },
   {
     "sentence_id": 34,
@@ -809,11 +809,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.723797,
-    "sentence_avg_boundary_f1": 0.864737,
-    "sentence_exact_match_rate": 0.05,
-    "discrimination_index": 0.396808
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.695959,
+    "sentence_avg_boundary_f1": 0.831478,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.48182
   },
   {
     "sentence_id": 35,
@@ -833,11 +833,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.602645,
-    "sentence_avg_boundary_f1": 0.803601,
-    "sentence_exact_match_rate": 0.04,
-    "discrimination_index": 0.465269
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.579466,
+    "sentence_avg_boundary_f1": 0.772693,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.525782
   },
   {
     "sentence_id": 36,
@@ -857,11 +857,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.682509,
-    "sentence_avg_boundary_f1": 0.858425,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.662821,
+    "sentence_avg_boundary_f1": 0.833663,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.283995
+    "discrimination_index": 0.34617
   },
   {
     "sentence_id": 37,
@@ -881,11 +881,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.644263,
-    "sentence_avg_boundary_f1": 0.830339,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.613289,
+    "sentence_avg_boundary_f1": 0.790419,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.356613
+    "discrimination_index": 0.449216
   },
   {
     "sentence_id": 38,
@@ -905,11 +905,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.759208,
-    "sentence_avg_boundary_f1": 0.868037,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.722707,
+    "sentence_avg_boundary_f1": 0.826304,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.260306
+    "discrimination_index": 0.38268
   },
   {
     "sentence_id": 39,
@@ -929,11 +929,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.642612,
-    "sentence_avg_boundary_f1": 0.806553,
-    "sentence_exact_match_rate": 0.16,
-    "discrimination_index": 0.585688
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.617896,
+    "sentence_avg_boundary_f1": 0.775532,
+    "sentence_exact_match_rate": 0.153846,
+    "discrimination_index": 0.645003
   },
   {
     "sentence_id": 40,
@@ -953,11 +953,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.679361,
-    "sentence_avg_boundary_f1": 0.857106,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.659764,
+    "sentence_avg_boundary_f1": 0.832382,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.315574
+    "discrimination_index": 0.375248
   },
   {
     "sentence_id": 41,
@@ -977,11 +977,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.577782,
-    "sentence_avg_boundary_f1": 0.807256,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.550004,
+    "sentence_avg_boundary_f1": 0.768445,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.382411
+    "discrimination_index": 0.456972
   },
   {
     "sentence_id": 42,
@@ -1001,11 +1001,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.784544,
-    "sentence_avg_boundary_f1": 0.909469,
-    "sentence_exact_match_rate": 0.029703,
-    "discrimination_index": 0.264758
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.761912,
+    "sentence_avg_boundary_f1": 0.883234,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.338909
   },
   {
     "sentence_id": 43,
@@ -1025,11 +1025,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.696021,
-    "sentence_avg_boundary_f1": 0.862382,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.669251,
+    "sentence_avg_boundary_f1": 0.829213,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.286907
+    "discrimination_index": 0.369915
   },
   {
     "sentence_id": 44,
@@ -1049,11 +1049,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.819758,
-    "sentence_avg_boundary_f1": 0.904135,
-    "sentence_exact_match_rate": 0.118812,
-    "discrimination_index": 0.353385
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.796111,
+    "sentence_avg_boundary_f1": 0.878055,
+    "sentence_exact_match_rate": 0.115385,
+    "discrimination_index": 0.428919
   },
   {
     "sentence_id": 45,
@@ -1073,11 +1073,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.659656,
-    "sentence_avg_boundary_f1": 0.825335,
-    "sentence_exact_match_rate": 0.04,
-    "discrimination_index": 0.441542
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.634285,
+    "sentence_avg_boundary_f1": 0.793592,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.514435
   },
   {
     "sentence_id": 46,
@@ -1097,11 +1097,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long|mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.712995,
-    "sentence_avg_boundary_f1": 0.863947,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.685572,
+    "sentence_avg_boundary_f1": 0.830718,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.34135
+    "discrimination_index": 0.426461
   },
   {
     "sentence_id": 47,
@@ -1121,11 +1121,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.662258,
-    "sentence_avg_boundary_f1": 0.841505,
-    "sentence_exact_match_rate": 0.11,
-    "discrimination_index": 0.51889
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.636786,
+    "sentence_avg_boundary_f1": 0.809139,
+    "sentence_exact_match_rate": 0.105769,
+    "discrimination_index": 0.583077
   },
   {
     "sentence_id": 48,
@@ -1145,11 +1145,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.833197,
-    "sentence_avg_boundary_f1": 0.902782,
-    "sentence_exact_match_rate": 0.26,
-    "discrimination_index": 0.372038
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.801151,
+    "sentence_avg_boundary_f1": 0.868059,
+    "sentence_exact_match_rate": 0.25,
+    "discrimination_index": 0.474454
   },
   {
     "sentence_id": 49,
@@ -1169,11 +1169,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.719506,
-    "sentence_avg_boundary_f1": 0.867856,
-    "sentence_exact_match_rate": 0.03,
-    "discrimination_index": 0.417971
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.691833,
+    "sentence_avg_boundary_f1": 0.834477,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.496921
   },
   {
     "sentence_id": 50,
@@ -1193,11 +1193,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.687079,
-    "sentence_avg_boundary_f1": 0.863312,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.660653,
+    "sentence_avg_boundary_f1": 0.830107,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.264799
+    "discrimination_index": 0.349223
   },
   {
     "sentence_id": 51,
@@ -1217,11 +1217,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.629881,
-    "sentence_avg_boundary_f1": 0.779589,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.599598,
+    "sentence_avg_boundary_f1": 0.742109,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.359815
+    "discrimination_index": 0.451518
   },
   {
     "sentence_id": 52,
@@ -1241,11 +1241,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.680818,
-    "sentence_avg_boundary_f1": 0.82946,
-    "sentence_exact_match_rate": 0.049505,
-    "discrimination_index": 0.353993
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.661179,
+    "sentence_avg_boundary_f1": 0.805534,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.411614
   },
   {
     "sentence_id": 53,
@@ -1265,11 +1265,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.509797,
-    "sentence_avg_boundary_f1": 0.683942,
-    "sentence_exact_match_rate": 0.03,
-    "discrimination_index": 0.458551
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.49019,
+    "sentence_avg_boundary_f1": 0.657637,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.504891
   },
   {
     "sentence_id": 54,
@@ -1289,11 +1289,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.804913,
-    "sentence_avg_boundary_f1": 0.907497,
-    "sentence_exact_match_rate": 0.171717,
-    "discrimination_index": 0.365202
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.766215,
+    "sentence_avg_boundary_f1": 0.863868,
+    "sentence_exact_match_rate": 0.163462,
+    "discrimination_index": 0.490363
   },
   {
     "sentence_id": 55,
@@ -1313,11 +1313,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.632528,
-    "sentence_avg_boundary_f1": 0.83898,
-    "sentence_exact_match_rate": 0.009901,
-    "discrimination_index": 0.299345
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.614282,
+    "sentence_avg_boundary_f1": 0.814779,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.354835
   },
   {
     "sentence_id": 56,
@@ -1337,11 +1337,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.744597,
-    "sentence_avg_boundary_f1": 0.877841,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.708799,
+    "sentence_avg_boundary_f1": 0.835637,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.291584
+    "discrimination_index": 0.409657
   },
   {
     "sentence_id": 57,
@@ -1361,11 +1361,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.71168,
-    "sentence_avg_boundary_f1": 0.861241,
-    "sentence_exact_match_rate": 0.1,
-    "discrimination_index": 0.443312
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.684308,
+    "sentence_avg_boundary_f1": 0.828116,
+    "sentence_exact_match_rate": 0.096154,
+    "discrimination_index": 0.522688
   },
   {
     "sentence_id": 58,
@@ -1385,11 +1385,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.689976,
-    "sentence_avg_boundary_f1": 0.831704,
-    "sentence_exact_match_rate": 0.06,
-    "discrimination_index": 0.415415
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.663439,
+    "sentence_avg_boundary_f1": 0.799716,
+    "sentence_exact_match_rate": 0.057692,
+    "discrimination_index": 0.492961
   },
   {
     "sentence_id": 59,
@@ -1409,11 +1409,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.670376,
-    "sentence_avg_boundary_f1": 0.83273,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.638146,
+    "sentence_avg_boundary_f1": 0.792695,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.265223
+    "discrimination_index": 0.36939
   },
   {
     "sentence_id": 60,
@@ -1433,11 +1433,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.628981,
-    "sentence_avg_boundary_f1": 0.803109,
-    "sentence_exact_match_rate": 0.03,
-    "discrimination_index": 0.597794
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.60479,
+    "sentence_avg_boundary_f1": 0.772221,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.652888
   },
   {
     "sentence_id": 61,
@@ -1457,11 +1457,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.801344,
-    "sentence_avg_boundary_f1": 0.886663,
-    "sentence_exact_match_rate": 0.18,
-    "discrimination_index": 0.377238
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.770523,
+    "sentence_avg_boundary_f1": 0.85256,
+    "sentence_exact_match_rate": 0.173077,
+    "discrimination_index": 0.471426
   },
   {
     "sentence_id": 62,
@@ -1481,11 +1481,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.642707,
-    "sentence_avg_boundary_f1": 0.830519,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.342674
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.611808,
+    "sentence_avg_boundary_f1": 0.79059,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.435349
   },
   {
     "sentence_id": 63,
@@ -1505,11 +1505,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.712021,
-    "sentence_avg_boundary_f1": 0.849946,
-    "sentence_exact_match_rate": 0.1,
-    "discrimination_index": 0.434728
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.684636,
+    "sentence_avg_boundary_f1": 0.817256,
+    "sentence_exact_match_rate": 0.096154,
+    "discrimination_index": 0.512395
   },
   {
     "sentence_id": 64,
@@ -1529,11 +1529,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.756801,
-    "sentence_avg_boundary_f1": 0.897134,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.720417,
+    "sentence_avg_boundary_f1": 0.854003,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.229996
+    "discrimination_index": 0.352376
   },
   {
     "sentence_id": 65,
@@ -1553,11 +1553,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.774223,
-    "sentence_avg_boundary_f1": 0.900881,
-    "sentence_exact_match_rate": 0.019802,
-    "discrimination_index": 0.306586
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.75189,
+    "sentence_avg_boundary_f1": 0.874894,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.378411
   },
   {
     "sentence_id": 66,
@@ -1577,11 +1577,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.661271,
-    "sentence_avg_boundary_f1": 0.852304,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.635837,
+    "sentence_avg_boundary_f1": 0.819523,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.31129
+    "discrimination_index": 0.389939
   },
   {
     "sentence_id": 67,
@@ -1601,11 +1601,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.727939,
-    "sentence_avg_boundary_f1": 0.877411,
-    "sentence_exact_match_rate": 0.070707,
-    "discrimination_index": 0.412099
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.692942,
+    "sentence_avg_boundary_f1": 0.835228,
+    "sentence_exact_match_rate": 0.067308,
+    "discrimination_index": 0.516282
   },
   {
     "sentence_id": 68,
@@ -1625,11 +1625,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.743959,
-    "sentence_avg_boundary_f1": 0.879723,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.32619
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.715345,
+    "sentence_avg_boundary_f1": 0.845887,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.417951
   },
   {
     "sentence_id": 69,
@@ -1649,11 +1649,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.721669,
-    "sentence_avg_boundary_f1": 0.875921,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.693912,
+    "sentence_avg_boundary_f1": 0.842231,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.284138
+    "discrimination_index": 0.373658
   },
   {
     "sentence_id": 70,
@@ -1673,11 +1673,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.579926,
-    "sentence_avg_boundary_f1": 0.783556,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.557622,
+    "sentence_avg_boundary_f1": 0.753419,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.378515
+    "discrimination_index": 0.43819
   },
   {
     "sentence_id": 71,
@@ -1697,11 +1697,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.722097,
-    "sentence_avg_boundary_f1": 0.851989,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.687381,
+    "sentence_avg_boundary_f1": 0.811028,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.352356
+    "discrimination_index": 0.462753
   },
   {
     "sentence_id": 72,
@@ -1721,11 +1721,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.658096,
-    "sentence_avg_boundary_f1": 0.855114,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.632785,
+    "sentence_avg_boundary_f1": 0.822225,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.302304
+    "discrimination_index": 0.381143
   },
   {
     "sentence_id": 73,
@@ -1745,11 +1745,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.783293,
-    "sentence_avg_boundary_f1": 0.904632,
-    "sentence_exact_match_rate": 0.16,
-    "discrimination_index": 0.385525
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.753167,
+    "sentence_avg_boundary_f1": 0.869838,
+    "sentence_exact_match_rate": 0.153846,
+    "discrimination_index": 0.477369
   },
   {
     "sentence_id": 74,
@@ -1769,11 +1769,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.690113,
-    "sentence_avg_boundary_f1": 0.868334,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.656935,
+    "sentence_avg_boundary_f1": 0.826587,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.214752
+    "discrimination_index": 0.327136
   },
   {
     "sentence_id": 75,
@@ -1793,11 +1793,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.700974,
-    "sentence_avg_boundary_f1": 0.871314,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.653793,
+    "sentence_avg_boundary_f1": 0.812668,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.265966
+    "discrimination_index": 0.417493
   },
   {
     "sentence_id": 76,
@@ -1817,11 +1817,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.796401,
-    "sentence_avg_boundary_f1": 0.898511,
-    "sentence_exact_match_rate": 0.19802,
-    "discrimination_index": 0.375432
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.773428,
+    "sentence_avg_boundary_f1": 0.872593,
+    "sentence_exact_match_rate": 0.192308,
+    "discrimination_index": 0.446363
   },
   {
     "sentence_id": 77,
@@ -1841,11 +1841,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.771887,
-    "sentence_avg_boundary_f1": 0.873886,
-    "sentence_exact_match_rate": 0.05,
-    "discrimination_index": 0.384363
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.742199,
+    "sentence_avg_boundary_f1": 0.840275,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.479015
   },
   {
     "sentence_id": 78,
@@ -1865,11 +1865,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.81357,
-    "sentence_avg_boundary_f1": 0.907982,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.298181
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.782279,
+    "sentence_avg_boundary_f1": 0.87306,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.401454
   },
   {
     "sentence_id": 79,
@@ -1889,11 +1889,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.770198,
-    "sentence_avg_boundary_f1": 0.901668,
-    "sentence_exact_match_rate": 0.089109,
-    "discrimination_index": 0.356834
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.747981,
+    "sentence_avg_boundary_f1": 0.875658,
+    "sentence_exact_match_rate": 0.086538,
+    "discrimination_index": 0.424536
   },
   {
     "sentence_id": 80,
@@ -1913,11 +1913,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.628526,
-    "sentence_avg_boundary_f1": 0.824671,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.598308,
+    "sentence_avg_boundary_f1": 0.785023,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.260613
+    "discrimination_index": 0.359496
   },
   {
     "sentence_id": 81,
@@ -1937,11 +1937,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.864634,
-    "sentence_avg_boundary_f1": 0.938459,
-    "sentence_exact_match_rate": 0.138614,
-    "discrimination_index": 0.293904
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.839692,
+    "sentence_avg_boundary_f1": 0.911388,
+    "sentence_exact_match_rate": 0.134615,
+    "discrimination_index": 0.378008
   },
   {
     "sentence_id": 82,
@@ -1961,11 +1961,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.725583,
-    "sentence_avg_boundary_f1": 0.888324,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.683723,
+    "sentence_avg_boundary_f1": 0.837074,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.277185
+    "discrimination_index": 0.407225
   },
   {
     "sentence_id": 83,
@@ -1985,11 +1985,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.742921,
-    "sentence_avg_boundary_f1": 0.879026,
-    "sentence_exact_match_rate": 0.03,
-    "discrimination_index": 0.282501
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.714347,
+    "sentence_avg_boundary_f1": 0.845218,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.373538
   },
   {
     "sentence_id": 84,
@@ -2009,11 +2009,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.624828,
-    "sentence_avg_boundary_f1": 0.827956,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.600796,
+    "sentence_avg_boundary_f1": 0.796112,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.289466
+    "discrimination_index": 0.363285
   },
   {
     "sentence_id": 85,
@@ -2033,11 +2033,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.750443,
-    "sentence_avg_boundary_f1": 0.874605,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.721579,
+    "sentence_avg_boundary_f1": 0.840966,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.254972
+    "discrimination_index": 0.349704
   },
   {
     "sentence_id": 86,
@@ -2057,11 +2057,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.875835,
-    "sentence_avg_boundary_f1": 0.929761,
-    "sentence_exact_match_rate": 0.41,
-    "discrimination_index": 0.301094
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.842149,
+    "sentence_avg_boundary_f1": 0.894001,
+    "sentence_exact_match_rate": 0.394231,
+    "discrimination_index": 0.413109
   },
   {
     "sentence_id": 87,
@@ -2081,11 +2081,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.754433,
-    "sentence_avg_boundary_f1": 0.888138,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.73267,
+    "sentence_avg_boundary_f1": 0.862519,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.335529
+    "discrimination_index": 0.404079
   },
   {
     "sentence_id": 88,
@@ -2105,11 +2105,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.711949,
-    "sentence_avg_boundary_f1": 0.857267,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.67772,
+    "sentence_avg_boundary_f1": 0.816052,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.352167
+    "discrimination_index": 0.460194
   },
   {
     "sentence_id": 89,
@@ -2129,11 +2129,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.70548,
-    "sentence_avg_boundary_f1": 0.863658,
-    "sentence_exact_match_rate": 0.02,
-    "discrimination_index": 0.272468
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.678346,
+    "sentence_avg_boundary_f1": 0.830441,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.357313
   },
   {
     "sentence_id": 90,
@@ -2153,11 +2153,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.737355,
-    "sentence_avg_boundary_f1": 0.876578,
-    "sentence_exact_match_rate": 0.23,
-    "discrimination_index": 0.516732
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.708995,
+    "sentence_avg_boundary_f1": 0.842863,
+    "sentence_exact_match_rate": 0.221154,
+    "discrimination_index": 0.594654
   },
   {
     "sentence_id": 91,
@@ -2177,11 +2177,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.71058,
-    "sentence_avg_boundary_f1": 0.87944,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.690082,
+    "sentence_avg_boundary_f1": 0.854072,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.334718
+    "discrimination_index": 0.394785
   },
   {
     "sentence_id": 92,
@@ -2201,11 +2201,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.672427,
-    "sentence_avg_boundary_f1": 0.851029,
-    "sentence_exact_match_rate": 0.009901,
-    "discrimination_index": 0.456755
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.65303,
+    "sentence_avg_boundary_f1": 0.82648,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.506969
   },
   {
     "sentence_id": 93,
@@ -2225,11 +2225,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.815042,
-    "sentence_avg_boundary_f1": 0.912895,
-    "sentence_exact_match_rate": 0.1,
-    "discrimination_index": 0.335516
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.783694,
+    "sentence_avg_boundary_f1": 0.877784,
+    "sentence_exact_match_rate": 0.096154,
+    "discrimination_index": 0.436215
   },
   {
     "sentence_id": 94,
@@ -2249,11 +2249,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.763278,
-    "sentence_avg_boundary_f1": 0.888642,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.311037
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.726582,
+    "sentence_avg_boundary_f1": 0.845919,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.430666
   },
   {
     "sentence_id": 95,
@@ -2273,11 +2273,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.721613,
-    "sentence_avg_boundary_f1": 0.87943,
-    "sentence_exact_match_rate": 0.019802,
-    "discrimination_index": 0.392649
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.700797,
+    "sentence_avg_boundary_f1": 0.854062,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.452846
   },
   {
     "sentence_id": 96,
@@ -2297,11 +2297,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.691694,
-    "sentence_avg_boundary_f1": 0.849196,
-    "sentence_exact_match_rate": 0.02,
-    "discrimination_index": 0.32817
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.66509,
+    "sentence_avg_boundary_f1": 0.816535,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.409617
   },
   {
     "sentence_id": 97,
@@ -2321,11 +2321,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.790237,
-    "sentence_avg_boundary_f1": 0.896342,
-    "sentence_exact_match_rate": 0.111111,
-    "discrimination_index": 0.339128
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.752245,
+    "sentence_avg_boundary_f1": 0.853248,
+    "sentence_exact_match_rate": 0.105769,
+    "discrimination_index": 0.463139
   },
   {
     "sentence_id": 98,
@@ -2345,11 +2345,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.581336,
-    "sentence_avg_boundary_f1": 0.809282,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.558977,
+    "sentence_avg_boundary_f1": 0.778156,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.278513
+    "discrimination_index": 0.346791
   },
   {
     "sentence_id": 99,
@@ -2369,11 +2369,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.819494,
-    "sentence_avg_boundary_f1": 0.920815,
-    "sentence_exact_match_rate": 0.019802,
-    "discrimination_index": 0.303842
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.795855,
+    "sentence_avg_boundary_f1": 0.894253,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.381992
   },
   {
     "sentence_id": 100,
@@ -2393,11 +2393,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 100,
-    "sentence_avg_word_f1": 0.652396,
-    "sentence_avg_boundary_f1": 0.851682,
-    "sentence_exact_match_rate": 0.01,
-    "discrimination_index": 0.296171
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.627304,
+    "sentence_avg_boundary_f1": 0.818925,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.373403
   },
   {
     "sentence_id": 101,
@@ -2417,11 +2417,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 101,
-    "sentence_avg_word_f1": 0.570901,
-    "sentence_avg_boundary_f1": 0.837555,
-    "sentence_exact_match_rate": 0.09901,
-    "discrimination_index": 0.431062
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.554432,
+    "sentence_avg_boundary_f1": 0.813394,
+    "sentence_exact_match_rate": 0.096154,
+    "discrimination_index": 0.467012
   },
   {
     "sentence_id": 102,
@@ -2441,11 +2441,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.667605,
-    "sentence_avg_boundary_f1": 0.848416,
-    "sentence_exact_match_rate": 0.020619,
-    "discrimination_index": 0.463914
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.62267,
+    "sentence_avg_boundary_f1": 0.791311,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.583891
   },
   {
     "sentence_id": 103,
@@ -2465,11 +2465,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.614772,
-    "sentence_avg_boundary_f1": 0.759212,
-    "sentence_exact_match_rate": 0.092784,
-    "discrimination_index": 0.610833
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.573393,
+    "sentence_avg_boundary_f1": 0.708111,
+    "sentence_exact_match_rate": 0.086538,
+    "discrimination_index": 0.693062
   },
   {
     "sentence_id": 104,
@@ -2489,11 +2489,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.648998,
-    "sentence_avg_boundary_f1": 0.840778,
-    "sentence_exact_match_rate": 0.020408,
-    "discrimination_index": 0.371227
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.611556,
+    "sentence_avg_boundary_f1": 0.792272,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.475009
   },
   {
     "sentence_id": 105,
@@ -2513,11 +2513,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.733056,
-    "sentence_avg_boundary_f1": 0.890412,
-    "sentence_exact_match_rate": 0.050505,
-    "discrimination_index": 0.3638
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.697813,
+    "sentence_avg_boundary_f1": 0.847604,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.470735
   },
   {
     "sentence_id": 106,
@@ -2537,11 +2537,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.786382,
-    "sentence_avg_boundary_f1": 0.88442,
-    "sentence_exact_match_rate": 0.113402,
-    "discrimination_index": 0.358083
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.733453,
+    "sentence_avg_boundary_f1": 0.824892,
+    "sentence_exact_match_rate": 0.105769,
+    "discrimination_index": 0.520034
   },
   {
     "sentence_id": 107,
@@ -2561,11 +2561,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.774847,
-    "sentence_avg_boundary_f1": 0.894418,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.737595,
+    "sentence_avg_boundary_f1": 0.851417,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.319577
+    "discrimination_index": 0.443213
   },
   {
     "sentence_id": 108,
@@ -2585,11 +2585,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.778989,
-    "sentence_avg_boundary_f1": 0.881018,
-    "sentence_exact_match_rate": 0.040816,
-    "discrimination_index": 0.38697
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.734047,
+    "sentence_avg_boundary_f1": 0.83019,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.52449
   },
   {
     "sentence_id": 109,
@@ -2609,11 +2609,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.513492,
-    "sentence_avg_boundary_f1": 0.744126,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.483867,
+    "sentence_avg_boundary_f1": 0.701195,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.470966
+    "discrimination_index": 0.533286
   },
   {
     "sentence_id": 110,
@@ -2633,11 +2633,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.694511,
-    "sentence_avg_boundary_f1": 0.857242,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.661121,
+    "sentence_avg_boundary_f1": 0.816029,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.253469
+    "discrimination_index": 0.364441
   },
   {
     "sentence_id": 111,
@@ -2657,11 +2657,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.781553,
-    "sentence_avg_boundary_f1": 0.90557,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.736463,
+    "sentence_avg_boundary_f1": 0.853326,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.291983
+    "discrimination_index": 0.440162
   },
   {
     "sentence_id": 112,
@@ -2681,11 +2681,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.557102,
-    "sentence_avg_boundary_f1": 0.760412,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.46561
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.530319,
+    "sentence_avg_boundary_f1": 0.723854,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.529473
   },
   {
     "sentence_id": 113,
@@ -2705,11 +2705,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.751804,
-    "sentence_avg_boundary_f1": 0.876198,
-    "sentence_exact_match_rate": 0.060606,
-    "discrimination_index": 0.370689
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.71566,
+    "sentence_avg_boundary_f1": 0.834073,
+    "sentence_exact_match_rate": 0.057692,
+    "discrimination_index": 0.484992
   },
   {
     "sentence_id": 114,
@@ -2729,11 +2729,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.563089,
-    "sentence_avg_boundary_f1": 0.817727,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.530603,
+    "sentence_avg_boundary_f1": 0.77055,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.363079
+    "discrimination_index": 0.448826
   },
   {
     "sentence_id": 115,
@@ -2753,11 +2753,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.82837,
-    "sentence_avg_boundary_f1": 0.916961,
-    "sentence_exact_match_rate": 0.050505,
-    "discrimination_index": 0.29541
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.788545,
+    "sentence_avg_boundary_f1": 0.872876,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.430219
   },
   {
     "sentence_id": 116,
@@ -2777,11 +2777,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.681928,
-    "sentence_avg_boundary_f1": 0.832385,
-    "sentence_exact_match_rate": 0.010204,
-    "discrimination_index": 0.369642
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.642586,
+    "sentence_avg_boundary_f1": 0.784363,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.482268
   },
   {
     "sentence_id": 117,
@@ -2801,11 +2801,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.820201,
-    "sentence_avg_boundary_f1": 0.912981,
-    "sentence_exact_match_rate": 0.132653,
-    "discrimination_index": 0.331446
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.772882,
+    "sentence_avg_boundary_f1": 0.860309,
+    "sentence_exact_match_rate": 0.125,
+    "discrimination_index": 0.481157
   },
   {
     "sentence_id": 118,
@@ -2825,11 +2825,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.682767,
-    "sentence_avg_boundary_f1": 0.841767,
-    "sentence_exact_match_rate": 0.070707,
-    "discrimination_index": 0.488823
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.649942,
+    "sentence_avg_boundary_f1": 0.801298,
+    "sentence_exact_match_rate": 0.067308,
+    "discrimination_index": 0.575862
   },
   {
     "sentence_id": 119,
@@ -2849,11 +2849,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.701026,
-    "sentence_avg_boundary_f1": 0.854915,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.653841,
+    "sentence_avg_boundary_f1": 0.797373,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.290621
+    "discrimination_index": 0.440674
   },
   {
     "sentence_id": 120,
@@ -2873,11 +2873,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.75955,
-    "sentence_avg_boundary_f1": 0.882273,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.708426,
+    "sentence_avg_boundary_f1": 0.822889,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.264052
+    "discrimination_index": 0.43609
   },
   {
     "sentence_id": 121,
@@ -2897,11 +2897,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.719178,
-    "sentence_avg_boundary_f1": 0.864339,
-    "sentence_exact_match_rate": 0.040816,
-    "discrimination_index": 0.385643
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.677686,
+    "sentence_avg_boundary_f1": 0.814473,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.503334
   },
   {
     "sentence_id": 122,
@@ -2921,11 +2921,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.750454,
-    "sentence_avg_boundary_f1": 0.821538,
-    "sentence_exact_match_rate": 0.051546,
-    "discrimination_index": 0.325308
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.699942,
+    "sentence_avg_boundary_f1": 0.766242,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.484218
   },
   {
     "sentence_id": 123,
@@ -2945,11 +2945,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.675908,
-    "sentence_avg_boundary_f1": 0.840029,
-    "sentence_exact_match_rate": 0.05102,
-    "discrimination_index": 0.437893
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.636913,
+    "sentence_avg_boundary_f1": 0.791566,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.539148
   },
   {
     "sentence_id": 124,
@@ -2969,11 +2969,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.873694,
-    "sentence_avg_boundary_f1": 0.934813,
-    "sentence_exact_match_rate": 0.444444,
-    "discrimination_index": 0.32655
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.831689,
+    "sentence_avg_boundary_f1": 0.88987,
+    "sentence_exact_match_rate": 0.423077,
+    "discrimination_index": 0.469239
   },
   {
     "sentence_id": 125,
@@ -2993,11 +2993,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.750372,
-    "sentence_avg_boundary_f1": 0.887249,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.699866,
+    "sentence_avg_boundary_f1": 0.827531,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.294474
+    "discrimination_index": 0.454522
   },
   {
     "sentence_id": 126,
@@ -3017,11 +3017,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.796815,
-    "sentence_avg_boundary_f1": 0.898903,
-    "sentence_exact_match_rate": 0.091837,
-    "discrimination_index": 0.361047
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.750845,
+    "sentence_avg_boundary_f1": 0.847043,
+    "sentence_exact_match_rate": 0.086538,
+    "discrimination_index": 0.504947
   },
   {
     "sentence_id": 127,
@@ -3041,11 +3041,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.796434,
-    "sentence_avg_boundary_f1": 0.902804,
-    "sentence_exact_match_rate": 0.050505,
-    "discrimination_index": 0.339237
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.758144,
+    "sentence_avg_boundary_f1": 0.8594,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.465704
   },
   {
     "sentence_id": 128,
@@ -3065,11 +3065,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.70411,
-    "sentence_avg_boundary_f1": 0.869724,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.670258,
+    "sentence_avg_boundary_f1": 0.82791,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.307723
+    "discrimination_index": 0.416645
   },
   {
     "sentence_id": 129,
@@ -3089,11 +3089,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.738357,
-    "sentence_avg_boundary_f1": 0.879353,
-    "sentence_exact_match_rate": 0.050505,
-    "discrimination_index": 0.397969
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.702859,
+    "sentence_avg_boundary_f1": 0.837076,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.504353
   },
   {
     "sentence_id": 130,
@@ -3113,11 +3113,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 96,
-    "sentence_avg_word_f1": 0.652433,
-    "sentence_avg_boundary_f1": 0.827869,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.602246,
+    "sentence_avg_boundary_f1": 0.764187,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.353449
+    "discrimination_index": 0.500406
   },
   {
     "sentence_id": 131,
@@ -3137,11 +3137,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.830359,
-    "sentence_avg_boundary_f1": 0.910862,
-    "sentence_exact_match_rate": 0.193878,
-    "discrimination_index": 0.312169
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.782454,
+    "sentence_avg_boundary_f1": 0.858312,
+    "sentence_exact_match_rate": 0.182692,
+    "discrimination_index": 0.465019
   },
   {
     "sentence_id": 132,
@@ -3161,11 +3161,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.711683,
-    "sentence_avg_boundary_f1": 0.88075,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.677467,
+    "sentence_avg_boundary_f1": 0.838406,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.317387
+    "discrimination_index": 0.426229
   },
   {
     "sentence_id": 133,
@@ -3185,11 +3185,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.651166,
-    "sentence_avg_boundary_f1": 0.841647,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.607338,
+    "sentence_avg_boundary_f1": 0.784998,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.347175
+    "discrimination_index": 0.476638
   },
   {
     "sentence_id": 134,
@@ -3209,11 +3209,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.672521,
-    "sentence_avg_boundary_f1": 0.810331,
-    "sentence_exact_match_rate": 0.060606,
-    "discrimination_index": 0.360491
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.640188,
+    "sentence_avg_boundary_f1": 0.771372,
+    "sentence_exact_match_rate": 0.057692,
+    "discrimination_index": 0.456035
   },
   {
     "sentence_id": 135,
@@ -3233,11 +3233,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.863335,
-    "sentence_avg_boundary_f1": 0.938853,
-    "sentence_exact_match_rate": 0.295918,
-    "discrimination_index": 0.32984
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.813527,
+    "sentence_avg_boundary_f1": 0.884688,
+    "sentence_exact_match_rate": 0.278846,
+    "discrimination_index": 0.491128
   },
   {
     "sentence_id": 136,
@@ -3257,11 +3257,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.772452,
-    "sentence_avg_boundary_f1": 0.882575,
-    "sentence_exact_match_rate": 0.183673,
-    "discrimination_index": 0.449204
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.727888,
+    "sentence_avg_boundary_f1": 0.831657,
+    "sentence_exact_match_rate": 0.173077,
+    "discrimination_index": 0.579649
   },
   {
     "sentence_id": 137,
@@ -3281,11 +3281,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.817539,
-    "sentence_avg_boundary_f1": 0.918007,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.315594
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.778234,
+    "sentence_avg_boundary_f1": 0.873872,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.446988
   },
   {
     "sentence_id": 138,
@@ -3305,11 +3305,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "mixed_script",
     "notes": "Competition data with standard train/dev/test split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.733711,
-    "sentence_avg_boundary_f1": 0.851975,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.698437,
+    "sentence_avg_boundary_f1": 0.811014,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.341264
+    "discrimination_index": 0.455238
   },
   {
     "sentence_id": 139,
@@ -3329,11 +3329,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 96,
-    "sentence_avg_word_f1": 0.692267,
-    "sentence_avg_boundary_f1": 0.867942,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.639016,
+    "sentence_avg_boundary_f1": 0.801177,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.215392
+    "discrimination_index": 0.388184
   },
   {
     "sentence_id": 140,
@@ -3353,11 +3353,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "annotation_like",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.713842,
-    "sentence_avg_boundary_f1": 0.884587,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.672659,
+    "sentence_avg_boundary_f1": 0.833553,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.238985
+    "discrimination_index": 0.37044
   },
   {
     "sentence_id": 141,
@@ -3377,11 +3377,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.543138,
-    "sentence_avg_boundary_f1": 0.809603,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.511803,
+    "sentence_avg_boundary_f1": 0.762895,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.260215
+    "discrimination_index": 0.349994
   },
   {
     "sentence_id": 142,
@@ -3401,11 +3401,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.652871,
-    "sentence_avg_boundary_f1": 0.85727,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.608928,
+    "sentence_avg_boundary_f1": 0.799569,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.28637
+    "discrimination_index": 0.420661
   },
   {
     "sentence_id": 143,
@@ -3425,11 +3425,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.586343,
-    "sentence_avg_boundary_f1": 0.845736,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.546878,
+    "sentence_avg_boundary_f1": 0.788812,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.312892
+    "discrimination_index": 0.42502
   },
   {
     "sentence_id": 144,
@@ -3449,11 +3449,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.658699,
-    "sentence_avg_boundary_f1": 0.859769,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.614363,
+    "sentence_avg_boundary_f1": 0.8019,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.265495
+    "discrimination_index": 0.405109
   },
   {
     "sentence_id": 145,
@@ -3473,11 +3473,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.649283,
-    "sentence_avg_boundary_f1": 0.859784,
-    "sentence_exact_match_rate": 0.010309,
-    "discrimination_index": 0.328304
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.605581,
+    "sentence_avg_boundary_f1": 0.801914,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.458641
   },
   {
     "sentence_id": 146,
@@ -3497,11 +3497,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.565139,
-    "sentence_avg_boundary_f1": 0.822814,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.527101,
+    "sentence_avg_boundary_f1": 0.767433,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.299343
+    "discrimination_index": 0.406385
   },
   {
     "sentence_id": 147,
@@ -3521,11 +3521,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.718075,
-    "sentence_avg_boundary_f1": 0.879207,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.669743,
+    "sentence_avg_boundary_f1": 0.820029,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.240669
+    "discrimination_index": 0.399972
   },
   {
     "sentence_id": 148,
@@ -3545,11 +3545,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.677802,
-    "sentence_avg_boundary_f1": 0.869651,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.632181,
+    "sentence_avg_boundary_f1": 0.811117,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.311836
+    "discrimination_index": 0.450869
   },
   {
     "sentence_id": 149,
@@ -3569,11 +3569,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 96,
-    "sentence_avg_word_f1": 0.687876,
-    "sentence_avg_boundary_f1": 0.87498,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.634963,
+    "sentence_avg_boundary_f1": 0.807674,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.337901
+    "discrimination_index": 0.497708
   },
   {
     "sentence_id": 150,
@@ -3593,11 +3593,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.663484,
-    "sentence_avg_boundary_f1": 0.862272,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.618826,
+    "sentence_avg_boundary_f1": 0.804234,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.255911
+    "discrimination_index": 0.395922
   },
   {
     "sentence_id": 151,
@@ -3617,11 +3617,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.619774,
-    "sentence_avg_boundary_f1": 0.850744,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.578059,
+    "sentence_avg_boundary_f1": 0.793483,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.253435
+    "discrimination_index": 0.383983
   },
   {
     "sentence_id": 152,
@@ -3641,11 +3641,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.673015,
-    "sentence_avg_boundary_f1": 0.864978,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.627716,
+    "sentence_avg_boundary_f1": 0.806759,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.295461
+    "discrimination_index": 0.436861
   },
   {
     "sentence_id": 153,
@@ -3665,11 +3665,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.680625,
-    "sentence_avg_boundary_f1": 0.873125,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.634814,
+    "sentence_avg_boundary_f1": 0.814357,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.242465
+    "discrimination_index": 0.388373
   },
   {
     "sentence_id": 154,
@@ -3689,11 +3689,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.643464,
-    "sentence_avg_boundary_f1": 0.862737,
-    "sentence_exact_match_rate": 0.010204,
-    "discrimination_index": 0.348817
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.606341,
+    "sentence_avg_boundary_f1": 0.812964,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.451903
   },
   {
     "sentence_id": 155,
@@ -3713,11 +3713,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.65657,
-    "sentence_avg_boundary_f1": 0.857371,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.612378,
+    "sentence_avg_boundary_f1": 0.799663,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.275849
+    "discrimination_index": 0.414159
   },
   {
     "sentence_id": 156,
@@ -3737,11 +3737,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.610873,
-    "sentence_avg_boundary_f1": 0.83456,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.569756,
+    "sentence_avg_boundary_f1": 0.778387,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.319141
+    "discrimination_index": 0.438468
   },
   {
     "sentence_id": 157,
@@ -3761,11 +3761,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.631793,
-    "sentence_avg_boundary_f1": 0.843804,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.595343,
+    "sentence_avg_boundary_f1": 0.795123,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.252969
+    "discrimination_index": 0.363925
   },
   {
     "sentence_id": 158,
@@ -3785,11 +3785,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 96,
-    "sentence_avg_word_f1": 0.696099,
-    "sentence_avg_boundary_f1": 0.87295,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.642553,
+    "sentence_avg_boundary_f1": 0.8058,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.306453
+    "discrimination_index": 0.472209
   },
   {
     "sentence_id": 159,
@@ -3809,11 +3809,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.668722,
-    "sentence_avg_boundary_f1": 0.865712,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.623712,
+    "sentence_avg_boundary_f1": 0.807443,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.267605
+    "discrimination_index": 0.406533
   },
   {
     "sentence_id": 160,
@@ -3833,11 +3833,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.638799,
-    "sentence_avg_boundary_f1": 0.850491,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.595803,
+    "sentence_avg_boundary_f1": 0.793246,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.337667
+    "discrimination_index": 0.462356
   },
   {
     "sentence_id": 161,
@@ -3857,11 +3857,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.588625,
-    "sentence_avg_boundary_f1": 0.830807,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.554666,
+    "sentence_avg_boundary_f1": 0.782876,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.310128
+    "discrimination_index": 0.405065
   },
   {
     "sentence_id": 162,
@@ -3881,11 +3881,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.576601,
-    "sentence_avg_boundary_f1": 0.835602,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.543336,
+    "sentence_avg_boundary_f1": 0.787395,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.339802
+    "discrimination_index": 0.432099
   },
   {
     "sentence_id": 163,
@@ -3905,11 +3905,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.692544,
-    "sentence_avg_boundary_f1": 0.880176,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.645931,
+    "sentence_avg_boundary_f1": 0.820933,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.314095
+    "discrimination_index": 0.455569
   },
   {
     "sentence_id": 164,
@@ -3929,11 +3929,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 96,
-    "sentence_avg_word_f1": 0.703272,
-    "sentence_avg_boundary_f1": 0.8781,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.649174,
+    "sentence_avg_boundary_f1": 0.810554,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.296573
+    "discrimination_index": 0.467455
   },
   {
     "sentence_id": 165,
@@ -3953,11 +3953,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.602139,
-    "sentence_avg_boundary_f1": 0.824163,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.5674,
+    "sentence_avg_boundary_f1": 0.776616,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.311318
+    "discrimination_index": 0.412243
   },
   {
     "sentence_id": 166,
@@ -3977,11 +3977,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.638404,
-    "sentence_avg_boundary_f1": 0.85098,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.601573,
+    "sentence_avg_boundary_f1": 0.801885,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.309358
+    "discrimination_index": 0.419284
   },
   {
     "sentence_id": 167,
@@ -4001,11 +4001,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.6495,
-    "sentence_avg_boundary_f1": 0.849168,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.605784,
+    "sentence_avg_boundary_f1": 0.792013,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.342075
+    "discrimination_index": 0.468845
   },
   {
     "sentence_id": 168,
@@ -4025,11 +4025,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.651824,
-    "sentence_avg_boundary_f1": 0.859287,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.607951,
+    "sentence_avg_boundary_f1": 0.80145,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.296274
+    "discrimination_index": 0.429067
   },
   {
     "sentence_id": 169,
@@ -4049,11 +4049,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.771445,
-    "sentence_avg_boundary_f1": 0.908483,
-    "sentence_exact_match_rate": 0.010204,
-    "discrimination_index": 0.313818
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.726939,
+    "sentence_avg_boundary_f1": 0.85607,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.452804
   },
   {
     "sentence_id": 170,
@@ -4073,11 +4073,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.704351,
-    "sentence_avg_boundary_f1": 0.882699,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.663715,
+    "sentence_avg_boundary_f1": 0.831774,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.25082
+    "discrimination_index": 0.38118
   },
   {
     "sentence_id": 171,
@@ -4097,11 +4097,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.728301,
-    "sentence_avg_boundary_f1": 0.886784,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.679281,
+    "sentence_avg_boundary_f1": 0.827097,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.28717
+    "discrimination_index": 0.441853
   },
   {
     "sentence_id": 172,
@@ -4121,11 +4121,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.685319,
-    "sentence_avg_boundary_f1": 0.875254,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.645781,
+    "sentence_avg_boundary_f1": 0.824759,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.315721
+    "discrimination_index": 0.431069
   },
   {
     "sentence_id": 173,
@@ -4145,11 +4145,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.697685,
-    "sentence_avg_boundary_f1": 0.880733,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.657434,
+    "sentence_avg_boundary_f1": 0.829922,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.268792
+    "discrimination_index": 0.395826
   },
   {
     "sentence_id": 174,
@@ -4169,11 +4169,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.679393,
-    "sentence_avg_boundary_f1": 0.872089,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.640197,
+    "sentence_avg_boundary_f1": 0.821776,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.199689
+    "discrimination_index": 0.32939
   },
   {
     "sentence_id": 175,
@@ -4193,11 +4193,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.675732,
-    "sentence_avg_boundary_f1": 0.87251,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.636748,
+    "sentence_avg_boundary_f1": 0.822173,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.267865
+    "discrimination_index": 0.391113
   },
   {
     "sentence_id": 176,
@@ -4217,11 +4217,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.801784,
-    "sentence_avg_boundary_f1": 0.923587,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.755527,
+    "sentence_avg_boundary_f1": 0.870303,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.265804
+    "discrimination_index": 0.416823
   },
   {
     "sentence_id": 177,
@@ -4241,11 +4241,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.62333,
-    "sentence_avg_boundary_f1": 0.848719,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.587368,
+    "sentence_avg_boundary_f1": 0.799755,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.328837
+    "discrimination_index": 0.431581
   },
   {
     "sentence_id": 178,
@@ -4265,11 +4265,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.657489,
-    "sentence_avg_boundary_f1": 0.861565,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.613235,
+    "sentence_avg_boundary_f1": 0.803575,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.289056
+    "discrimination_index": 0.425616
   },
   {
     "sentence_id": 179,
@@ -4289,11 +4289,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.615671,
-    "sentence_avg_boundary_f1": 0.848186,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.580152,
+    "sentence_avg_boundary_f1": 0.799252,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.325059
+    "discrimination_index": 0.424292
   },
   {
     "sentence_id": 180,
@@ -4313,11 +4313,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.72387,
-    "sentence_avg_boundary_f1": 0.891289,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.675148,
+    "sentence_avg_boundary_f1": 0.831298,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.323096
+    "discrimination_index": 0.472216
   },
   {
     "sentence_id": 181,
@@ -4337,11 +4337,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 96,
-    "sentence_avg_word_f1": 0.693444,
-    "sentence_avg_boundary_f1": 0.873367,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.640102,
+    "sentence_avg_boundary_f1": 0.806185,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.307338
+    "discrimination_index": 0.471636
   },
   {
     "sentence_id": 182,
@@ -4361,11 +4361,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.551941,
-    "sentence_avg_boundary_f1": 0.803544,
-    "sentence_exact_match_rate": 0.010204,
-    "discrimination_index": 0.37144
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.520099,
+    "sentence_avg_boundary_f1": 0.757186,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.45126
   },
   {
     "sentence_id": 183,
@@ -4385,11 +4385,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": "very_long",
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.617038,
-    "sentence_avg_boundary_f1": 0.841463,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.575507,
+    "sentence_avg_boundary_f1": 0.784826,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.285845
+    "discrimination_index": 0.41308
   },
   {
     "sentence_id": 184,
@@ -4409,11 +4409,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Test A is same-book; Test B is cross-book.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.546413,
-    "sentence_avg_boundary_f1": 0.806436,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.514889,
+    "sentence_avg_boundary_f1": 0.759911,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.308087
+    "discrimination_index": 0.396982
   },
   {
     "sentence_id": 185,
@@ -4433,11 +4433,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.554373,
-    "sentence_avg_boundary_f1": 0.797136,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.52239,
+    "sentence_avg_boundary_f1": 0.751147,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.280636
+    "discrimination_index": 0.370855
   },
   {
     "sentence_id": 186,
@@ -4457,11 +4457,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.631759,
-    "sentence_avg_boundary_f1": 0.826063,
-    "sentence_exact_match_rate": 0.030612,
-    "discrimination_index": 0.256799
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.595311,
+    "sentence_avg_boundary_f1": 0.778406,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.367043
   },
   {
     "sentence_id": 187,
@@ -4481,11 +4481,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 97,
-    "sentence_avg_word_f1": 0.5829,
-    "sentence_avg_boundary_f1": 0.831816,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.543666,
+    "sentence_avg_boundary_f1": 0.775828,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.321435
+    "discrimination_index": 0.432762
   },
   {
     "sentence_id": 188,
@@ -4505,11 +4505,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.578954,
-    "sentence_avg_boundary_f1": 0.802447,
-    "sentence_exact_match_rate": 0.05102,
-    "discrimination_index": 0.363354
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.545553,
+    "sentence_avg_boundary_f1": 0.756152,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.454407
   },
   {
     "sentence_id": 189,
@@ -4529,11 +4529,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.618346,
-    "sentence_avg_boundary_f1": 0.814431,
-    "sentence_exact_match_rate": 0.040816,
-    "discrimination_index": 0.427112
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.582672,
+    "sentence_avg_boundary_f1": 0.767445,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.522002
   },
   {
     "sentence_id": 190,
@@ -4553,11 +4553,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.617889,
-    "sentence_avg_boundary_f1": 0.840805,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.343156
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.588183,
+    "sentence_avg_boundary_f1": 0.800382,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.4332
   },
   {
     "sentence_id": 191,
@@ -4577,11 +4577,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.537041,
-    "sentence_avg_boundary_f1": 0.781731,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.346776
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.511222,
+    "sentence_avg_boundary_f1": 0.744148,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.417932
   },
   {
     "sentence_id": 192,
@@ -4601,11 +4601,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.528395,
-    "sentence_avg_boundary_f1": 0.797466,
-    "sentence_exact_match_rate": 0.040816,
-    "discrimination_index": 0.463504
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.497911,
+    "sentence_avg_boundary_f1": 0.751459,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.533798
   },
   {
     "sentence_id": 193,
@@ -4625,11 +4625,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.519345,
-    "sentence_avg_boundary_f1": 0.773202,
-    "sentence_exact_match_rate": 0.020202,
-    "discrimination_index": 0.352534
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.494376,
+    "sentence_avg_boundary_f1": 0.736029,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.418095
   },
   {
     "sentence_id": 194,
@@ -4649,11 +4649,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.480032,
-    "sentence_avg_boundary_f1": 0.767528,
-    "sentence_exact_match_rate": 0.030303,
-    "discrimination_index": 0.289416
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.456954,
+    "sentence_avg_boundary_f1": 0.730627,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.35527
   },
   {
     "sentence_id": 195,
@@ -4673,11 +4673,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.502172,
-    "sentence_avg_boundary_f1": 0.757876,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.431381
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.478029,
+    "sentence_avg_boundary_f1": 0.721439,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.490611
   },
   {
     "sentence_id": 196,
@@ -4697,11 +4697,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.53668,
-    "sentence_avg_boundary_f1": 0.788031,
-    "sentence_exact_match_rate": 0.030303,
-    "discrimination_index": 0.345954
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.510878,
+    "sentence_avg_boundary_f1": 0.750145,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.417829
   },
   {
     "sentence_id": 197,
@@ -4721,11 +4721,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.479064,
-    "sentence_avg_boundary_f1": 0.747636,
-    "sentence_exact_match_rate": 0.050505,
-    "discrimination_index": 0.56453
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.456032,
+    "sentence_avg_boundary_f1": 0.711692,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.605678
   },
   {
     "sentence_id": 198,
@@ -4745,11 +4745,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.176753,
-    "sentence_avg_boundary_f1": 0.410396,
-    "sentence_exact_match_rate": 0.020202,
-    "discrimination_index": 0.405616
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.168255,
+    "sentence_avg_boundary_f1": 0.390666,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.399066
   },
   {
     "sentence_id": 199,
@@ -4769,11 +4769,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.616313,
-    "sentence_avg_boundary_f1": 0.832059,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.284191
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.586683,
+    "sentence_avg_boundary_f1": 0.792056,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.375274
   },
   {
     "sentence_id": 200,
@@ -4793,11 +4793,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.592658,
-    "sentence_avg_boundary_f1": 0.809296,
-    "sentence_exact_match_rate": 0.030612,
-    "discrimination_index": 0.307445
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.558466,
+    "sentence_avg_boundary_f1": 0.762606,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.404659
   },
   {
     "sentence_id": 201,
@@ -4817,11 +4817,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.623047,
-    "sentence_avg_boundary_f1": 0.830398,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.344164
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.593093,
+    "sentence_avg_boundary_f1": 0.790475,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.43087
   },
   {
     "sentence_id": 202,
@@ -4841,11 +4841,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.732433,
-    "sentence_avg_boundary_f1": 0.891746,
-    "sentence_exact_match_rate": 0.040816,
-    "discrimination_index": 0.350193
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.690178,
+    "sentence_avg_boundary_f1": 0.8403,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.475206
   },
   {
     "sentence_id": 203,
@@ -4865,11 +4865,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.622344,
-    "sentence_avg_boundary_f1": 0.843059,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.592424,
+    "sentence_avg_boundary_f1": 0.802527,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.365824
+    "discrimination_index": 0.449126
   },
   {
     "sentence_id": 204,
@@ -4889,11 +4889,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.509485,
-    "sentence_avg_boundary_f1": 0.794643,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.48499,
+    "sentence_avg_boundary_f1": 0.756439,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.253559
+    "discrimination_index": 0.3298
   },
   {
     "sentence_id": 205,
@@ -4913,11 +4913,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.592952,
-    "sentence_avg_boundary_f1": 0.80511,
-    "sentence_exact_match_rate": 0.030303,
-    "discrimination_index": 0.32433
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.564444,
+    "sentence_avg_boundary_f1": 0.766403,
+    "sentence_exact_match_rate": 0.028846,
+    "discrimination_index": 0.406281
   },
   {
     "sentence_id": 206,
@@ -4937,11 +4937,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.429105,
-    "sentence_avg_boundary_f1": 0.658459,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.379642
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.408475,
+    "sentence_avg_boundary_f1": 0.626802,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.428544
   },
   {
     "sentence_id": 207,
@@ -4961,11 +4961,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "Derived from TCM-Ancient-Books aligned sentence and segmentation files with deterministic 80/10/10 split.",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.332955,
-    "sentence_avg_boundary_f1": 0.684216,
-    "sentence_exact_match_rate": 0.020202,
-    "discrimination_index": 0.368704
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.316948,
+    "sentence_avg_boundary_f1": 0.651321,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.399433
   },
   {
     "sentence_id": 208,
@@ -4985,11 +4985,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：‘八百标兵奔北坡’的强化版。; 释义：pronunciation challenge; 来源：中国城市报·人民网; URL=https://paper.people.com.cn/zgcsb/html/2020-08/17/content_2003906.htm",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.209988,
-    "sentence_avg_boundary_f1": 0.700592,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.143127
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.199892,
+    "sentence_avg_boundary_f1": 0.666909,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.170483
   },
   {
     "sentence_id": 209,
@@ -5009,11 +5009,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：同字连写、多词性“别”、语义还原。; 释义：校服上除了校徽不要别的东西，叫他们别别别的，他们却偏偏要别别的东西。; 来源：当代中国 Our China Story; URL=https://www.ourchinastory.com/cn/12180/%E6%A0%A1%E6%9C%8D%E9%99%A4%E4%BA%86%E6%A0%A1%E5%BE%BD%E5%88%AB%E5%88%AB%E5%88%AB%E7%9A%84%EF%BC%8C%E5%8F%AB%E5%88%AB%E5%88%AB%E5%88%AB%E7%9A%84%E9%9D%9E%E5%BE%97%E5%88%AB%E5%88%AB%E7%9A%84",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.543258,
-    "sentence_avg_boundary_f1": 0.781319,
-    "sentence_exact_match_rate": 0.050505,
-    "discrimination_index": 0.536524
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.51714,
+    "sentence_avg_boundary_f1": 0.743756,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.598315
   },
   {
     "sentence_id": 210,
@@ -5033,11 +5033,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：副词‘一会’、助动‘会’、动词‘会会’。; 释义：你等一会儿，会不会去会见懂会计的人吗？; 来源：当代中国 Our China Story; URL=https://www.ourchinastory.com/cn/12184/%E4%BD%A0%E7%AD%89%E4%B8%80%E4%BC%9A%E4%BC%9A%E4%BC%9A%E4%BC%9A%E4%BC%9A%E4%BC%9A%E8%AE%A1%E7%9A%84%E4%BA%BA%E5%90%97%EF%BC%9F--",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.71737,
-    "sentence_avg_boundary_f1": 0.852807,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.682881,
+    "sentence_avg_boundary_f1": 0.811807,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.205945
+    "discrimination_index": 0.320087
   },
   {
     "sentence_id": 211,
@@ -5057,11 +5057,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：公开‘断句题’并给答案。; 释义：用毒药去毒毒蛇，毒蛇会不会被毒死？; 来源：央视新闻转载（腾讯新闻）; URL=https://news.qq.com/rain/a/20210401A09Q1Q00",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.513762,
-    "sentence_avg_boundary_f1": 0.75937,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.367148
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.489062,
+    "sentence_avg_boundary_f1": 0.722862,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.433356
   },
   {
     "sentence_id": 212,
@@ -5081,11 +5081,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：第二个‘把’是介词，第三个‘把’指车把。; 释义：我骑车差点摔倒，还好我一下子把车把抓住了。; 来源：央视新闻转载（腾讯新闻）; URL=https://news.qq.com/rain/a/20210401A09Q1Q00",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.646502,
-    "sentence_avg_boundary_f1": 0.842194,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.25007
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.61542,
+    "sentence_avg_boundary_f1": 0.801704,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.354765
   },
   {
     "sentence_id": 213,
@@ -5105,11 +5105,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：偏 p/b。; 释义：pronunciation challenge; 来源：人民周刊·人民网; URL=https://paper.people.com.cn/rmzk/html/2020-05/27/content_1989140.htm",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.637338,
-    "sentence_avg_boundary_f1": 0.861147,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.600568,
+    "sentence_avg_boundary_f1": 0.811465,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.240985
+    "discrimination_index": 0.356357
   },
   {
     "sentence_id": 214,
@@ -5129,11 +5129,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：经典 b/p 对立。; 释义：pronunciation challenge; 来源：人民日报海外版-人民网; URL=https://paper.people.com.cn/rmrbhwb/html/2014-09/23/content_1481007.htm",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.763222,
-    "sentence_avg_boundary_f1": 0.892941,
-    "sentence_exact_match_rate": 0.10101,
-    "discrimination_index": 0.350883
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.726528,
+    "sentence_avg_boundary_f1": 0.850011,
+    "sentence_exact_match_rate": 0.096154,
+    "discrimination_index": 0.46792
   },
   {
     "sentence_id": 215,
@@ -5153,11 +5153,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：偏 h/f/hui/hua。; 释义：pronunciation challenge; 来源：中国城市报·人民网; URL=https://paper.people.com.cn/zgcsb/html/2020-08/17/content_2003906.htm",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.545495,
-    "sentence_avg_boundary_f1": 0.747159,
-    "sentence_exact_match_rate": 0.020202,
-    "discrimination_index": 0.46663
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.519269,
+    "sentence_avg_boundary_f1": 0.711238,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.530361
   },
   {
     "sentence_id": 216,
@@ -5177,11 +5177,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：偏 f/h + 鼻韵母。; 释义：pronunciation challenge; 来源：人民网文化频道 / 人民网教育频道; URL=https://culture.people.com.cn/n/2015/0922/c172318-27619888.html",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.738828,
-    "sentence_avg_boundary_f1": 0.894489,
-    "sentence_exact_match_rate": 0.091837,
-    "discrimination_index": 0.404833
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.696204,
+    "sentence_avg_boundary_f1": 0.842884,
+    "sentence_exact_match_rate": 0.086538,
+    "discrimination_index": 0.525354
   },
   {
     "sentence_id": 217,
@@ -5201,11 +5201,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：‘上上/上/上海’边界。; 释义：差点没赶上去上海的车。; 来源：当代中国 Our China Story; URL=https://www.ourchinastory.com/cn/12179/%E5%B7%AE%E7%82%B9%E6%B2%A1%E4%B8%8A%E4%B8%8A%E4%B8%8A%E4%B8%8A%E6%B5%B7%E7%9A%84%E8%BD%A6",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.771009,
-    "sentence_avg_boundary_f1": 0.888609,
-    "sentence_exact_match_rate": 0.020202,
-    "discrimination_index": 0.174382
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.733941,
+    "sentence_avg_boundary_f1": 0.845888,
+    "sentence_exact_match_rate": 0.019231,
+    "discrimination_index": 0.304709
   },
   {
     "sentence_id": 218,
@@ -5225,11 +5225,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：原文提示可把‘明明’‘白白’视作人名。; 释义：明明很清楚地知道白白喜欢他。; 来源：当代中国 Our China Story; URL=https://www.ourchinastory.com/cn/12308/%E6%98%8E%E6%98%8E%E6%98%8E%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%99%BD%E5%96%9C%E6%AC%A2%E4%BB%96-",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.778226,
-    "sentence_avg_boundary_f1": 0.860738,
-    "sentence_exact_match_rate": 0.489796,
-    "discrimination_index": 0.575086
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.733329,
+    "sentence_avg_boundary_f1": 0.81108,
+    "sentence_exact_match_rate": 0.461538,
+    "discrimination_index": 0.686142
   },
   {
     "sentence_id": 219,
@@ -5249,11 +5249,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：同形字‘过’的动词/人名/动词。; 释义：小龙女想体验一下过儿经历过的生活。; 来源：当代中国 Our China Story; URL=https://www.ourchinastory.com/cn/12173/%E5%B0%8F%E9%BE%99%E5%A5%B3%EF%BC%9A%E6%88%91%E6%83%B3%E8%A6%81%E8%BF%87%E8%BF%87%E8%BF%87%E5%84%BF%E8%BF%87%E8%BF%87%E7%9A%84%E6%97%A5%E5%AD%90-",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.574635,
-    "sentence_avg_boundary_f1": 0.83116,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.360878
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.547009,
+    "sentence_avg_boundary_f1": 0.7912,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.441157
   },
   {
     "sentence_id": 220,
@@ -5273,11 +5273,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：人工构造，考介词“把”、名词“把手”和动词“把紧”；已修正原始样本文字中的重复字问题。; 释义：你先把门把手握紧。; 来源：constructed by assistant",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.617454,
-    "sentence_avg_boundary_f1": 0.831762,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.412795
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.587769,
+    "sentence_avg_boundary_f1": 0.791774,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.496953
   },
   {
     "sentence_id": 221,
@@ -5297,11 +5297,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：偏 s/sh + i 音近混淆。; 释义：pronunciation challenge; 来源：人民周刊·人民网; URL=https://paper.people.com.cn/rmzk/html/2020-05/27/content_1989140.htm",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.56038,
-    "sentence_avg_boundary_f1": 0.841,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.52805,
+    "sentence_avg_boundary_f1": 0.792481,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.216204
+    "discrimination_index": 0.315969
   },
   {
     "sentence_id": 222,
@@ -5321,11 +5321,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：偏 h/l。; 释义：pronunciation challenge; 来源：人民周刊·人民网; URL=https://paper.people.com.cn/rmzk/html/2020-05/27/content_1989140.htm",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.647709,
-    "sentence_avg_boundary_f1": 0.858217,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.61657,
+    "sentence_avg_boundary_f1": 0.816957,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.355594
+    "discrimination_index": 0.445004
   },
   {
     "sentence_id": 223,
@@ -5345,11 +5345,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：偏 n/l。; 释义：pronunciation challenge; 来源：中国城市报·人民网; URL=https://paper.people.com.cn/zgcsb/html/2020-08/17/content_2003906.htm",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.510163,
-    "sentence_avg_boundary_f1": 0.73449,
-    "sentence_exact_match_rate": 0.040404,
-    "discrimination_index": 0.5026
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.485636,
+    "sentence_avg_boundary_f1": 0.699178,
+    "sentence_exact_match_rate": 0.038462,
+    "discrimination_index": 0.55586
   },
   {
     "sentence_id": 224,
@@ -5369,11 +5369,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：白/石/塔/搭反复交替。; 释义：pronunciation challenge; 来源：陕西频道·人民网（搜索结果片段）; URL=https://sn.people.com.cn/n2/2023/1015/c186331-40603949.html",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.705951,
-    "sentence_avg_boundary_f1": 0.884759,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.665223,
+    "sentence_avg_boundary_f1": 0.833715,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.358863
+    "discrimination_index": 0.47566
   },
   {
     "sentence_id": 225,
@@ -5393,11 +5393,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：人工构造，补充‘数’的动词/结果补语边界。; 释义：老师让你数一数那些数不清的星星。; 来源：constructed by assistant",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.710228,
-    "sentence_avg_boundary_f1": 0.843999,
-    "sentence_exact_match_rate": 0.111111,
-    "discrimination_index": 0.301293
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.676082,
+    "sentence_avg_boundary_f1": 0.803423,
+    "sentence_exact_match_rate": 0.105769,
+    "discrimination_index": 0.408536
   },
   {
     "sentence_id": 226,
@@ -5417,11 +5417,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：人工构造，考“明天 / 天”边界；已修正原始样本文字中的重复字问题。; 释义：她说明天的天气会更冷。; 来源：constructed by assistant",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.486045,
-    "sentence_avg_boundary_f1": 0.708587,
-    "sentence_exact_match_rate": 0.010101,
-    "discrimination_index": 0.285346
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.462677,
+    "sentence_avg_boundary_f1": 0.67452,
+    "sentence_exact_match_rate": 0.009615,
+    "discrimination_index": 0.35586
   },
   {
     "sentence_id": 227,
@@ -5441,11 +5441,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：人工构造，考‘上/上周/上过’。; 释义：我想去上上周上过的那门课。; 来源：constructed by assistant",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.661513,
-    "sentence_avg_boundary_f1": 0.850367,
-    "sentence_exact_match_rate": 0.05102,
-    "discrimination_index": 0.259224
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.623349,
+    "sentence_avg_boundary_f1": 0.801307,
+    "sentence_exact_match_rate": 0.048077,
+    "discrimination_index": 0.380933
   },
   {
     "sentence_id": 228,
@@ -5465,11 +5465,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：经典 s/sh 对立。; 释义：pronunciation challenge; 来源：人民日报海外版-人民网; URL=https://paper.people.com.cn/rmrbhwb/html/2018-07/20/content_1869123.htm",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.751747,
-    "sentence_avg_boundary_f1": 0.906216,
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.715606,
+    "sentence_avg_boundary_f1": 0.862648,
     "sentence_exact_match_rate": 0.0,
-    "discrimination_index": 0.189866
+    "discrimination_index": 0.316089
   },
   {
     "sentence_id": 229,
@@ -5489,11 +5489,11 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：经典 pu/tu 对立。; 释义：pronunciation challenge; 来源：新华网访谈（举例提及）; URL=https://www.xinhuanet.com/xhft/201311/wz.htm",
-    "participant_count": 98,
-    "sentence_avg_word_f1": 0.773227,
-    "sentence_avg_boundary_f1": 0.907175,
-    "sentence_exact_match_rate": 0.183673,
-    "discrimination_index": 0.459655
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.728618,
+    "sentence_avg_boundary_f1": 0.854838,
+    "sentence_exact_match_rate": 0.173077,
+    "discrimination_index": 0.584918
   },
   {
     "sentence_id": 230,
@@ -5513,10 +5513,10 @@
     "split_role": "platform_eval_v2_draft",
     "review_flags": NaN,
     "notes": "备注：低难度热身题。; 释义：pronunciation challenge; 来源：人民网教育频道（搜索结果片段）; URL=https://edu.people.com.cn/n/2013/0924/c356900-23019982.html",
-    "participant_count": 99,
-    "sentence_avg_word_f1": 0.799498,
-    "sentence_avg_boundary_f1": 0.923146,
-    "sentence_exact_match_rate": 0.262626,
-    "discrimination_index": 0.421371
+    "participant_count": 104,
+    "sentence_avg_word_f1": 0.76106,
+    "sentence_avg_boundary_f1": 0.878764,
+    "sentence_exact_match_rate": 0.25,
+    "discrimination_index": 0.548232
   }
 ]

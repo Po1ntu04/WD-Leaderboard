@@ -61,6 +61,83 @@ def boundary_positions(tokens: list[str], raw_len: int) -> set[int]:
     return positions
 
 
+def boundary_context(raw_text: str, boundary: int, window: int = 8) -> dict[str, Any]:
+    return {
+        "left_char": raw_text[boundary - 1] if 0 < boundary <= len(raw_text) else "",
+        "right_char": raw_text[boundary] if 0 <= boundary < len(raw_text) else "",
+        "left_context": raw_text[max(0, boundary - window) : boundary],
+        "right_context": raw_text[boundary : min(len(raw_text), boundary + window)],
+    }
+
+
+def tokens_in_region(tokens: list[str], start_char: int, end_char: int) -> list[str]:
+    out: list[str] = []
+    for span in token_spans(tokens):
+        if int(span["start"]) >= start_char and int(span["end"]) <= end_char:
+            out.append(str(span["text"]))
+    return out
+
+
+def classify_boundary_error(fp_boundaries: set[int], fn_boundaries: set[int]) -> str:
+    if fp_boundaries and not fn_boundaries:
+        return "over_seg"
+    if fn_boundaries and not fp_boundaries:
+        return "under_seg"
+    if fp_boundaries and fn_boundaries and len(fp_boundaries) == len(fn_boundaries):
+        return "boundary_shift"
+    return "mixed"
+
+
+def local_span_error_rows(
+    *,
+    submission_name: str,
+    sentence_id: int,
+    raw_text: str,
+    gold_tokens: list[str],
+    pred_tokens: list[str],
+    subsets: dict[str, Any],
+    gold_boundaries: set[int],
+    pred_boundaries: set[int],
+) -> list[dict[str, Any]]:
+    mismatch_boundaries = sorted(gold_boundaries ^ pred_boundaries)
+    if not mismatch_boundaries:
+        return []
+
+    common_anchors = sorted({0, len(raw_text)} | (gold_boundaries & pred_boundaries))
+    rows: list[dict[str, Any]] = []
+    cursor = 0
+    while cursor < len(mismatch_boundaries):
+        first = mismatch_boundaries[cursor]
+        start_char = max(anchor for anchor in common_anchors if anchor < first)
+        end_char = min(anchor for anchor in common_anchors if anchor > first)
+        region_boundaries = [first]
+        cursor += 1
+        while cursor < len(mismatch_boundaries) and mismatch_boundaries[cursor] < end_char:
+            region_boundaries.append(mismatch_boundaries[cursor])
+            cursor += 1
+
+        region_set = set(region_boundaries)
+        fp_boundaries = region_set & (pred_boundaries - gold_boundaries)
+        fn_boundaries = region_set & (gold_boundaries - pred_boundaries)
+        rows.append(
+            {
+                "submission_name": submission_name,
+                "sentence_id": sentence_id,
+                **subsets,
+                "raw_span": raw_text[start_char:end_char],
+                "gold_span_tokens": " / ".join(tokens_in_region(gold_tokens, start_char, end_char)),
+                "pred_span_tokens": " / ".join(tokens_in_region(pred_tokens, start_char, end_char)),
+                "start_char": start_char,
+                "end_char": end_char,
+                "error_type": classify_boundary_error(fp_boundaries, fn_boundaries),
+                "severity": len(region_boundaries),
+                "false_positive_boundary_count": len(fp_boundaries),
+                "false_negative_boundary_count": len(fn_boundaries),
+            }
+        )
+    return rows
+
+
 def infer_difficulty(row: dict[str, Any]) -> str:
     explicit = str(row.get("difficulty") or row.get("difficulty_bucket") or "").strip()
     if explicit:
@@ -205,26 +282,23 @@ def score_sentence(
     validation_status: str,
     gold_status: str = GOLD_STATUS_CONFIRMED,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]:
-    is_scored = validation_status == "ok" and gold_status != GOLD_STATUS_EXCLUDED
-    valid = validation_status == "ok"
+    pred_valid = validation_status == "ok"
+    is_evaluable = gold_status != GOLD_STATUS_EXCLUDED
     gold_spans = token_spans(gold_tokens)
-    pred_spans = token_spans(pred_tokens) if valid else []
+    pred_spans = token_spans(pred_tokens) if pred_valid else []
     gold_span_keys = {span_key(span): span for span in gold_spans}
     pred_span_keys = {span_key(span): span for span in pred_spans}
     correct_word_spans = set(gold_span_keys) & set(pred_span_keys)
 
     gold_boundaries = boundary_positions(gold_tokens, len(raw_text))
-    pred_boundaries = boundary_positions(pred_tokens, len(raw_text)) if valid else set()
+    pred_boundaries = boundary_positions(pred_tokens, len(raw_text)) if pred_valid else set()
     correct_boundaries = gold_boundaries & pred_boundaries
     over_segmentation = pred_boundaries - gold_boundaries
     under_segmentation = gold_boundaries - pred_boundaries
-    if not valid:
-        over_segmentation = set()
-        under_segmentation = set()
 
     word_metrics = prf(len(correct_word_spans), len(pred_span_keys), len(gold_span_keys))
     boundary_metrics = prf(len(correct_boundaries), len(pred_boundaries), len(gold_boundaries))
-    exact_match = int(valid and gold_tokens == pred_tokens)
+    exact_match = int(pred_valid and gold_tokens == pred_tokens)
 
     score_row: dict[str, Any] = {
         "submission_name": submission_name,
@@ -232,7 +306,9 @@ def score_sentence(
         **subsets,
         "validation_status": validation_status,
         "gold_status": gold_status,
-        "is_scored": int(is_scored),
+        "pred_valid": int(pred_valid),
+        "is_evaluable": int(is_evaluable),
+        "is_scored": int(is_evaluable),
         "word_precision": word_metrics["precision"],
         "word_recall": word_metrics["recall"],
         "word_f1": word_metrics["f1"],
@@ -251,73 +327,51 @@ def score_sentence(
     }
 
     boundary_rows: list[dict[str, Any]] = []
-    for boundary in sorted(correct_boundaries):
+    if not is_evaluable:
+        return score_row, boundary_rows, []
+
+    for boundary in sorted(gold_boundaries | pred_boundaries):
+        gold_boundary = boundary in gold_boundaries
+        pred_boundary = boundary in pred_boundaries
+        if gold_boundary and pred_boundary:
+            boundary_case = "TP"
+            boundary_type = "true_positive"
+        elif pred_boundary:
+            boundary_case = "FP"
+            boundary_type = "over_segmentation"
+        else:
+            boundary_case = "FN"
+            boundary_type = "under_segmentation"
         boundary_rows.append(
             {
                 "submission_name": submission_name,
                 "sentence_id": sentence_id,
                 **subsets,
                 "boundary_position": boundary,
-                "boundary_type": "true_positive",
-            }
-        )
-    for boundary in sorted(over_segmentation):
-        boundary_rows.append(
-            {
-                "submission_name": submission_name,
-                "sentence_id": sentence_id,
-                **subsets,
-                "boundary_position": boundary,
-                "boundary_type": "over_segmentation",
-            }
-        )
-    for boundary in sorted(under_segmentation):
-        boundary_rows.append(
-            {
-                "submission_name": submission_name,
-                "sentence_id": sentence_id,
-                **subsets,
-                "boundary_position": boundary,
-                "boundary_type": "under_segmentation",
+                **boundary_context(raw_text, boundary),
+                "gold_boundary": int(gold_boundary),
+                "pred_boundary": int(pred_boundary),
+                "boundary_case": boundary_case,
+                "boundary_type": boundary_type,
             }
         )
 
-    span_error_rows: list[dict[str, Any]] = []
-    if not valid:
-        return score_row, boundary_rows, span_error_rows
-
-    for key in sorted(set(pred_span_keys) - set(gold_span_keys)):
-        span = pred_span_keys[key]
-        span_error_rows.append(
-            {
-                "submission_name": submission_name,
-                "sentence_id": sentence_id,
-                **subsets,
-                "error_type": "false_positive_span",
-                "start": span["start"],
-                "end": span["end"],
-                "text": span["text"],
-            }
-        )
-    for key in sorted(set(gold_span_keys) - set(pred_span_keys)):
-        span = gold_span_keys[key]
-        span_error_rows.append(
-            {
-                "submission_name": submission_name,
-                "sentence_id": sentence_id,
-                **subsets,
-                "error_type": "false_negative_span",
-                "start": span["start"],
-                "end": span["end"],
-                "text": span["text"],
-            }
-        )
+    span_error_rows = local_span_error_rows(
+        submission_name=submission_name,
+        sentence_id=sentence_id,
+        raw_text=raw_text,
+        gold_tokens=gold_tokens,
+        pred_tokens=pred_tokens if pred_valid else [],
+        subsets=subsets,
+        gold_boundaries=gold_boundaries,
+        pred_boundaries=pred_boundaries,
+    )
 
     return score_row, boundary_rows, span_error_rows
 
 
 def aggregate_score_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    rows = [row for row in rows if int(row.get("is_scored", 1) or 0) == 1]
+    rows = [row for row in rows if int(row.get("is_evaluable", row.get("is_scored", 1)) or 0) == 1]
     total_sentences = len(rows)
     gold_words = sum(int(row.get("gold_word_count", 0) or 0) for row in rows)
     pred_words = sum(int(row.get("pred_word_count", 0) or 0) for row in rows)
@@ -375,7 +429,7 @@ def sentence_level_statistics(sentence_score_rows: list[dict[str, Any]]) -> pd.D
                 "discrimination_index",
             ]
         )
-    scored = frame[frame.get("is_scored", 1).astype(int) == 1].copy()
+    scored = frame[frame.get("is_evaluable", frame.get("is_scored", 1)).astype(int) == 1].copy()
     if scored.empty:
         return pd.DataFrame(columns=["sentence_id", "participant_count", "sentence_avg_word_f1", "sentence_avg_boundary_f1", "sentence_exact_match_rate", "discrimination_index"])
     for column in ["word_f1", "boundary_f1", "exact_match"]:
@@ -442,8 +496,6 @@ def evaluate_submission(
         gold_status = _sentence_gold_status(sentence_table, sentence_id)
         pred_tokens = pred_rows[index] if scoring_enabled and index < len(pred_rows) else []
         validation_status = sentence_errors.get(sentence_id, "ok") if scoring_enabled else sentence_errors.get(sentence_id, "submission_invalid")
-        if validation_status == "ok" and gold_status == GOLD_STATUS_EXCLUDED:
-            validation_status = "gold_excluded"
         score_row, boundary, span_errors = score_sentence(
             submission_name=submission_name,
             sentence_id=sentence_id,

@@ -1,6 +1,6 @@
 # Demo Results
 
-This directory stores generated demo leaderboard artifacts for the local platform prototype.
+This directory stores generated demo leaderboard artifacts for the canonical `platform/` implementation.
 
 Expected generated files:
 
@@ -8,8 +8,10 @@ Expected generated files:
 - `index.html`
 - `reports/*.report.json`
 
-Use the following command after running the benchmark:
+Regenerate the demo artifacts from the classroom prediction directory:
 
-```powershell
-python platform\app\generate_demo_results.py
+```bash
+python app/session.py --prediction-dir "submit/2026春-分词大赛(word)/predictions"
 ```
+
+The exported `boundary_table` intentionally stores only TP/FP/FN boundary positions. TN character positions are omitted because they are numerous and not useful for error review.

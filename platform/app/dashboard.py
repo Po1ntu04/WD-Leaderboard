@@ -214,10 +214,14 @@ def dataset_word_counter(sentence_table: pd.DataFrame) -> Counter[str]:
 
 def error_word_counter(span_errors: pd.DataFrame) -> Counter[str]:
     counter: Counter[str] = Counter()
-    if 'text' in span_errors.columns:
-        for token in span_errors['text'].dropna().astype(str):
-            if token:
-                counter[token] += 1
+    for column in ('raw_span', 'text', 'gold_span_tokens', 'pred_span_tokens'):
+        if column not in span_errors.columns:
+            continue
+        for value in span_errors[column].dropna().astype(str):
+            for token in value.replace(' / ', '/').split('/'):
+                token = token.strip()
+                if token:
+                    counter[token] += 1
     return counter
 
 
@@ -309,7 +313,7 @@ def create_app(results_dir: Path) -> Dash:
             dbc.Tab([dcc.Graph(figure=error_counts(span_errors, boundary_table), className='mt-3'), datatable('span-error-table', span_errors, page_size=12), html.Div(className='mt-3'), datatable('boundary-table', boundary_table, page_size=12)], label='P1-7 Error Type Bar Chart'),
             dbc.Tab([dcc.Graph(figure=rank_delta_view(submissions), className='mt-3')], label='P1-8 Rank Delta View'),
             dbc.Tab([html.Div('Gold Review Console：复核 gold_status=confirmed/suspicious/excluded；excluded 不参与排名评分。', className='text-secondary mt-3 mb-2'), datatable('gold-review-table', sentence_table, page_size=15)], label='P1-9 Gold Review Console'),
-            dbc.Tab([dbc.Row([dbc.Col(simple_word_cloud(dataset_word_counter(sentence_table), 'Dataset overview word cloud（来自 sentence_table.gold）'), lg=6), dbc.Col(simple_word_cloud(error_word_counter(span_errors), 'Common error spans word cloud（来自 span_error_table.text）'), lg=6)], className='g-3 mt-3')], label='P2-10 Word Cloud'),
+            dbc.Tab([dbc.Row([dbc.Col(simple_word_cloud(dataset_word_counter(sentence_table), 'Dataset overview word cloud（来自 sentence_table.gold）'), lg=6), dbc.Col(simple_word_cloud(error_word_counter(span_errors), 'Common error spans word cloud（来自 span_error_table.raw_span）'), lg=6)], className='g-3 mt-3')], label='P2-10 Word Cloud'),
             dbc.Tab([dcc.Graph(figure=sankey_chart(boundary_table), className='mt-3')], label='P2-11 Sankey Chart'),
             dbc.Tab([dcc.Graph(figure=clustering_scatter(submissions), className='mt-3')], label='P2-12 Student Clustering'),
             dbc.Tab([dcc.Graph(figure=network_graph(sentence_scores), className='mt-3')], label='P2-13 Network Graph'),
