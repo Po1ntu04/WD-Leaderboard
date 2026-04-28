@@ -157,31 +157,17 @@ python app/session.py --prediction-dir submissions/
 python app/leaderboard.py
 ```
 
-## Dashboard pages
+## Dashboard navigation
 
-P0:
+The dashboard uses five grouped tabs instead of separate peer tabs for every visualization:
 
-1. Overview Dashboard
-2. Leaderboard Table
-3. Subset Score Heatmap
-4. Boundary Diff Viewer
-5. Sentence Difficulty Scatter Plot
+1. **Overview** — title, data version, KPI cards, leaderboard preview, top-15 bar chart, metric heatmap, and source summary.
+2. **Leaderboard** — official table, subset heatmap, rank-delta view, and student/method profile.
+3. **Diagnostics** — character-level boundary diff viewer, error-type chart, sentence difficulty map, and expandable long tables.
+4. **Gold Review** — review console for `confirmed` / `suspicious` / `excluded` gold rows.
+5. **Experimental** — word cloud, Sankey, clustering, and network graph. These are exploratory only and are not used for official ranking.
 
-P1:
-
-6. Student / Method Profile
-7. Error Type Bar Chart
-8. Rank Delta View
-9. Gold Review Console
-
-P2:
-
-10. Word Cloud
-11. Sankey Chart
-12. Student Clustering
-13. Network Graph
-
-The visual design is intentionally clean and academic: white / blue-gray background, dense readable tables, no 3D charts, and every chart maps back to an exported table.
+The visual design is intentionally clean and academic: `#f8fafc` background, white cards, blue-gray accents, dense readable tables, no 3D charts, and every chart maps back to an exported table.
 
 ## Tests
 
@@ -196,4 +182,4 @@ The dashboard sample verifies:
 - over-segmentation is detected;
 - under-segmentation is detected;
 - repeated words are scored by spans;
-- invalid reconstruction is flagged.
+- invalid reconstruction is tolerated at row level and counted as 0, not excluded.

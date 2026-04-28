@@ -2,8 +2,8 @@
   "note": "Long-form analytics tables are exported as CSV plus CSV.GZ. GitHub may not preview large CSV files; use the .csv.gz or parquet artifacts or regenerate locally with python app/session.py --prediction-dir <demo_predictions_dir>.",
   "tables": {
     "sentence_score_table": {
-      "csv": "/tmp/wd-leaderboard-fix/platform/results/sentence_score_table.csv",
-      "csv_gzip": "/tmp/wd-leaderboard-fix/platform/results/sentence_score_table.csv.gz",
+      "csv": "platform/results/sentence_score_table.csv",
+      "csv_gzip": "platform/results/sentence_score_table.csv.gz",
       "row_count": 23920,
       "column_count": 25,
       "columns": [
@@ -35,8 +35,8 @@
       ]
     },
     "boundary_table": {
-      "csv": "/tmp/wd-leaderboard-fix/platform/results/boundary_table.csv",
-      "csv_gzip": "/tmp/wd-leaderboard-fix/platform/results/boundary_table.csv.gz",
+      "csv": "platform/results/boundary_table.csv",
+      "csv_gzip": "platform/results/boundary_table.csv.gz",
       "row_count": 792008,
       "column_count": 14,
       "columns": [
@@ -57,8 +57,8 @@
       ]
     },
     "span_error_table": {
-      "csv": "/tmp/wd-leaderboard-fix/platform/results/span_error_table.csv",
-      "csv_gzip": "/tmp/wd-leaderboard-fix/platform/results/span_error_table.csv.gz",
+      "csv": "platform/results/span_error_table.csv",
+      "csv_gzip": "platform/results/span_error_table.csv.gz",
       "row_count": 126091,
       "column_count": 14,
       "columns": [

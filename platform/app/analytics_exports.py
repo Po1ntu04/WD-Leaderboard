@@ -13,6 +13,7 @@ SUBSET_TYPES = ("source", "difficulty", "sentence_type")
 GOLD_STATUS_CONFIRMED = "confirmed"
 GOLD_STATUS_SUSPICIOUS = "suspicious"
 GOLD_STATUS_EXCLUDED = "excluded"
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _round(value: float, digits: int = 6) -> float:
@@ -546,13 +547,21 @@ def _write_table_pair(frame: pd.DataFrame, csv_path: Path, json_path: Path | Non
         _write_json_records(json_path, frame.to_dict(orient="records"))
 
 
+def repository_relative_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return resolved.as_posix()
+
+
 def _write_long_table(frame: pd.DataFrame, csv_path: Path) -> dict[str, Any]:
     frame.to_csv(csv_path, index=False, encoding="utf-8-sig")
     gzip_path = csv_path.with_suffix(csv_path.suffix + ".gz")
     frame.to_csv(gzip_path, index=False, encoding="utf-8-sig", compression="gzip")
     return {
-        "csv": str(csv_path.resolve()),
-        "csv_gzip": str(gzip_path.resolve()),
+        "csv": repository_relative_path(csv_path),
+        "csv_gzip": repository_relative_path(gzip_path),
         "row_count": int(len(frame)),
         "column_count": int(len(frame.columns)),
         "columns": list(frame.columns),

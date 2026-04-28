@@ -59,6 +59,13 @@ def read_json(path: Path) -> list[dict]:
     return json.loads(path.read_text(encoding='utf-8'))
 
 
+def read_json_object(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding='utf-8'))
+    return payload if isinstance(payload, dict) else {}
+
+
 def load_tables(results_dir: Path) -> dict[str, pd.DataFrame]:
     submission_table = read_csv(results_dir / 'submission_table.csv')
     if submission_table.empty and (results_dir / 'leaderboard.json').exists():
@@ -77,29 +84,95 @@ def table_records(frame: pd.DataFrame) -> list[dict]:
     return frame.fillna('').to_dict('records') if not frame.empty else []
 
 
-def datatable(table_id: str, frame: pd.DataFrame, page_size: int = 12) -> dash_table.DataTable:
+def score_bar_styles(columns: list[str]) -> list[dict[str, Any]]:
+    styles: list[dict[str, Any]] = []
+    score_columns = [column for column in columns if column in {'word_f1', 'boundary_f1', 'exact_match_sentence_rate'}]
+    bands = [
+        (0.0, 0.2, 'linear-gradient(90deg, rgba(37,99,235,.12) 20%, transparent 20%)'),
+        (0.2, 0.4, 'linear-gradient(90deg, rgba(37,99,235,.16) 40%, transparent 40%)'),
+        (0.4, 0.6, 'linear-gradient(90deg, rgba(37,99,235,.20) 60%, transparent 60%)'),
+        (0.6, 0.8, 'linear-gradient(90deg, rgba(37,99,235,.24) 80%, transparent 80%)'),
+        (0.8, 1.01, 'linear-gradient(90deg, rgba(37,99,235,.30) 100%, transparent 100%)'),
+    ]
+    for column in score_columns:
+        for low, high, background in bands:
+            styles.append({
+                'if': {'filter_query': f'{{{column}}} >= {low} && {{{column}}} < {high}', 'column_id': column},
+                'background': background,
+                'fontWeight': '600',
+            })
+    return styles
+
+
+def datatable(
+    table_id: str,
+    frame: pd.DataFrame,
+    page_size: int = 12,
+    visible_columns: list[str] | None = None,
+    conditional: list[dict[str, Any]] | None = None,
+) -> dash_table.DataTable:
+    if visible_columns is not None and not frame.empty:
+        columns_to_show = [column for column in visible_columns if column in frame.columns]
+        frame = frame[columns_to_show].copy()
     columns = [{'name': column, 'id': column} for column in frame.columns] if not frame.empty else []
+    data = table_records(frame)
+    if table_id in {'leaderboard-table', 'leaderboard-preview-table'} and data:
+        for row in data:
+            try:
+                rank = int(row.get('rank', 0))
+            except Exception:
+                rank = 0
+            if rank == 1:
+                row['rank'] = '🥇 1'
+            elif rank == 2:
+                row['rank'] = '🥈 2'
+            elif rank == 3:
+                row['rank'] = '🥉 3'
+            try:
+                issue_count = int(float(row.get('tolerant_issue_count') or 0))
+            except Exception:
+                issue_count = 0
+            if issue_count > 0:
+                row['tolerant_issue_count'] = f'⚠️ {issue_count}'
+    base_conditional: list[dict[str, Any]] = [{'if': {'row_index': 'odd'}, 'backgroundColor': '#f8fafc'}]
+    if 'status' in frame.columns:
+        base_conditional.append({'if': {'filter_query': '{status} != "成功"'}, 'backgroundColor': '#fef2f2', 'color': '#991b1b'})
+    if 'tolerant_issue_count' in frame.columns:
+        issue_query = '{tolerant_issue_count} contains "⚠️"' if table_id in {'leaderboard-table', 'leaderboard-preview-table'} else '{tolerant_issue_count} > 0'
+        base_conditional.append({'if': {'filter_query': issue_query, 'column_id': 'tolerant_issue_count'}, 'backgroundColor': '#fff7ed', 'color': '#9a3412', 'fontWeight': '700'})
+    if 'rank' in frame.columns:
+        base_conditional.extend([
+            {'if': {'row_index': 0, 'column_id': 'rank'}, 'backgroundColor': '#fef3c7', 'color': '#92400e', 'fontWeight': '800'},
+            {'if': {'row_index': 1, 'column_id': 'rank'}, 'backgroundColor': '#f1f5f9', 'color': '#334155', 'fontWeight': '800'},
+            {'if': {'row_index': 2, 'column_id': 'rank'}, 'backgroundColor': '#ffedd5', 'color': '#9a3412', 'fontWeight': '800'},
+        ])
     return dash_table.DataTable(
         id=table_id,
         columns=columns,
-        data=table_records(frame),
+        data=data,
         page_size=page_size,
         sort_action='native',
         filter_action='native',
+        fixed_rows={'headers': True},
+        css=[{'selector': '.dash-spreadsheet-menu', 'rule': 'position: sticky; top: 0; z-index: 3;'}],
         style_table={'overflowX': 'auto'},
         style_cell={
             'backgroundColor': '#ffffff',
             'color': '#1e293b',
-            'border': '1px solid #cbd5e1',
+            'border': '1px solid #e2e8f0',
             'fontFamily': 'system-ui, -apple-system, Segoe UI, sans-serif',
             'fontSize': 12,
             'maxWidth': 360,
             'whiteSpace': 'normal',
             'height': 'auto',
-            'padding': '6px',
+            'padding': '8px',
         },
-        style_header={'backgroundColor': '#e2e8f0', 'fontWeight': '700', 'color': '#0f172a'},
-        style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#f8fafc'}],
+        style_header={'backgroundColor': '#eff6ff', 'fontWeight': '700', 'color': '#1e3a8a', 'border': '1px solid #bfdbfe'},
+        style_data_conditional=[
+            *base_conditional,
+            *(conditional or []),
+            *score_bar_styles(list(frame.columns)),
+        ],
     )
 
 
@@ -274,13 +347,121 @@ def network_graph(sentence_scores: pd.DataFrame) -> go.Figure:
     return fig
 
 
+
+LEADERBOARD_VISIBLE_COLUMNS = [
+    'rank',
+    'submission_name',
+    'status',
+    'word_f1',
+    'boundary_f1',
+    'exact_match_sentence_rate',
+    'over_segmentation_count',
+    'under_segmentation_count',
+    'tolerant_issue_count',
+    'runtime_seconds',
+]
+
+
+def section_title(title: str, subtitle: str = '') -> html.Div:
+    children: list[Any] = [html.Div(title, className='section-title')]
+    if subtitle:
+        children.append(html.Div(subtitle, className='section-subtitle'))
+    return html.Div(children, className='section-heading')
+
+
+def panel(children: list[Any] | Any, class_name: str = '') -> html.Div:
+    return html.Div(children, className=f'analytics-panel {class_name}'.strip())
+
+
+def source_summary_figure(sentence_table: pd.DataFrame) -> go.Figure:
+    if sentence_table.empty or 'source' not in sentence_table.columns:
+        return empty_figure('暂无数据集来源摘要')
+    counts = sentence_table.groupby('source', dropna=False).size().reset_index(name='sentence_count')
+    counts = counts.sort_values('sentence_count', ascending=True)
+    fig = px.bar(counts, x='sentence_count', y='source', orientation='h', color='sentence_count', color_continuous_scale='Blues', title='Dataset / Source Summary（来自 sentence_table）')
+    fig.update_layout(height=320, coloraxis_showscale=False, **PLOT_LAYOUT)
+    return fig
+
+
+def source_summary_table(sentence_table: pd.DataFrame) -> pd.DataFrame:
+    if sentence_table.empty or 'source' not in sentence_table.columns:
+        return pd.DataFrame()
+    table = sentence_table.groupby('source', dropna=False).agg(
+        sentence_count=('sentence_id', 'count'),
+        avg_char_len=('char_len', 'mean') if 'char_len' in sentence_table.columns else ('sentence_id', 'count'),
+    ).reset_index()
+    if 'gold_status' in sentence_table.columns:
+        status = sentence_table.pivot_table(index='source', columns='gold_status', values='sentence_id', aggfunc='count', fill_value=0).reset_index()
+        table = table.merge(status, on='source', how='left')
+    if 'avg_char_len' in table.columns:
+        table['avg_char_len'] = pd.to_numeric(table['avg_char_len'], errors='coerce').fillna(0).round(2)
+    return table
+
+
 def kpi_cards(submissions: pd.DataFrame, sentence_table: pd.DataFrame) -> list[dbc.Col]:
     success = submissions[submissions.get('status', '') == '成功'] if 'status' in submissions.columns else submissions
     best_word_f1 = numeric(success, 'word_f1').max() if not success.empty else 0.0
     best_boundary_f1 = numeric(success, 'boundary_f1').max() if not success.empty else 0.0
+    exact = numeric(success, 'exact_match_sentence_rate').max() if not success.empty else 0.0
+    total_issues = int(numeric(submissions, 'tolerant_issue_count').sum()) if not submissions.empty else 0
     excluded = int((sentence_table.get('gold_status', pd.Series(dtype=str)) == 'excluded').sum()) if not sentence_table.empty else 0
-    values = [('提交数', len(submissions)), ('句子数', len(sentence_table)), ('排除 gold', excluded), ('最佳词级 F1', f'{best_word_f1:.4f}'), ('最佳边界 F1', f'{best_boundary_f1:.4f}')]
-    return [dbc.Col(dbc.Card(dbc.CardBody([html.Div(label, className='text-secondary small'), html.Div(str(value), className='h4 fw-bold text-primary')]), className='border-0 shadow-sm'), md=2) for label, value in values]
+    values = [
+        ('Submissions', len(submissions), '参与提交 / 方法数'),
+        ('Sentences', len(sentence_table), f'excluded gold: {excluded}'),
+        ('Best Word F1', f'{best_word_f1:.4f}', 'span-level word metric'),
+        ('Best Boundary F1', f'{best_boundary_f1:.4f}', 'boundary-position metric'),
+        ('Best Exact Match', f'{exact:.4f}', 'sentence-level exact rate'),
+        ('Tolerant Issues', total_issues, 'row-level warnings'),
+    ]
+    return [
+        dbc.Col(
+            html.Div([
+                html.Div(label, className='kpi-label'),
+                html.Div(str(value), className='kpi-value'),
+                html.Div(str(subtitle), className='kpi-subtitle'),
+            ], className='kpi-card'),
+            lg=2,
+            md=4,
+            sm=6,
+        )
+        for label, value, subtitle in values
+    ]
+
+
+def boundary_case_class(row: pd.Series) -> str:
+    case = str(row.get('boundary_case', '')).upper()
+    return {'TP': 'boundary-tp', 'FP': 'boundary-fp', 'FN': 'boundary-fn'}.get(case, 'boundary-none')
+
+
+def character_boundary_diff(raw_text: str, boundary_rows: pd.DataFrame) -> html.Div:
+    if not raw_text:
+        return html.Div('暂无 raw text。', className='text-muted')
+    boundary_lookup: dict[int, pd.Series] = {}
+    if not boundary_rows.empty and 'boundary_position' in boundary_rows.columns:
+        for _, row in boundary_rows.iterrows():
+            try:
+                boundary_lookup[int(row.get('boundary_position'))] = row
+            except Exception:
+                continue
+
+    cells: list[Any] = []
+    for index, char in enumerate(raw_text):
+        boundary_position = index + 1
+        marker = html.Span('', className='boundary-marker boundary-none')
+        tooltip = ''
+        if boundary_position in boundary_lookup and boundary_position < len(raw_text):
+            row = boundary_lookup[boundary_position]
+            marker = html.Span('', className=f'boundary-marker {boundary_case_class(row)}')
+            tooltip = f"pos={boundary_position} case={row.get('boundary_case', '')} gold={row.get('gold_boundary', '')} pred={row.get('pred_boundary', '')}"
+        cells.append(html.Span([html.Span(char, className='char-glyph'), marker], className='char-cell', title=tooltip))
+    return html.Div([
+        html.Div(cells, className='boundary-cell-grid'),
+        html.Div([
+            html.Span([html.Span('', className='legend-swatch boundary-tp'), 'TP: gold + pred'], className='boundary-legend-item'),
+            html.Span([html.Span('', className='legend-swatch boundary-fp'), 'FP: pred only'], className='boundary-legend-item'),
+            html.Span([html.Span('', className='legend-swatch boundary-fn'), 'FN: gold only'], className='boundary-legend-item'),
+        ], className='boundary-legend'),
+    ])
 
 
 def create_app(results_dir: Path) -> Dash:
@@ -290,6 +471,7 @@ def create_app(results_dir: Path) -> Dash:
     sentence_scores = tables['sentence_score_table']
     boundary_table = tables['boundary_table']
     span_errors = tables['span_error_table']
+    session_summary = read_json_object(results_dir / 'session_summary.json')
 
     app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], title='中文分词排行榜与分析看板', assets_folder=str((Path(__file__).resolve().parent / 'assets')))
     metric_options = [{'label': METRIC_LABELS.get(column, column), 'value': column} for column in metric_columns(submissions)]
@@ -298,35 +480,120 @@ def create_app(results_dir: Path) -> Dash:
     default_submission = submission_options[0]['value'] if submission_options else ''
     sentence_options = [{'label': f"#{int(row.get('sentence_id', 0))} {str(row.get('raw_text', ''))[:28]}", 'value': int(row.get('sentence_id', 0))} for row in table_records(sentence_table)]
     default_sentence = sentence_options[0]['value'] if sentence_options else None
+    data_version = str(session_summary.get('dataset_version') or Path(str(session_summary.get('raw_path', ''))).parent.name or results_dir.name)
+
+    leaderboard_preview = submissions.head(15).copy() if not submissions.empty else submissions
+    source_table = source_summary_table(sentence_table)
+
+    overview_tab = html.Div([
+        html.Div([
+            html.Div('Chinese Word Segmentation Leaderboard', className='hero-title'),
+            html.Div('Academic analytics dashboard for span-level scoring, boundary diagnostics, and gold review.', className='hero-subtitle'),
+            html.Div([
+                html.Span(f'Results: {results_dir}', className='hero-pill'),
+                html.Span(f'Data version: {data_version}', className='hero-pill'),
+            ], className='hero-meta'),
+        ], className='dashboard-hero'),
+        dbc.Row(kpi_cards(submissions, sentence_table), className='g-3 mb-4'),
+        dbc.Row([
+            dbc.Col(panel([section_title('Leaderboard Preview', 'Top submissions with official ranking columns.'), datatable('leaderboard-preview-table', leaderboard_preview, page_size=10, visible_columns=LEADERBOARD_VISIBLE_COLUMNS)]), lg=7),
+            dbc.Col(panel([section_title('Top 15', 'Primary metric ranking preview.'), dcc.Graph(figure=top_bar(submissions, default_metric), className='dashboard-graph')]), lg=5),
+        ], className='g-3'),
+        dbc.Row([
+            dbc.Col(panel([section_title('Metric Heatmap', 'Cross-metric comparison for leading submissions.'), dcc.Graph(figure=metric_heatmap(submissions), className='dashboard-graph')]), lg=7),
+            dbc.Col(panel([section_title('Dataset / Source Summary', 'Sentence distribution by source.'), dcc.Graph(figure=source_summary_figure(sentence_table), className='dashboard-graph'), datatable('source-summary-table', source_table, page_size=8)]), lg=5),
+        ], className='g-3 mt-1'),
+    ], className='tab-body')
+
+    leaderboard_tab = html.Div([
+        panel([
+            section_title('Official Leaderboard', 'Default columns emphasize ranking metrics; subset metrics are available in details.'),
+            datatable('leaderboard-table', submissions, page_size=18, visible_columns=LEADERBOARD_VISIBLE_COLUMNS),
+            html.Details([html.Summary('Show full submission table with subset columns', className='details-summary'), datatable('leaderboard-full-table', submissions, page_size=12)], className='details-panel'),
+        ]),
+        dbc.Row([
+            dbc.Col(panel([section_title('Subset Score Heatmap', 'Scores by source, difficulty, and sentence type.'), dcc.Graph(figure=subset_score_heatmap(submissions), className='dashboard-graph')]), lg=7),
+            dbc.Col(panel([section_title('Rank Delta View', 'Timestamp order view for ranking changes.'), dcc.Graph(figure=rank_delta_view(submissions), className='dashboard-graph')]), lg=5),
+        ], className='g-3 mt-1'),
+        panel([
+            section_title('Student / Method Profile', 'Submission-level radar and weakest sentence breakdown.'),
+            dbc.Row(dbc.Col(dcc.Dropdown(id='profile-submission', options=submission_options, value=default_submission, clearable=False), md=5), className='mb-3'),
+            dbc.Row([dbc.Col(dcc.Graph(id='profile-radar'), lg=5), dbc.Col(dcc.Graph(id='profile-sentence-bar'), lg=7)], className='g-3'),
+            html.Div(id='profile-summary', className='mt-2'),
+            datatable('profile-sentence-table', sentence_scores.head(0), page_size=12),
+        ], 'mt-3'),
+    ], className='tab-body')
+
+    diagnostics_tab = html.Div([
+        panel([
+            section_title('Boundary Diff Viewer', 'Character-level boundary comparison for a selected submission and sentence.'),
+            dbc.Row([
+                dbc.Col(dcc.Dropdown(id='boundary-submission', options=submission_options, value=default_submission, clearable=False), md=5),
+                dbc.Col(dcc.Dropdown(id='boundary-sentence', options=sentence_options, value=default_sentence, clearable=False), md=7),
+            ], className='mb-3'),
+            html.Div(id='boundary-diff-viewer'),
+        ]),
+        dbc.Row([
+            dbc.Col(panel([section_title('Error Type Bar Chart', 'Aggregated boundary and span-error categories.'), dcc.Graph(figure=error_counts(span_errors, boundary_table), className='dashboard-graph')]), lg=5),
+            dbc.Col(panel([section_title('Sentence Difficulty Map', 'Average sentence score and discrimination by source.'), dcc.Graph(figure=sentence_scatter(sentence_table), className='dashboard-graph')]), lg=7),
+        ], className='g-3 mt-1'),
+        panel([
+            section_title('Diagnostics Long Tables', 'Raw rows are expandable; these tables come directly from exported artifacts.'),
+            html.Details([html.Summary('Show span_error_table', className='details-summary'), datatable('span-error-table', span_errors, page_size=12)], className='details-panel'),
+            html.Details([html.Summary('Show boundary_table', className='details-summary'), datatable('boundary-table', boundary_table, page_size=12)], className='details-panel'),
+            html.Details([html.Summary('Show sentence_table', className='details-summary'), datatable('sentence-difficulty-table', sentence_table, page_size=12)], className='details-panel'),
+        ], 'mt-3'),
+    ], className='tab-body')
+
+    gold_review_tab = html.Div([
+        panel([
+            section_title('Gold Review Console', 'Review confirmed / suspicious / excluded gold rows. Excluded rows are visible but not ranked.'),
+            dbc.Alert('gold_status=excluded rows are excluded from official denominators; suspicious rows remain scored and should be reviewed.', color='info', className='academic-alert'),
+            datatable('gold-review-table', sentence_table, page_size=15),
+        ]),
+    ], className='tab-body')
+
+    experimental_tab = html.Div([
+        dbc.Alert('Experimental visualizations are exploratory only and are not used for official ranking.', color='warning', className='academic-alert'),
+        dbc.Row([
+            dbc.Col(panel(simple_word_cloud(dataset_word_counter(sentence_table), 'Dataset overview word cloud（来自 sentence_table.gold）')), lg=6),
+            dbc.Col(panel(simple_word_cloud(error_word_counter(span_errors), 'Common error spans word cloud（来自 span_error_table.raw_span）')), lg=6),
+        ], className='g-3'),
+        dbc.Row([
+            dbc.Col(panel([section_title('Sankey Chart', 'Source to boundary error flow.'), dcc.Graph(figure=sankey_chart(boundary_table), className='dashboard-graph')]), lg=6),
+            dbc.Col(panel([section_title('Student Clustering', 'Metric-space exploratory scatter.'), dcc.Graph(figure=clustering_scatter(submissions), className='dashboard-graph')]), lg=6),
+        ], className='g-3 mt-1'),
+        panel([section_title('Network Graph', 'Exploratory similarity network from sentence-score profiles.'), dcc.Graph(figure=network_graph(sentence_scores), className='dashboard-graph')], 'mt-3'),
+    ], className='tab-body experimental-tab')
 
     app.layout = dbc.Container([
-        dbc.Row(dbc.Col(html.Div('中文分词排行榜与视觉分析平台', className='h2 fw-bold mt-4 mb-1 text-primary'))),
-        dbc.Row(dbc.Col(html.Div(f'所有图表均只读取导出表：{results_dir}', className='text-secondary mb-3'))),
-        dbc.Row(kpi_cards(submissions, sentence_table), className='g-3 mb-3'),
         dbc.Tabs([
-            dbc.Tab([dbc.Row([dbc.Col(dcc.Graph(figure=top_bar(submissions, default_metric)), lg=6), dbc.Col(dcc.Graph(figure=metric_heatmap(submissions)), lg=6)], className='g-3 mt-2')], label='P0-1 Overview Dashboard'),
-            dbc.Tab([html.Div(className='mt-3'), datatable('leaderboard-table', submissions, page_size=18)], label='P0-2 Leaderboard Table'),
-            dbc.Tab([dcc.Graph(figure=subset_score_heatmap(submissions), className='mt-3')], label='P0-3 Subset Score Heatmap'),
-            dbc.Tab([dbc.Row([dbc.Col(dcc.Dropdown(id='boundary-submission', options=submission_options, value=default_submission, clearable=False), md=5), dbc.Col(dcc.Dropdown(id='boundary-sentence', options=sentence_options, value=default_sentence, clearable=False), md=7)], className='mt-3 mb-2'), html.Div(id='boundary-diff-viewer')], label='P0-4 Boundary Diff Viewer'),
-            dbc.Tab([dcc.Graph(figure=sentence_scatter(sentence_table), className='mt-3'), datatable('sentence-difficulty-table', sentence_table, page_size=12)], label='P0-5 Sentence Difficulty Scatter Plot'),
-            dbc.Tab([dbc.Row(dbc.Col(dcc.Dropdown(id='profile-submission', options=submission_options, value=default_submission, clearable=False), md=5), className='mt-3 mb-2'), dbc.Row([dbc.Col(dcc.Graph(id='profile-radar'), lg=5), dbc.Col(dcc.Graph(id='profile-sentence-bar'), lg=7)], className='g-3'), html.Div(id='profile-summary', className='mt-2'), datatable('profile-sentence-table', sentence_scores.head(0), page_size=12)], label='P1-6 Student / Method Profile'),
-            dbc.Tab([dcc.Graph(figure=error_counts(span_errors, boundary_table), className='mt-3'), datatable('span-error-table', span_errors, page_size=12), html.Div(className='mt-3'), datatable('boundary-table', boundary_table, page_size=12)], label='P1-7 Error Type Bar Chart'),
-            dbc.Tab([dcc.Graph(figure=rank_delta_view(submissions), className='mt-3')], label='P1-8 Rank Delta View'),
-            dbc.Tab([html.Div('Gold Review Console：复核 gold_status=confirmed/suspicious/excluded；excluded 不参与排名评分。', className='text-secondary mt-3 mb-2'), datatable('gold-review-table', sentence_table, page_size=15)], label='P1-9 Gold Review Console'),
-            dbc.Tab([dbc.Row([dbc.Col(simple_word_cloud(dataset_word_counter(sentence_table), 'Dataset overview word cloud（来自 sentence_table.gold）'), lg=6), dbc.Col(simple_word_cloud(error_word_counter(span_errors), 'Common error spans word cloud（来自 span_error_table.raw_span）'), lg=6)], className='g-3 mt-3')], label='P2-10 Word Cloud'),
-            dbc.Tab([dcc.Graph(figure=sankey_chart(boundary_table), className='mt-3')], label='P2-11 Sankey Chart'),
-            dbc.Tab([dcc.Graph(figure=clustering_scatter(submissions), className='mt-3')], label='P2-12 Student Clustering'),
-            dbc.Tab([dcc.Graph(figure=network_graph(sentence_scores), className='mt-3')], label='P2-13 Network Graph'),
-        ])
-    ], fluid=True, style={'backgroundColor': '#f8fafc', 'minHeight': '100vh', 'paddingBottom': '32px'})
+            dbc.Tab(overview_tab, label='Overview', tab_id='overview'),
+            dbc.Tab(leaderboard_tab, label='Leaderboard', tab_id='leaderboard'),
+            dbc.Tab(diagnostics_tab, label='Diagnostics', tab_id='diagnostics'),
+            dbc.Tab(gold_review_tab, label='Gold Review', tab_id='gold-review'),
+            dbc.Tab(experimental_tab, label='Experimental', tab_id='experimental'),
+        ], id='main-tabs', active_tab='overview', className='main-nav-tabs'),
+    ], fluid=True, className='dashboard-shell')
 
     @app.callback(Output('boundary-diff-viewer', 'children'), Input('boundary-submission', 'value'), Input('boundary-sentence', 'value'))
     def update_boundary_diff(submission_name: str, sentence_id: int) -> Any:
         sentence_row = sentence_table[sentence_table['sentence_id'] == sentence_id] if not sentence_table.empty and sentence_id is not None else pd.DataFrame()
         boundary_rows = boundary_table[(boundary_table.get('submission_name', '') == submission_name) & (boundary_table.get('sentence_id', -1) == sentence_id)] if not boundary_table.empty else pd.DataFrame()
         score_rows = sentence_scores[(sentence_scores.get('submission_name', '') == submission_name) & (sentence_scores.get('sentence_id', -1) == sentence_id)] if not sentence_scores.empty else pd.DataFrame()
-        raw = sentence_row.iloc[0].get('raw_text', '') if not sentence_row.empty else ''
-        return html.Div([dbc.Alert(f'句子 #{sentence_id}: {raw}', color='light'), html.Div('句级得分', className='fw-bold'), datatable('selected-sentence-score', score_rows, page_size=4), html.Div('边界差异 true_positive / over_segmentation / under_segmentation', className='fw-bold mt-3'), datatable('selected-boundary-diff', boundary_rows, page_size=10)])
+        raw = str(sentence_row.iloc[0].get('raw_text', '')) if not sentence_row.empty else ''
+        metadata = ''
+        if not score_rows.empty:
+            row = score_rows.iloc[0]
+            metadata = f"validation={row.get('validation_status', '')} ｜ word_f1={row.get('word_f1', 0)} ｜ boundary_f1={row.get('boundary_f1', 0)}"
+        return panel([
+            html.Div(f'句子 #{sentence_id}: {raw}', className='boundary-sentence-title'),
+            html.Div(metadata, className='boundary-sentence-meta'),
+            character_boundary_diff(raw, boundary_rows),
+            html.Div('Selected sentence score', className='subsection-title'),
+            datatable('selected-sentence-score', score_rows, page_size=4),
+            html.Details([html.Summary('Show raw boundary rows', className='details-summary'), datatable('selected-boundary-diff', boundary_rows, page_size=10)], className='details-panel'),
+        ])
 
     @app.callback(Output('profile-radar', 'figure'), Output('profile-sentence-bar', 'figure'), Output('profile-summary', 'children'), Output('profile-sentence-table', 'data'), Output('profile-sentence-table', 'columns'), Input('profile-submission', 'value'))
     def update_profile(submission_name: str):
@@ -342,16 +609,15 @@ def create_app(results_dir: Path) -> Dash:
         rows = sentence_scores[sentence_scores['submission_name'].astype(str) == str(submission_name)].copy() if not sentence_scores.empty else pd.DataFrame()
         if not rows.empty:
             rows['word_f1'] = pd.to_numeric(rows.get('word_f1'), errors='coerce')
-            bar = px.bar(rows.sort_values('word_f1').head(20), x='word_f1', y='sentence_id', orientation='h', color='source', title='最低词级 F1 的句子 Top 20（来自 sentence_score_table）')
+            bar = px.bar(rows.sort_values('word_f1').head(20), x='word_f1', y='sentence_id', orientation='h', color='source', title='Lowest word-F1 sentences（来自 sentence_score_table）')
             bar.update_layout(height=330, **PLOT_LAYOUT)
         else:
             bar = empty_figure('暂无句级数据')
-        summary = dbc.Alert(f"状态：{series.get('status', '')} ｜ 词级F1：{series.get('word_f1', 0)} ｜ 边界F1：{series.get('boundary_f1', 0)} ｜ 过切：{series.get('over_segmentation_count', 0)} ｜ 欠切：{series.get('under_segmentation_count', 0)}", color='primary')
+        summary = dbc.Alert(f"状态：{series.get('status', '')} ｜ 词级F1：{series.get('word_f1', 0)} ｜ 边界F1：{series.get('boundary_f1', 0)} ｜ 过切：{series.get('over_segmentation_count', 0)} ｜ 欠切：{series.get('under_segmentation_count', 0)}", color='primary', className='academic-alert')
         columns = [{'name': column, 'id': column} for column in rows.columns]
         return radar, bar, summary, table_records(rows), columns
 
     return app
-
 
 def main() -> None:
     args = parse_args()
