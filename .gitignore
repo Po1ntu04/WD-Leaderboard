@@ -33,3 +33,6 @@ Database information-OAS/
 # OS / editor
 .DS_Store
 nul
+platform/results/figures/
+*.log
+.env

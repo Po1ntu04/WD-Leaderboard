@@ -27,10 +27,19 @@ pip install -r requirements.txt
 
 ## 启动方式
 
+推荐在仓库根目录使用 `make`，可以避免误进旧 checkout：
+
+```bash
+make workspace-check
+make dashboard
+```
+
+如果 `make workspace-check` 显示 `Dashboard: old/unknown tab layout`，说明当前目录不是新版工作区。
+
 ### 1. 打开交互式排行榜前端
 
 ```bash
-python app/leaderboard.py
+python app/leaderboard.py --results-dir platform/results --host 0.0.0.0 --port 8050
 ```
 
 默认地址：
@@ -44,6 +53,8 @@ Windows 下也可以直接双击：
 ### 1b. 导出 PPT 静态图片
 
 ```bash
+make export-figures
+# or
 python app/export_figures.py --results-dir platform/results --out-dir platform/results/figures
 ```
 
@@ -68,6 +79,12 @@ python app/score.py --submission path/to/pred.txt --name 学号_姓名
 python app/session.py --prediction-dir path/to/predictions
 ```
 
+### 4. 停止本地前端
+
+```bash
+make stop-dashboard
+```
+
 ## `pred.txt` 约定
 
 - 每一行对应 `raw.txt` 中的一行
@@ -89,9 +106,12 @@ python app/session.py --prediction-dir path/to/predictions
 - `test_assets/platform_eval_v2_draft/`：课堂评测包
 - `test_assets/submission_sample_v1/`：测试样例
 - `docs/classroom_pred_submission_protocol.md`：提交协议
+- `docs/workspace_structure.md`：工作区结构、编辑边界和常用命令
+- `Makefile`：统一本地启动、测试、导出和检查命令
 
 ## 说明
 
 - 当前仓库重点是 leaderboard 展示与课堂评测，不含完整算法训练工程。
 - `platform/results/` 中已带一套 demo 结果，便于同事直接接手前端继续优化。
 - 若要继续收集 `pred.txt` 并投屏展示，只需更新 `platform/results/leaderboard.csv`、`platform/results/reports/`，或直接重新跑 `python app/session.py`。
+- 本地建议以 `NLP_latest` 作为唯一编辑工作区；旧的 `NLP` 目录容易启动到 P0/P1 旧版前端。
