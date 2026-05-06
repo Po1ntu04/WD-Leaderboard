@@ -25,24 +25,36 @@ body {
 }
 
 .podium-card {
-  border-radius: 22px;
-  padding: 18px 18px 0 18px;
-  background: linear-gradient(180deg, rgba(20, 31, 56, .96), rgba(14, 23, 41, .92));
-  border: 1px solid rgba(93, 126, 182, .24);
-  box-shadow: 0 16px 36px rgba(2, 8, 23, 0.32);
-  animation: podium-rise .55s ease;
+  border-radius: 24px;
+  padding: 20px 20px 0 20px;
+  background: linear-gradient(180deg, rgba(20, 31, 56, .98), rgba(14, 23, 41, .94));
+  border: 1px solid rgba(93, 126, 182, .28);
+  box-shadow: 0 20px 40px rgba(2, 8, 23, 0.36), 0 8px 16px rgba(2, 8, 23, 0.24);
+  animation: podium-rise .6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.podium-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 24px 48px rgba(2, 8, 23, 0.42), 0 12px 20px rgba(2, 8, 23, 0.28);
 }
 
 .podium-rank {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 54px;
-  height: 54px;
+  width: 60px;
+  height: 60px;
   border-radius: 999px;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 800;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.podium-card:hover .podium-rank {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .podium-gold .podium-rank,
@@ -78,10 +90,12 @@ body {
 }
 
 .podium-score {
-  margin-top: 10px;
-  font-size: 1.45rem;
+  margin-top: 12px;
+  font-size: 1.65rem;
   font-weight: 800;
   color: #7dd3fc;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 8px rgba(125, 211, 252, 0.3);
 }
 
 .podium-pillar {

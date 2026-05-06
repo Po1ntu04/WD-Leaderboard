@@ -137,9 +137,16 @@ COUNT_COLUMNS = {
 
 PLOT_LAYOUT = {
     'paper_bgcolor': '#ffffff',
-    'plot_bgcolor': '#ffffff',
-    'font_color': '#1e293b',
-    'margin': dict(l=42, r=24, t=54, b=42),
+    'plot_bgcolor': '#fafbfc',
+    'font': dict(family='Inter, system-ui, -apple-system, sans-serif', size=12, color='#1e293b'),
+    'margin': dict(l=48, r=28, t=58, b=48),
+    # Keep title styling as magic-underscore properties rather than a nested
+    # `title` dict, because most chart builders pass their own title string.
+    # A nested dict would collide with `update_layout(title=..., **PLOT_LAYOUT)`.
+    'title_font': dict(size=16, color='#1e3a8a'),
+    'title_x': 0.02,
+    'title_xanchor': 'left',
+    'hoverlabel': dict(bgcolor='#ffffff', font_size=13, font_family='Inter, system-ui'),
 }
 
 
@@ -350,9 +357,17 @@ def top_bar(submissions: pd.DataFrame, metric: str = 'word_f1') -> go.Figure:
     top['display_name'] = top['submission_name'].astype(str).map(lambda value: text_preview(value, 22))
     top['value_text'] = top[metric].map(lambda value: f'{float(value):.4f}')
     fig = px.bar(top, x=metric, y='display_name', orientation='h', color=metric, color_continuous_scale='Blues', text='value_text', hover_name='submission_name')
-    fig.update_traces(textposition='outside', cliponaxis=False)
-    fig.update_layout(title=f'Top 15 - {METRIC_LABELS.get(metric, metric)}', xaxis_title=METRIC_LABELS.get(metric, metric), yaxis_title='', height=410, coloraxis_showscale=False, **PLOT_LAYOUT)
-    fig.update_xaxes(range=[0, min(1.05, max(0.1, float(top[metric].max()) * 1.12))])
+    fig.update_traces(textposition='outside', cliponaxis=False, marker=dict(line=dict(width=0)))
+    fig.update_layout(
+        title=f'Top 15 - {METRIC_LABELS.get(metric, metric)}',
+        xaxis_title=METRIC_LABELS.get(metric, metric),
+        yaxis_title='',
+        height=420,
+        coloraxis_showscale=False,
+        **PLOT_LAYOUT
+    )
+    fig.update_xaxes(range=[0, min(1.05, max(0.1, float(top[metric].max()) * 1.12))], gridcolor='#e2e8f0', gridwidth=1)
+    fig.update_yaxes(gridcolor='#f1f5f9', gridwidth=1)
     return fig
 
 
